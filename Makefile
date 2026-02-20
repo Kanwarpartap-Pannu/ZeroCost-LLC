@@ -1,0 +1,6 @@
+# define parameters
+MEM_DEPTH ?= 256
+CACHE_SIZE ?= 64 
+BLOCK_SIZE ?= 8
+WAYS ?= 2 
+NUM_SETS ?= CACHE_SIZE / (BLOCK_SIZE * WAYS)
