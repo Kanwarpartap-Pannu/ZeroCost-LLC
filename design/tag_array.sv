@@ -61,7 +61,7 @@ logic [$clog2(WAYS)-1:0] oldest_way;
 always_comb begin 
     oldest_way = 0;
     for (int i = 0; i<WAYS; i++) begin 
-        if (LRU_array[index_i][i] > LRU_array[index_i][empty_way]) begin 
+        if (LRU_array[index_i][i] >= LRU_array[index_i][empty_way]) begin 
             oldest_way = i;  
         end 
     end 
@@ -72,13 +72,12 @@ assign replace_way = empty_found ? empty_way : oldest_way;
 
 // Block aging logic for hit and replacement 
 logic [$clog2(WAYS)-1:0] reset_way = hit ? hit_way : replace_way; 
-logic [$clog2(WAYS)-1:0] previous_age = LRU_array[index_i][reset_way]; 
 always_ff @(posedge clk) begin 
     for (int i=0; i<WAYS; i++) begin 
         if (i == reset_way) begin 
             LRU_array[index_i][i] <= 0; 
         end
-        else if ( (LRU_array[i] < previous_age) && (flag_array[i] != 0)) begin 
+        else if ( (LRU_array[index_i][i] < LRU_array[index_i][reset_way]) && (flag_array[index_i][i] != 0)) begin 
             LRU_array[index_i][i] <= LRU_array[index_i][i] + 1; 
         end 
     end
@@ -89,7 +88,6 @@ always_ff @(posedge clk) begin
     if (!hit) begin 
         tag_array [index_i][replace_way] <= tag_i; 
         flag_array [index_i][replace_way] <= 1;
-        LRU_array [] 
     end 
 
 end 
