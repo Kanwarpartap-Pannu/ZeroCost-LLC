@@ -3,7 +3,8 @@
 
     Description: A 2D Array storing the Tag for each block of data stored in each set 
     of the cache in the data array. Tracks each Tag based on LRU policy to handle conflicts. 
-    Able to add Tag into the array and search for a given tag in the array. 
+    Able to add Tag into the array and search for a given tag in the array. Returns whether there
+    was a cache hit or miss, and which block was a hit or needs to be replaced.   
 
 */
 
@@ -21,17 +22,17 @@ module tag_array #(
 localparam int WAYS = `WAYS; 
 
 // Tag Array, Each row is a set, each column holds tag for the block 
-logic [TAG_BITS-1:0]     tag_array  [0:NUM_SETS-1][0:WAYS]; 
+logic [TAG_BITS-1:0]     tag_array  [0:NUM_SETS-1][0:WAYS-1]; 
 
-// Array to store flags for each block for now single flag for valid or invalid
-logic                    flag_array [0:NUM_SETS-1][0:WAYS]; 
+// Array to store if each block has valid or invalid data
+logic                    valid_array [0:NUM_SETS-1][0:WAYS-1]; 
 
 // LRU Array 
-logic [$clog2(WAYS)-1:0] LRU_array  [0:NUM_SETS-1][0:WAYS]; 
+logic [$clog2(WAYS)-1:0] LRU_array  [0:NUM_SETS-1][0:WAYS-1]; 
 
-// Search for tag in the set, 1 for hit 0 for miss
+// Search for tag in the set, 1 for hit 0 for miss 
 logic [$clog2(WAYS)-1:0] hit_way; 
-always_comb begin
+always_comb begin 
 
    for (int i = 0; i<WAYS; i++) begin 
         if (tag_array_array[index_i][i] == tag_i) begin 
@@ -49,7 +50,7 @@ always_comb begin
     empty_way = 0;
     empty_found=0;  
     for (int i = 0; i<WAYS; i++) begin 
-        if (flag_array[index_i][i] == 0) begin 
+        if (valid_array[index_i][i] == 0) begin 
             empty_way = i; 
             empty_found = 1; 
         end 
@@ -77,7 +78,7 @@ always_ff @(posedge clk) begin
         if (i == reset_way) begin 
             LRU_array[index_i][i] <= 0; 
         end
-        else if ( (LRU_array[index_i][i] < LRU_array[index_i][reset_way]) && (flag_array[index_i][i] != 0)) begin 
+        else if ( (LRU_array[index_i][i] < LRU_array[index_i][reset_way]) && (valid_array[index_i][i] != 0)) begin 
             LRU_array[index_i][i] <= LRU_array[index_i][i] + 1; 
         end 
     end
@@ -87,7 +88,7 @@ end
 always_ff @(posedge clk) begin 
     if (!hit) begin 
         tag_array [index_i][replace_way] <= tag_i; 
-        flag_array [index_i][replace_way] <= 1;
+        valid_array [index_i][replace_way] <= 1;
     end 
 
 end 
