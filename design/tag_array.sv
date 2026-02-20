@@ -12,9 +12,9 @@ module tag_array #(
     parameter int INDEX_BITS=2, 
     parameter int NUM_SETS=4 
 )(
-    input logic [TAG_BITS-1:0] tag_i, 
+    input logic [TAG_BITS-1:0]   tag_i, 
     input logic [INDEX_BITS-1:0] index_i, 
-    output logic [`WAYS-1:0] hit 
+    output logic                 hit 
 );
 
 localparam int WAYS = `WAYS; 
@@ -28,13 +28,18 @@ logic                    flag_array [0:NUM_SETS-1][0:WAYS];
 // LRU Array 
 logic [$clog2(WAYS)-1:0] LRU_array  [0:NUM_SETS-1][0:WAYS]; 
 
-// Lookup logic True if TAG is in the set
-genvar i; 
-generate
-    for (i=0; i<WAYS; i++) begin 
-        assign hit[i] = ((tag_array[index_i][i] == tag) && (flag_array[index_i][i] == 1));  
-    end 
-endgenerate
+// Search for tag in the set, 1 for hit 0 for miss
+logic [$clog2(WAYS)-1:0] hit_way; 
+always_comb begin
+
+   for (int i = 0; i<WAYS; i++) begin 
+        if (tag_array_array[index_i][i] == tag_i) begin 
+            hit_way = i; 
+            hit = 1; 
+        end 
+    end  
+
+end 
 
 
 // Look for Empty Block 
@@ -51,7 +56,7 @@ always_comb begin
     end 
 end 
 
-// LRU Logic
+// LRU Logic 
 logic [$clog2(WAYS)-1:0] oldest_way;  
 always_comb begin 
     oldest_way = 0;
@@ -67,9 +72,10 @@ assign replace_way = empty_found ? empty_way : oldest_way;
 
 // Cache Insertion Logic 
 always_ff @(posedge clk) begin 
-    if (hit == 0) begin 
+    if (!hit) begin 
         tag_array [index_i][replace_way] <= tag_i; 
-        flag_array [index_i][replace_way] <= 1; 
+        flag_array [index_i][replace_way] <= 1;
+        LRU_array [] 
     end 
 
 end 
