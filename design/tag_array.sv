@@ -13,10 +13,12 @@ module tag_array #(
     parameter int INDEX_BITS=2, 
     parameter int NUM_SETS=4 
 )(
-    input logic                  clk, 
+    input logic                  clk,
+    input logic                  idle, 
     input logic [TAG_BITS-1:0]   tag_i, 
     input logic [INDEX_BITS-1:0] index_i, 
-    output logic                 hit 
+    output logic                 hit,
+    output logic [$clog2(WAYS)-1:0] replace_way 
 );
 
 localparam int WAYS = `WAYS; 
@@ -74,23 +76,26 @@ assign replace_way = empty_found ? empty_way : oldest_way;
 // Block aging logic for hit and replacement 
 logic [$clog2(WAYS)-1:0] reset_way = hit ? hit_way : replace_way; 
 always_ff @(posedge clk) begin 
-    for (int i=0; i<WAYS; i++) begin 
-        if (i == reset_way) begin 
-            LRU_array[index_i][i] <= 0; 
+    if (!idle) begin // Do not update ages if cache not being used 
+        for (int i=0; i<WAYS; i++) begin 
+            if (i == reset_way) begin 
+                LRU_array[index_i][i] <= 0; 
+            end
+            else if ( (LRU_array[index_i][i] < LRU_array[index_i][reset_way]) && (valid_array[index_i][i] != 0)) begin 
+                LRU_array[index_i][i] <= LRU_array[index_i][i] + 1; 
+            end 
         end
-        else if ( (LRU_array[index_i][i] < LRU_array[index_i][reset_way]) && (valid_array[index_i][i] != 0)) begin 
-            LRU_array[index_i][i] <= LRU_array[index_i][i] + 1; 
-        end 
     end
 end 
 
 // Cache Insertion Logic 
 always_ff @(posedge clk) begin 
-    if (!hit) begin 
-        tag_array [index_i][replace_way] <= tag_i; 
-        valid_array [index_i][replace_way] <= 1;
-    end 
-
+    if (!idle) begin // do not replace if cache not in use 
+        if (!hit) begin 
+            tag_array [index_i][replace_way] <= tag_i; 
+            valid_array [index_i][replace_way] <= 1;
+        end 
+    end
 end 
 
 
