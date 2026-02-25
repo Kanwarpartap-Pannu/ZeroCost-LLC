@@ -1,0 +1,10 @@
+lint.vlt
+design/cache_tb.sv
+design/data_array.sv
+design/lookup.sv
+design/memory.sv
+design/tag_array.sv
+--Wall 
+--trace-vcd
+--Wno-fatal
+--timing

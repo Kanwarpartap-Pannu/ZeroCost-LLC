@@ -18,7 +18,7 @@ module tag_array #(
     input logic [TAG_BITS-1:0]   tag_i, 
     input logic [INDEX_BITS-1:0] index_i, 
     output logic                 hit,
-    output logic [$clog2(WAYS)-1:0] replace_way 
+    output logic [$clog2(WAYS)-1:0] replace_way_o 
 );
 
 localparam int WAYS = `WAYS; 
@@ -37,7 +37,7 @@ logic [$clog2(WAYS)-1:0] hit_way;
 always_comb begin 
 
    for (int i = 0; i<WAYS; i++) begin 
-        if (tag_array_array[index_i][i] == tag_i) begin 
+        if (tag_array[index_i][i] == tag_i) begin 
             hit_way = i; 
             hit = 1; 
         end 
@@ -70,11 +70,13 @@ always_comb begin
     end 
 end 
 
-// Block to replace logic 
+// Block to replace logic
+logic [$clog2(WAYS)-1:0] replace_way; 
 assign replace_way = empty_found ? empty_way : oldest_way; 
 
 // Block aging logic for hit and replacement 
-logic [$clog2(WAYS)-1:0] reset_way = hit ? hit_way : replace_way; 
+logic [$clog2(WAYS)-1:0] reset_way = hit ? hit_way : replace_way;
+assign replace_way_o = reset_way; 
 always_ff @(posedge clk) begin 
     if (!idle) begin // Do not update ages if cache not being used 
         for (int i=0; i<WAYS; i++) begin 

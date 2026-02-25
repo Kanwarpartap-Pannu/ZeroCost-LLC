@@ -28,18 +28,16 @@ module memory #(
   input logic rst,
   input logic [AWIDTH-1:0] addr_i = BASE_ADDR,
   input logic [AWIDTH-1:0] addr_dat = BASE_ADDR,
-  input logic [DWIDTH-1:0] data_i,
   input logic [DWIDTH-1:0] data_dat,
   input logic read_en_i,
-  input logic write_en_i,
   input logic read_en_dat,
   input logic write_en_dat,
   input logic [2:0] funct3_i,
 
   // outputs
+  output logic              ready, 
   output logic [DWIDTH-1:0] data_o,
-  output logic [DWIDTH-1:0] data_dat_o,
-  output logic [1:0] size_encoded_o
+  output logic [DWIDTH-1:0] data_dat_o
 );
 
     
@@ -132,7 +130,7 @@ module memory #(
     // Combinational read logic for data memory
     always_comb begin
 	    data_dat_o = 0; // default to zero
-
+        ready = 1;
         if (read_en_i) begin 
             if ($isunknown(addr_dat)) begin
                 data_dat_o = 0;
@@ -189,10 +187,6 @@ module memory #(
 
         end
         
- 	end
-
-    assign size_encoded_o = size_encoded;
-	
-   
+ 	end   
  
 endmodule : memory
