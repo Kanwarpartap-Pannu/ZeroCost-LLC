@@ -19,9 +19,6 @@ module lookup #(
     input logic [DWIDTH-1:0] store_data,
     input logic [6:0] opcode_i, 
     input logic [2:0] funct3_i,  
-    output logic [OFFSET_BITS-1:0] offset,
-    output logic [INDEX_BITS-1:0] index, 
-    output logic [TAG_BITS-1:0] tag, 
     output logic [DWIDTH-1:0] data_out,
     output logic stall,  
     output logic data_valid
@@ -33,10 +30,15 @@ localparam OFFSET_BITS   = $clog2(`BLOCK_SIZE);
 localparam INDEX_BITS    = $clog2(NUM_SETS);
 localparam TAG_BITS      = AWIDTH - INDEX_BITS - OFFSET_BITS;
 
+logic [OFFSET_BITS-1:0] offset;
+logic [INDEX_BITS-1:0] index;
+logic [TAG_BITS-1:0] tag;
+logic [AWIDTH-1:0] memory_address; 
+
 assign offset = address[OFFSET_BITS-1:0];
 assign index  = address[((OFFSET_BITS-1)+INDEX_BITS):OFFSET_BITS]; 
 assign tag    = address[(((OFFSET_BITS+INDEX_BITS)-1)+TAG_BITS):(OFFSET_BITS+INDEX_BITS)]; 
-
+assign memory_address = {address[AWIDTH-1:OFFSET_BITS], {OFFSET_BITS{1'b0}}};
 
 // STATES 
 parameter CACHE = 0, MAIN_MEMORY =1; 
@@ -46,7 +48,7 @@ logic curr_state, next_state;
 // MAIN MEMORY 
 logic read_en = 1;
 logic write_en = 0;
-logic [DWIDTH-1:0] mem_out; 
+logic [((`BLOCK_SIZE*8)-1):0] mem_out; 
 logic ready; 
 memory #(
     .AWIDTH(32),
@@ -56,7 +58,7 @@ memory #(
     .clk(clk),
     .rst(reset),
     .addr_i(address),
-    .addr_dat(address),
+    .addr_dat(memory_address),
     .data_dat(store_data), 
     .read_en_i(read_en),
     .read_en_dat(read_en), // controls for data memory 
@@ -71,14 +73,18 @@ memory #(
 // TAG ARRAY 
 logic hit; 
 logic idle; 
-logic [$clog2(`WAYS)-1:0] replace_way; 
+logic [$clog2(`WAYS)-1:0] replace_way;
+logic [$clog2(`WAYS)-1:0] hit_way; 
 tag_array # (
+    .TAG_BITS(TAG_BITS)
 ) cache_tag_array (
     .clk(clk),
     .idle(idle),
     .tag_i(tag),
     .index_i(index),
+    .replace_en(replace_en),
     .hit(hit),
+    .hit_way_o(hit_way),
     .replace_way_o(replace_way)
 ); 
 
@@ -87,6 +93,11 @@ tag_array # (
 logic replace_en; 
 logic [0:`WAYS-1][(`BLOCK_SIZE*8)-1:0] set ; 
 data_array #(
+    .TAG_BITS(TAG_BITS),
+    .INDEX_BITS(INDEX_BITS),
+    .NUM_SETS(NUM_SETS),
+    .BLOCK_SIZE(`BLOCK_SIZE),
+    .WAYS(`WAYS)
 ) cache_data_array (
     .clk(clk),
     .index_i(index),
@@ -144,10 +155,23 @@ always_ff @(posedge clk) begin
 
 end
 
-always_comb begin 
-    data_out = 0; // default to safe values  
+// size encoded logic 
+always_comb begin
+    case (funct3_i)
+        3'b000, 3'b100: data_out = set[hit_way][offset*8 +: 32];  // word 
+        3'b001, 3'b101: data_out = set[hit_way][offset*8 +: 16]; // halfword 
+        3'b010:         data_out = set[hit_way][offset*8 +: 8]; // byte 
+        3'b111, 3'b011:         data_out = set[hit_way][offset*8 +: 32]; // doubleword
+        default:        data_out = set[hit_way][offset*8 +: 8]; // default to word
+    endcase
+end
+
+
+always_comb begin  
     data_valid =0;
     replace_en = 0;  
+    idle = 1; 
+    stall = 0;  
     unique case(curr_state)
         CACHE: begin 
             unique case (opcode_i)
@@ -155,11 +179,11 @@ always_comb begin
                     if (hit) begin 
                         idle = 0; 
                         data_valid = 1; 
-                        data_out = set[replace_way][offset*8 +: 8]; 
                         replace_en = 0; 
+                        stall=0; 
                     end 
                     else if (!hit) begin 
-                        idle = 0;
+                        idle = 1;
                         data_valid = 0; 
                         stall = 1; 
                         replace_en = 0; 
@@ -170,6 +194,7 @@ always_comb begin
                     idle = 1; 
                     data_out = 32'b0; 
                     replace_en = 0; 
+                    stall = 1; 
                 end
 
             endcase
@@ -185,9 +210,8 @@ always_comb begin
             end 
             else if (ready) begin 
                 idle = 1; 
-                data_valid = 1; 
-                stall = 0; 
-                data_out = mem_out[offset*8 +: 8];
+                data_valid = 0; 
+                stall = 1; 
                 replace_en = 1; 
             end 
 

@@ -1,3 +1,5 @@
+`include "constants.svh"
+
 module cache_tb; 
 
 // reg
@@ -14,9 +16,6 @@ logic [AWIDTH-1:0] address;
 logic [DWIDTH-1:0] store_data; 
 logic [6:0] opcode_i; 
 logic [2:0] funct3_i;  
-logic [OFFSET_BITS-1:0] offset;
-logic [INDEX_BITS-1:0] index; 
-logic [TAG_BITS-1:0] tag; 
 logic [DWIDTH-1:0] data_out;
 logic stall;  
 logic data_valid;
@@ -25,12 +24,32 @@ logic data_valid;
 lookup #(
 ) cache (.*); 
 
+initial begin 
+    clk=0; 
+    reset=1; 
+    address = 0; 
+    opcode_i = 0; 
+    funct3_i = 0;
+    store_data = 0; 
+end
+
+always #1 clk = ~clk;
+
 // simulation 
 initial begin 
     $display("SIMULATION START"); 
-    #1
+    address = 'h00000093;
+    opcode_i = OP_LOAD; 
+    funct3_i = 11; 
+    store_data = 10; 
+    #100
     $finish; 
 end 
+
+initial begin 
+    $dumpfile("cache.vcd");
+    $dumpvars(0, cache_tb);  
+end
 
 
 endmodule

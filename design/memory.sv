@@ -37,7 +37,7 @@ module memory #(
   // outputs
   output logic              ready, 
   output logic [DWIDTH-1:0] data_o,
-  output logic [DWIDTH-1:0] data_dat_o
+  output logic [(`BLOCK_SIZE*8)-1:0] data_dat_o
 );
 
     
@@ -60,7 +60,7 @@ module memory #(
     // Adjusted address for fetch always assume given addr_i is within range
     assign address = addr_i - BASE_ADDR; 
 
-    // Adjusted address for data memory 
+    // Adjusted address for data memory
     assign address_dat = (addr_dat< BASE_ADDR) ? addr_dat % MEM_BYTES:(addr_dat - BASE_ADDR) % MEM_BYTES; 
   
     int i;
@@ -126,7 +126,7 @@ module memory #(
         end
   	end
 
-
+    
     // Combinational read logic for data memory
     always_comb begin
 	    data_dat_o = 0; // default to zero
@@ -136,19 +136,9 @@ module memory #(
                 data_dat_o = 0;
             end 
             else if (read_en_i) begin
-                case (size_encoded)
-                    2'b00: data_dat_o = {{24{1'b0}}, main_memory[address_dat]};
-                    2'b01: data_dat_o = {{16{1'b0}},
-                                main_memory[address_dat + 1],
-                                main_memory[address_dat]};
-                    2'b10, 2'b11: data_dat_o = {            
-                                main_memory[(address_dat + 3)% MEM_BYTES],
-                                main_memory[(address_dat + 2)% MEM_BYTES],
-                                main_memory[(address_dat + 1)% MEM_BYTES],
-                                main_memory[address_dat]
-                              };
-                    default: data_dat_o = 32'h0;
-                endcase
+                for (int i=0; i < `BLOCK_SIZE; i++) begin 
+                    data_dat_o[((`BLOCK_SIZE-1)-i)*8 +: 8] = main_memory[(address_dat+(`BLOCK_SIZE - i)) % MEM_BYTES];
+                end 
             end 
         end
   	end

@@ -1,0 +1,112 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Tue Mar  3 00:48:23 2026
+[*]
+[dumpfile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/cache.vcd"
+[dumpfile_mtime] "Tue Mar  3 00:45:39 2026"
+[dumpfile_size] 10456
+[savefile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/cache.gtkw"
+[timestart] 4
+[size] 1333 600
+[pos] 281 243
+*-1.365430 8 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[markername] AA
+[markername] BB
+[markername] CC
+[markername] DD
+[markername] EE
+[markername] FF
+[markername] GG
+[markername] HH
+[markername] II
+[markername] JJ
+[markername] KK
+[markername] LL
+[markername] MM
+[markername] NN
+[markername] OO
+[markername] PP
+[markername] QQ
+[markername] RR
+[markername] SS
+[markername] TT
+[markername] UU
+[markername] VV
+[markername] WW
+[markername] XX
+[markername] YY
+[markername] ZZ
+[treeopen] cache_tb.
+[treeopen] cache_tb.cache.
+[sst_width] 255
+[signals_width] 263
+[sst_expanded] 1
+[sst_vpaned_height] 159
+@28
+cache_tb.clk
+cache_tb.cache.replace_en
+@22
+cache_tb.cache.memory1.address_dat[31:0]
+cache_tb.cache.memory1.addr_dat[31:0]
+@c00022
+cache_tb.cache.tag[8:0]
+@28
+(0)cache_tb.cache.tag[8:0]
+(1)cache_tb.cache.tag[8:0]
+(2)cache_tb.cache.tag[8:0]
+(3)cache_tb.cache.tag[8:0]
+(4)cache_tb.cache.tag[8:0]
+(5)cache_tb.cache.tag[8:0]
+(6)cache_tb.cache.tag[8:0]
+(7)cache_tb.cache.tag[8:0]
+(8)cache_tb.cache.tag[8:0]
+@1401200
+-group_end
+@28
+cache_tb.cache.offset[2:0]
+@c00028
+cache_tb.cache.index[1:0]
+@28
+(0)cache_tb.cache.index[1:0]
+(1)cache_tb.cache.index[1:0]
+@1401200
+-group_end
+@c00022
+cache_tb.cache.address[13:0]
+@28
+(0)cache_tb.cache.address[13:0]
+(1)cache_tb.cache.address[13:0]
+(2)cache_tb.cache.address[13:0]
+(3)cache_tb.cache.address[13:0]
+(4)cache_tb.cache.address[13:0]
+(5)cache_tb.cache.address[13:0]
+(6)cache_tb.cache.address[13:0]
+(7)cache_tb.cache.address[13:0]
+(8)cache_tb.cache.address[13:0]
+(9)cache_tb.cache.address[13:0]
+(10)cache_tb.cache.address[13:0]
+(11)cache_tb.cache.address[13:0]
+(12)cache_tb.cache.address[13:0]
+(13)cache_tb.cache.address[13:0]
+@1401200
+-group_end
+@28
+cache_tb.cache.cache_tag_array.LRU_array[2][0][0]
+cache_tb.cache.cache_tag_array.LRU_array[2][1][0]
+@23
+cache_tb.cache.data_out[31:0]
+@22
+cache_tb.cache.cache_data_array.set_o[127:0]
+@28
+cache_tb.cache.replace_way[0]
+cache_tb.cache.cache_tag_array.reset_way[0]
+cache_tb.cache.cache_tag_array.hit_way[0]
+@22
+cache_tb.cache.cache_tag_array.tag_array[2][1][8:0]
+cache_tb.cache.cache_tag_array.tag_array[2][0][8:0]
+@28
+cache_tb.cache.cache_tag_array.index_i[1:0]
+cache_tb.cache.cache_tag_array.replace_way[0]
+cache_tb.cache.cache_tag_array.replace_way_o[0]
+[pattern_trace] 1
+[pattern_trace] 0

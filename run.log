@@ -1,35 +1,23 @@
-%Warning-PINCONNECTEMPTY: design/lookup.sv:66:6: Instance pin connected by name with empty reference: 'data_o'
-   66 |     .data_o(),
+%Warning-PINCONNECTEMPTY: design/lookup.sv:68:6: Instance pin connected by name with empty reference: 'data_o'
+   68 |     .data_o(),
       |      ^~~~~~
                           ... For warning description see https://verilator.org/warn/PINCONNECTEMPTY?v=5.042
                           ... Use "/* verilator lint_off PINCONNECTEMPTY */" and lint_on around source to disable this message.
-%Warning-WIDTHTRUNC: design/tag_array.sv:41:21: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
-                                              : ... note: In instance 'cache_tb.cache.cache_tag_array'
-   41 |             hit_way = i; 
-      |                     ^
-                     ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.042
-                     ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
-%Warning-WIDTHTRUNC: design/tag_array.sv:56:23: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
-                                              : ... note: In instance 'cache_tb.cache.cache_tag_array'
-   56 |             empty_way = i; 
-      |                       ^
-%Warning-WIDTHTRUNC: design/tag_array.sv:68:24: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
-                                              : ... note: In instance 'cache_tb.cache.cache_tag_array'
-   68 |             oldest_way = i;  
-      |                        ^
-%Warning-WIDTHEXPAND: design/tag_array.sv:83:19: Operator EQ expects 32 bits on the RHS, but RHS's VARREF 'reset_way' generates 1 bits.
-                                               : ... note: In instance 'cache_tb.cache.cache_tag_array'
-   83 |             if (i == reset_way) begin 
-      |                   ^~
-                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.042
-                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
-%Warning-ASCRANGE: design/data_array.sv:22:18: Ascending bit range vector: left < right of bit range: [0:3]
+%Warning-VARHIDDEN: design/memory.sv:139:26: Declaration of signal hides declaration in upper scope: 'i'
+  139 |                 for (int i=0; i < 8; i++) begin 
+      |                          ^
+                    design/memory.sv:66:9: ... Location of original declaration
+   66 |     int i;
+      |         ^
+                    ... For warning description see https://verilator.org/warn/VARHIDDEN?v=5.042
+                    ... Use "/* verilator lint_off VARHIDDEN */" and lint_on around source to disable this message.
+%Warning-ASCRANGE: design/data_array.sv:22:18: Ascending bit range vector: left < right of bit range: [0:1]
                                              : ... note: In instance 'cache_tb.cache.cache_data_array'
    22 |     output logic [0:WAYS-1][(BLOCK_SIZE*8)-1:0] set_o 
       |                  ^
                    ... For warning description see https://verilator.org/warn/ASCRANGE?v=5.042
                    ... Use "/* verilator lint_off ASCRANGE */" and lint_on around source to disable this message.
-%Warning-ASCRANGE: design/data_array.sv:27:21: Ascending bit range vector: left < right of bit range: [0:3]
+%Warning-ASCRANGE: design/data_array.sv:27:21: Ascending bit range vector: left < right of bit range: [0:1]
                                              : ... note: In instance 'cache_tb.cache.cache_data_array'
    27 | logic [0:NUM_SETS-1][0:WAYS-1][(BLOCK_SIZE*8)-1:0]     data_array ; 
       |                     ^
@@ -37,89 +25,77 @@
                                             : ... note: In instance 'cache_tb.cache.cache_data_array'
    27 | logic [0:NUM_SETS-1][0:WAYS-1][(BLOCK_SIZE*8)-1:0]     data_array ; 
       |       ^
-%Warning-WIDTHEXPAND: design/lookup.sv:58:6: Input port connection 'addr_i' expects 32 bits on the pin connection, but pin connection's VARREF 'address' generates 8 bits.
+%Warning-WIDTHTRUNC: design/tag_array.sv:45:21: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
+                                              : ... note: In instance 'cache_tb.cache.cache_tag_array'
+   45 |             hit_way = i; 
+      |                     ^
+                     ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.042
+                     ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
+%Warning-WIDTHTRUNC: design/tag_array.sv:64:23: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
+                                              : ... note: In instance 'cache_tb.cache.cache_tag_array'
+   64 |             empty_way = i; 
+      |                       ^
+%Warning-WIDTHTRUNC: design/tag_array.sv:76:24: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
+                                              : ... note: In instance 'cache_tb.cache.cache_tag_array'
+   76 |             oldest_way = i;  
+      |                        ^
+%Warning-WIDTHEXPAND: design/tag_array.sv:91:19: Operator EQ expects 32 bits on the RHS, but RHS's VARREF 'reset_way' generates 1 bits.
+                                               : ... note: In instance 'cache_tb.cache.cache_tag_array'
+   91 |             if (i == reset_way) begin 
+      |                   ^~
+                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.042
+                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Warning-WIDTHEXPAND: design/lookup.sv:60:6: Input port connection 'addr_i' expects 32 bits on the pin connection, but pin connection's VARREF 'address' generates 14 bits.
                                            : ... note: In instance 'cache_tb.cache'
-   58 |     .addr_i(address),
+   60 |     .addr_i(address),
       |      ^~~~~~
-%Warning-WIDTHEXPAND: design/lookup.sv:59:6: Input port connection 'addr_dat' expects 32 bits on the pin connection, but pin connection's VARREF 'address' generates 8 bits.
+%Warning-WIDTHEXPAND: design/lookup.sv:61:6: Input port connection 'addr_dat' expects 32 bits on the pin connection, but pin connection's VARREF 'memory_address' generates 14 bits.
                                            : ... note: In instance 'cache_tb.cache'
-   59 |     .addr_dat(address),
+   61 |     .addr_dat(memory_address),
       |      ^~~~~~~~
-%Warning-ASCRANGE: design/lookup.sv:88:7: Ascending bit range vector: left < right of bit range: [0:1]
+%Warning-ASCRANGE: design/lookup.sv:94:7: Ascending bit range vector: left < right of bit range: [0:1]
                                         : ... note: In instance 'cache_tb.cache'
-   88 | logic [0:2-1][(8*8)-1:0] set ; 
+   94 | logic [0:2-1][(8*8)-1:0] set ; 
       |       ^
-%Warning-WIDTHEXPAND: design/lookup.sv:93:6: Input port connection 'replace_way' expects 2 bits on the pin connection, but pin connection's VARREF 'replace_way' generates 1 bits.
-                                           : ... note: In instance 'cache_tb.cache'
-   93 |     .replace_way(replace_way),
-      |      ^~~~~~~~~~~
-%Warning-WIDTHEXPAND: design/lookup.sv:94:6: Input port connection 'cache_line_i' expects 64 bits on the pin connection, but pin connection's VARREF 'mem_out' generates 32 bits.
-                                           : ... note: In instance 'cache_tb.cache'
-   94 |     .cache_line_i(mem_out),
-      |      ^~~~~~~~~~~~
-%Warning-WIDTHEXPAND: design/lookup.sv:96:6: Output port connection 'set_o' expects 256 bits on the pin connection, but pin connection's VARREF 'set' generates 128 bits.
-                                           : ... note: In instance 'cache_tb.cache'
-   96 |     .set_o(set)
-      |      ^~~~~
-%Warning-WIDTHEXPAND: design/lookup.sv:158:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 8 bits.
+%Warning-WIDTHEXPAND: design/lookup.sv:162:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 16 bits.
                                              : ... note: In instance 'cache_tb.cache'
-  158 |                         data_out = set[replace_way][offset*8 +: 8]; 
+  162 |         3'b001, 3'b101: data_out = set[hit_way][offset*8 +: 16];  
       |                                  ^
-%Warning-WIDTHEXPAND: design/lookup.sv:190:26: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 8 bits.
+%Warning-WIDTHEXPAND: design/lookup.sv:163:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 8 bits.
                                              : ... note: In instance 'cache_tb.cache'
-  190 |                 data_out = mem_out[offset*8 +: 8];
-      |                          ^
-%Warning-UNDRIVEN: design/cache_tb.sv:4:7: Signal is not driven: 'clk'
-                                         : ... note: In instance 'cache_tb'
-    4 | logic clk; 
-      |       ^~~
-                   ... For warning description see https://verilator.org/warn/UNDRIVEN?v=5.042
-                   ... Use "/* verilator lint_off UNDRIVEN */" and lint_on around source to disable this message.
-%Warning-UNDRIVEN: design/cache_tb.sv:5:7: Signal is not driven: 'reset'
-                                         : ... note: In instance 'cache_tb'
-    5 | logic reset; 
-      |       ^~~~~
-%Warning-UNDRIVEN: design/cache_tb.sv:13:20: Signal is not driven: 'address'
-                                           : ... note: In instance 'cache_tb'
-   13 | logic [AWIDTH-1:0] address; 
-      |                    ^~~~~~~
-%Warning-UNDRIVEN: design/cache_tb.sv:14:20: Signal is not driven: 'store_data'
-                                           : ... note: In instance 'cache_tb'
-   14 | logic [DWIDTH-1:0] store_data; 
-      |                    ^~~~~~~~~~
-%Warning-UNDRIVEN: design/cache_tb.sv:15:13: Signal is not driven: 'opcode_i'
-                                           : ... note: In instance 'cache_tb'
-   15 | logic [6:0] opcode_i; 
-      |             ^~~~~~~~
-%Warning-UNDRIVEN: design/cache_tb.sv:16:13: Signal is not driven: 'funct3_i'
-                                           : ... note: In instance 'cache_tb'
-   16 | logic [2:0] funct3_i;  
-      |             ^~~~~~~~
-%Warning-UNUSEDSIGNAL: design/cache_tb.sv:17:25: Signal is not used: 'offset'
+  163 |         3'b010:         data_out = set[hit_way][offset*8 +: 8];  
+      |                                  ^
+%Warning-WIDTHEXPAND: design/lookup.sv:165:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 8 bits.
+                                             : ... note: In instance 'cache_tb.cache'
+  165 |         default:        data_out = set[hit_way][offset*8 +: 8];  
+      |                                  ^
+%Warning-WIDTHTRUNC: design/cache_tb.sv:43:14: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's CONST '?32?shb' generates 32 or 4 bits.
+                                             : ... note: In instance 'cache_tb'
+   43 |     funct3_i = 11; 
+      |              ^
+%Warning-MULTIDRIVEN: design/lookup.sv:195:21: Variable written to in always_comb also written by other process (IEEE 1800-2023 9.2.2.2): 'data_out'
+                                             : ... note: In instance 'cache_tb.cache'
+                      design/lookup.sv:195:21: 
+  195 |                     data_out = 32'b0; 
+      |                     ^~~~~~~~
+                      design/lookup.sv:165:25: ... Location of other write
+  165 |         default:        data_out = set[hit_way][offset*8 +: 8];  
+      |                         ^~~~~~~~
+                      ... For warning description see https://verilator.org/warn/MULTIDRIVEN?v=5.042
+                      ... Use "/* verilator lint_off MULTIDRIVEN */" and lint_on around source to disable this message.
+%Warning-UNUSEDSIGNAL: design/cache_tb.sv:19:20: Signal is not used: 'data_out'
                                                : ... note: In instance 'cache_tb'
-   17 | logic [OFFSET_BITS-1:0] offset;
-      |                         ^~~~~~
+   19 | logic [DWIDTH-1:0] data_out;
+      |                    ^~~~~~~~
                        ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.042
                        ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
-%Warning-UNUSEDSIGNAL: design/cache_tb.sv:18:24: Signal is not used: 'index'
-                                               : ... note: In instance 'cache_tb'
-   18 | logic [INDEX_BITS-1:0] index; 
-      |                        ^~~~~
-%Warning-UNUSEDSIGNAL: design/cache_tb.sv:19:22: Signal is not used: 'tag'
-                                               : ... note: In instance 'cache_tb'
-   19 | logic [TAG_BITS-1:0] tag; 
-      |                      ^~~
-%Warning-UNUSEDSIGNAL: design/cache_tb.sv:20:20: Signal is not used: 'data_out'
-                                               : ... note: In instance 'cache_tb'
-   20 | logic [DWIDTH-1:0] data_out;
-      |                    ^~~~~~~~
-%Warning-UNUSEDSIGNAL: design/cache_tb.sv:21:7: Signal is not used: 'stall'
+%Warning-UNUSEDSIGNAL: design/cache_tb.sv:20:7: Signal is not used: 'stall'
                                               : ... note: In instance 'cache_tb'
-   21 | logic stall;  
+   20 | logic stall;  
       |       ^~~~~
-%Warning-UNUSEDSIGNAL: design/cache_tb.sv:22:7: Signal is not used: 'data_valid'
+%Warning-UNUSEDSIGNAL: design/cache_tb.sv:21:7: Signal is not used: 'data_valid'
                                               : ... note: In instance 'cache_tb'
-   22 | logic data_valid;
+   21 | logic data_valid;
       |       ^~~~~~~~~~
 %Warning-UNUSEDSIGNAL: design/memory.sv:28:15: Signal is not used: 'rst'
                                              : ... note: In instance 'cache_tb.cache.memory1'
@@ -129,16 +105,6 @@
                                              : ... note: In instance 'cache_tb.cache.memory1'
    33 |   input logic read_en_dat,
       |               ^~~~~~~~~~~
-%Warning-LATCH: design/tag_array.sv:37:1: Latch inferred for signal 'cache_tb.cache.cache_tag_array.hit_way' (not all control paths of combinational always assign a value)
-                                        : ... Suggest use of always_latch for intentional latches
-   37 | always_comb begin 
-      | ^~~~~~~~~~~
-                ... For warning description see https://verilator.org/warn/LATCH?v=5.042
-                ... Use "/* verilator lint_off LATCH */" and lint_on around source to disable this message.
-%Warning-LATCH: design/tag_array.sv:37:1: Latch inferred for signal 'cache_tb.cache.hit' (not all control paths of combinational always assign a value)
-                                        : ... Suggest use of always_latch for intentional latches
-   37 | always_comb begin 
-      | ^~~~~~~~~~~
 c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=1 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=1 -DVM_TRACE_SAIF=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.042/share/verilator/include/verilated.cpp
 c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=1 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=1 -DVM_TRACE_SAIF=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_vcd_c.o /opt/homebrew/Cellar/verilator/5.042/share/verilator/include/verilated_vcd_c.cpp
 c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=1 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=1 -DVM_TRACE_SAIF=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.042/share/verilator/include/verilated_timing.cpp
@@ -149,5 +115,5 @@ echo "" > Vcache_tb__ALL.verilator_deplist.tmp
 c++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv   verilated.o verilated_vcd_c.o verilated_timing.o verilated_threads.o Vcache_tb__ALL.a    -pthread -lpthread   -o Vcache_tb
 rm Vcache_tb__ALL.verilator_deplist.tmp
 - V e r i l a t i o n   R e p o r t: Verilator 5.042 2025-11-02 rev UNKNOWN.REV
-- Verilator: Built from 0.126 MB sources in 7 modules, into 0.165 MB in 12 C++ files needing 0.000 MB
-- Verilator: Walltime 6.247 s (elab=0.010, cvt=0.030, bld=6.183); cpu 0.033 s on 1 threads
+- Verilator: Built from 0.132 MB sources in 7 modules, into 0.231 MB in 12 C++ files needing 0.000 MB
+- Verilator: Walltime 5.849 s (elab=0.006, cvt=0.025, bld=5.795); cpu 0.032 s on 1 threads

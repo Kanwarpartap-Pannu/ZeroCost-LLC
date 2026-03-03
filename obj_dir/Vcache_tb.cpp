@@ -62,6 +62,14 @@ void Vcache_tb::eval_step() {
     Verilated::endOfEval(vlSymsp->__Vm_evalMsgQp);
 }
 
+void Vcache_tb::eval_end_step() {
+    VL_DEBUG_IF(VL_DBG_MSGF("+eval_end_step Vcache_tb::eval_end_step\n"); );
+#ifdef VM_TRACE
+    // Tracing
+    if (VL_UNLIKELY(vlSymsp->__Vm_dumping)) vlSymsp->_traceDump();
+#endif  // VM_TRACE
+}
+
 //============================================================
 // Events and timing
 bool Vcache_tb::eventsPending() { return !vlSymsp->TOP.__VdlySched.empty(); }
