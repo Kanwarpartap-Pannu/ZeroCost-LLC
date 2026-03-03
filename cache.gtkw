@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
-[*] Tue Mar  3 00:48:23 2026
+[*] Tue Mar  3 21:12:38 2026
 [*]
 [dumpfile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/cache.vcd"
-[dumpfile_mtime] "Tue Mar  3 00:45:39 2026"
+[dumpfile_mtime] "Tue Mar  3 00:50:08 2026"
 [dumpfile_size] 10456
 [savefile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/cache.gtkw"
 [timestart] 4
 [size] 1333 600
 [pos] 281 243
-*-1.365430 8 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+*-1.365430 6 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 [markername] AA
 [markername] BB
 [markername] CC
@@ -93,8 +93,15 @@ cache_tb.cache.address[13:0]
 @28
 cache_tb.cache.cache_tag_array.LRU_array[2][0][0]
 cache_tb.cache.cache_tag_array.LRU_array[2][1][0]
-@23
+@22
 cache_tb.cache.data_out[31:0]
+cache_tb.cache.memory_address[13:0]
+cache_tb.cache.address[13:0]
+@28
+cache_tb.cache.curr_state
+cache_tb.cache.hit
+@29
+cache_tb.cache.next_state
 @22
 cache_tb.cache.cache_data_array.set_o[127:0]
 @28

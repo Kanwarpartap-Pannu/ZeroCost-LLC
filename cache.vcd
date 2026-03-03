@@ -25,8 +25,8 @@ $timescale 1ps $end
   $var wire 4 9! ALU_NOP [3:0] $end
  $upscope $end
  $scope module cache_tb $end
-  $var wire 1 n clk $end
-  $var wire 1 o reset $end
+  $var wire 1 m clk $end
+  $var wire 1 n reset $end
   $var wire 32 q AWIDTH [31:0] $end
   $var wire 32 r DWIDTH [31:0] $end
   $var wire 32 s NUM_SETS [31:0] $end
@@ -37,21 +37,21 @@ $timescale 1ps $end
   $var wire 32 % store_data [31:0] $end
   $var wire 7 & opcode_i [6:0] $end
   $var wire 3 ' funct3_i [2:0] $end
-  $var wire 32 4 data_out [31:0] $end
-  $var wire 1 5 stall $end
-  $var wire 1 6 data_valid $end
+  $var wire 32 o data_out [31:0] $end
+  $var wire 1 4 stall $end
+  $var wire 1 5 data_valid $end
   $scope module cache $end
    $var wire 32 q AWIDTH [31:0] $end
    $var wire 32 r DWIDTH [31:0] $end
-   $var wire 1 n clk $end
-   $var wire 1 o reset $end
+   $var wire 1 m clk $end
+   $var wire 1 n reset $end
    $var wire 14 $ address [13:0] $end
    $var wire 32 % store_data [31:0] $end
    $var wire 7 & opcode_i [6:0] $end
    $var wire 3 ' funct3_i [2:0] $end
-   $var wire 32 4 data_out [31:0] $end
-   $var wire 1 5 stall $end
-   $var wire 1 6 data_valid $end
+   $var wire 32 o data_out [31:0] $end
+   $var wire 1 4 stall $end
+   $var wire 1 5 data_valid $end
    $var wire 32 s NUM_SETS [31:0] $end
    $var wire 32 t OFFSET_BITS [31:0] $end
    $var wire 32 u INDEX_BITS [31:0] $end
@@ -63,7 +63,7 @@ $timescale 1ps $end
    $var wire 32 w CACHE [31:0] $end
    $var wire 32 x MAIN_MEMORY [31:0] $end
    $var wire 1 C curr_state $end
-   $var wire 1 D next_state $end
+   $var wire 1 6 next_state $end
    $var wire 1 y read_en $end
    $var wire 1 z write_en $end
    $var wire 64 , mem_out [63:0] $end
@@ -80,19 +80,19 @@ $timescale 1ps $end
     $var wire 32 s NUM_SETS [31:0] $end
     $var wire 32 } BLOCK_SIZE [31:0] $end
     $var wire 32 | WAYS [31:0] $end
-    $var wire 1 n clk $end
+    $var wire 1 m clk $end
     $var wire 2 ) index_i [1:0] $end
     $var wire 1 9 replace_way [0:0] $end
     $var wire 64 , cache_line_i [63:0] $end
     $var wire 1 ; replace_en $end
     $var wire 128 < set_o [127:0] $end
-    $var wire 512 E data_array [511:0] $end
+    $var wire 512 D data_array [511:0] $end
    $upscope $end
    $scope module cache_tag_array $end
     $var wire 32 { TAG_BITS [31:0] $end
     $var wire 32 | INDEX_BITS [31:0] $end
     $var wire 32 s NUM_SETS [31:0] $end
-    $var wire 1 n clk $end
+    $var wire 1 m clk $end
     $var wire 1 8 idle $end
     $var wire 9 * tag_i [8:0] $end
     $var wire 2 ) index_i [1:0] $end
@@ -101,30 +101,30 @@ $timescale 1ps $end
     $var wire 1 : hit_way_o [0:0] $end
     $var wire 1 9 replace_way_o [0:0] $end
     $var wire 32 | WAYS [31:0] $end
-    $var wire 9 U tag_array[0][0] [8:0] $end
-    $var wire 9 V tag_array[0][1] [8:0] $end
-    $var wire 9 W tag_array[1][0] [8:0] $end
-    $var wire 9 X tag_array[1][1] [8:0] $end
-    $var wire 9 Y tag_array[2][0] [8:0] $end
-    $var wire 9 Z tag_array[2][1] [8:0] $end
-    $var wire 9 [ tag_array[3][0] [8:0] $end
-    $var wire 9 \ tag_array[3][1] [8:0] $end
-    $var wire 1 ] valid_array[0][0] $end
-    $var wire 1 ^ valid_array[0][1] $end
-    $var wire 1 _ valid_array[1][0] $end
-    $var wire 1 ` valid_array[1][1] $end
-    $var wire 1 a valid_array[2][0] $end
-    $var wire 1 b valid_array[2][1] $end
-    $var wire 1 c valid_array[3][0] $end
-    $var wire 1 d valid_array[3][1] $end
-    $var wire 1 e LRU_array[0][0] [0:0] $end
-    $var wire 1 f LRU_array[0][1] [0:0] $end
-    $var wire 1 g LRU_array[1][0] [0:0] $end
-    $var wire 1 h LRU_array[1][1] [0:0] $end
-    $var wire 1 i LRU_array[2][0] [0:0] $end
-    $var wire 1 j LRU_array[2][1] [0:0] $end
-    $var wire 1 k LRU_array[3][0] [0:0] $end
-    $var wire 1 l LRU_array[3][1] [0:0] $end
+    $var wire 9 T tag_array[0][0] [8:0] $end
+    $var wire 9 U tag_array[0][1] [8:0] $end
+    $var wire 9 V tag_array[1][0] [8:0] $end
+    $var wire 9 W tag_array[1][1] [8:0] $end
+    $var wire 9 X tag_array[2][0] [8:0] $end
+    $var wire 9 Y tag_array[2][1] [8:0] $end
+    $var wire 9 Z tag_array[3][0] [8:0] $end
+    $var wire 9 [ tag_array[3][1] [8:0] $end
+    $var wire 1 \ valid_array[0][0] $end
+    $var wire 1 ] valid_array[0][1] $end
+    $var wire 1 ^ valid_array[1][0] $end
+    $var wire 1 _ valid_array[1][1] $end
+    $var wire 1 ` valid_array[2][0] $end
+    $var wire 1 a valid_array[2][1] $end
+    $var wire 1 b valid_array[3][0] $end
+    $var wire 1 c valid_array[3][1] $end
+    $var wire 1 d LRU_array[0][0] [0:0] $end
+    $var wire 1 e LRU_array[0][1] [0:0] $end
+    $var wire 1 f LRU_array[1][0] [0:0] $end
+    $var wire 1 g LRU_array[1][1] [0:0] $end
+    $var wire 1 h LRU_array[2][0] [0:0] $end
+    $var wire 1 i LRU_array[2][1] [0:0] $end
+    $var wire 1 j LRU_array[3][0] [0:0] $end
+    $var wire 1 k LRU_array[3][1] [0:0] $end
     $var wire 1 : hit_way [0:0] $end
     $var wire 1 @ empty_way [0:0] $end
     $var wire 1 A empty_found $end
@@ -141,15 +141,15 @@ $timescale 1ps $end
      $var wire 32 ~ i [31:0] $end
     $upscope $end
     $scope module unnamedblk4 $end
-     $var wire 32 m i [31:0] $end
+     $var wire 32 l i [31:0] $end
     $upscope $end
    $upscope $end
    $scope module memory1 $end
     $var wire 32 r AWIDTH [31:0] $end
     $var wire 32 r DWIDTH [31:0] $end
     $var wire 32 !! BASE_ADDR [31:0] $end
-    $var wire 1 n clk $end
-    $var wire 1 o rst $end
+    $var wire 1 m clk $end
+    $var wire 1 n rst $end
     $var wire 32 . addr_i [31:0] $end
     $var wire 32 / addr_dat [31:0] $end
     $var wire 32 % data_dat [31:0] $end
@@ -191,9 +191,9 @@ b11011110101011011011111011101111 0
 b00 1
 b11111111000000000000000010010011 2
 b00000000000000000000000010010000 3
-b00000000000000000000000000000000 4
-15
-06
+14
+05
+16
 07
 18
 19
@@ -204,8 +204,8 @@ b0000000000000000000000000000000000000000000000000000000000000000000000000000000
 1A
 1B
 0C
-0D
-b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 E
+b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 D
+b000000000 T
 b000000000 U
 b000000000 V
 b000000000 W
@@ -213,7 +213,7 @@ b000000000 X
 b000000000 Y
 b000000000 Z
 b000000000 [
-b000000000 \
+0\
 0]
 0^
 0_
@@ -229,10 +229,10 @@ b000000000 \
 0i
 0j
 0k
-0l
-b00000000000000000000000000000000 m
-0n
-1o
+b00000000000000000000000000000000 l
+0m
+1n
+b00000000000000000000000000000000 o
 b00000000000000000000000010010011 p
 b00000000000000000000000000001110 q
 b00000000000000000000000000100000 r
@@ -274,227 +274,220 @@ b1001 7!
 b1010 8!
 b1111 9!
 #1
-1D
-1n
-#2
-0n
-#3
+06
 1;
 1C
-1n
-#4
-0n
-#5
-b11111101111011111001000011001011 4
+1m
+#2
+0m
+#3
+04
+15
 17
+08
 09
 1:
+0;
 b00000000000000000000000000000000000000000000000000000000000000001100101111111101111011111001000011001011111111011110111110010000 <
 0@
-0D
-b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000110010111111110111101111100100001100101111111101111011111001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 E
-b000000100 Z
-1b
-1n
-#6
-0n
-#7
-05
-16
-08
-19
-0;
-b11001011111111011110111110010000110010111111110111101111100100001100101111111101111011111001000011001011111111011110111110010000 <
-0A
 0C
-b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001100101111111101111011111001000011001011111111011110111110010000110010111111110111101111100100001100101111111101111011111001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 E
+b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000110010111111110111101111100100001100101111111101111011111001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 D
 b000000100 Y
 1a
-1n
+1m
+b11111101111011111001000011001011 o
+#4
+0m
+#5
+b00000000000000000000000000000010 l
+1m
+#6
+0m
+#7
+1m
 #8
-0n
+0m
 #9
-b00000000000000000000000000000010 m
-1n
+1m
 #10
-0n
+0m
 #11
-1n
+1m
 #12
-0n
+0m
 #13
-1n
+1m
 #14
-0n
+0m
 #15
-1n
+1m
 #16
-0n
+0m
 #17
-1n
+1m
 #18
-0n
+0m
 #19
-1n
+1m
 #20
-0n
+0m
 #21
-1n
+1m
 #22
-0n
+0m
 #23
-1n
+1m
 #24
-0n
+0m
 #25
-1n
+1m
 #26
-0n
+0m
 #27
-1n
+1m
 #28
-0n
+0m
 #29
-1n
+1m
 #30
-0n
+0m
 #31
-1n
+1m
 #32
-0n
+0m
 #33
-1n
+1m
 #34
-0n
+0m
 #35
-1n
+1m
 #36
-0n
+0m
 #37
-1n
+1m
 #38
-0n
+0m
 #39
-1n
+1m
 #40
-0n
+0m
 #41
-1n
+1m
 #42
-0n
+0m
 #43
-1n
+1m
 #44
-0n
+0m
 #45
-1n
+1m
 #46
-0n
+0m
 #47
-1n
+1m
 #48
-0n
+0m
 #49
-1n
+1m
 #50
-0n
+0m
 #51
-1n
+1m
 #52
-0n
+0m
 #53
-1n
+1m
 #54
-0n
+0m
 #55
-1n
+1m
 #56
-0n
+0m
 #57
-1n
+1m
 #58
-0n
+0m
 #59
-1n
+1m
 #60
-0n
+0m
 #61
-1n
+1m
 #62
-0n
+0m
 #63
-1n
+1m
 #64
-0n
+0m
 #65
-1n
+1m
 #66
-0n
+0m
 #67
-1n
+1m
 #68
-0n
+0m
 #69
-1n
+1m
 #70
-0n
+0m
 #71
-1n
+1m
 #72
-0n
+0m
 #73
-1n
+1m
 #74
-0n
+0m
 #75
-1n
+1m
 #76
-0n
+0m
 #77
-1n
+1m
 #78
-0n
+0m
 #79
-1n
+1m
 #80
-0n
+0m
 #81
-1n
+1m
 #82
-0n
+0m
 #83
-1n
+1m
 #84
-0n
+0m
 #85
-1n
+1m
 #86
-0n
+0m
 #87
-1n
+1m
 #88
-0n
+0m
 #89
-1n
+1m
 #90
-0n
+0m
 #91
-1n
+1m
 #92
-0n
+0m
 #93
-1n
+1m
 #94
-0n
+0m
 #95
-1n
+1m
 #96
-0n
+0m
 #97
-1n
+1m
 #98
-0n
+0m
 #99
-1n
+1m
 #100
-0n
+0m

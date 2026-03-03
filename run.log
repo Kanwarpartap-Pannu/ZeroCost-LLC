@@ -73,16 +73,6 @@
                                              : ... note: In instance 'cache_tb'
    43 |     funct3_i = 11; 
       |              ^
-%Warning-MULTIDRIVEN: design/lookup.sv:195:21: Variable written to in always_comb also written by other process (IEEE 1800-2023 9.2.2.2): 'data_out'
-                                             : ... note: In instance 'cache_tb.cache'
-                      design/lookup.sv:195:21: 
-  195 |                     data_out = 32'b0; 
-      |                     ^~~~~~~~
-                      design/lookup.sv:165:25: ... Location of other write
-  165 |         default:        data_out = set[hit_way][offset*8 +: 8];  
-      |                         ^~~~~~~~
-                      ... For warning description see https://verilator.org/warn/MULTIDRIVEN?v=5.042
-                      ... Use "/* verilator lint_off MULTIDRIVEN */" and lint_on around source to disable this message.
 %Warning-UNUSEDSIGNAL: design/cache_tb.sv:19:20: Signal is not used: 'data_out'
                                                : ... note: In instance 'cache_tb'
    19 | logic [DWIDTH-1:0] data_out;
@@ -115,5 +105,5 @@ echo "" > Vcache_tb__ALL.verilator_deplist.tmp
 c++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv   verilated.o verilated_vcd_c.o verilated_timing.o verilated_threads.o Vcache_tb__ALL.a    -pthread -lpthread   -o Vcache_tb
 rm Vcache_tb__ALL.verilator_deplist.tmp
 - V e r i l a t i o n   R e p o r t: Verilator 5.042 2025-11-02 rev UNKNOWN.REV
-- Verilator: Built from 0.132 MB sources in 7 modules, into 0.231 MB in 12 C++ files needing 0.000 MB
-- Verilator: Walltime 5.849 s (elab=0.006, cvt=0.025, bld=5.795); cpu 0.032 s on 1 threads
+- Verilator: Built from 0.132 MB sources in 7 modules, into 0.162 MB in 12 C++ files needing 0.000 MB
+- Verilator: Walltime 6.117 s (elab=0.005, cvt=0.018, bld=6.077); cpu 0.028 s on 1 threads

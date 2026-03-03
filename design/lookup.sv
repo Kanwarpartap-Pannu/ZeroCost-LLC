@@ -119,22 +119,22 @@ always_ff @(posedge clk) begin
 end
 
 // next state logic 
-always_ff @(posedge clk) begin 
-    next_state <= curr_state;  // default safe value 
+always_comb begin 
+    next_state = curr_state;  // default safe value 
     unique case(curr_state)
         CACHE: begin 
             unique case (opcode_i)
                 OP_LOAD, OP_STORE: begin  
                     if (hit) begin 
-                        next_state <= CACHE; 
+                        next_state = CACHE; 
                     end 
                     else if (!hit) begin 
-                        next_state <= MAIN_MEMORY; 
+                        next_state = MAIN_MEMORY; 
                     end
                 end
 
                 default: begin 
-                    next_state <= CACHE; 
+                    next_state = CACHE; 
                 end
 
             endcase
@@ -143,10 +143,10 @@ always_ff @(posedge clk) begin
 
         MAIN_MEMORY: begin 
             if (!ready) begin 
-                next_state <= MAIN_MEMORY;  
+                next_state = MAIN_MEMORY;  
             end 
             else if (ready) begin 
-                next_state <= CACHE; 
+                next_state = CACHE; 
             end 
 
         end 
@@ -155,14 +155,14 @@ always_ff @(posedge clk) begin
 
 end
 
-// size encoded logic 
+// Data Out logic 
 always_comb begin
     case (funct3_i)
         3'b000, 3'b100: data_out = set[hit_way][offset*8 +: 32];  // word 
         3'b001, 3'b101: data_out = set[hit_way][offset*8 +: 16]; // halfword 
         3'b010:         data_out = set[hit_way][offset*8 +: 8]; // byte 
         3'b111, 3'b011:         data_out = set[hit_way][offset*8 +: 32]; // doubleword
-        default:        data_out = set[hit_way][offset*8 +: 8]; // default to word
+        default:        data_out = set[hit_way][offset*8 +: 8]; // default to byte 
     endcase
 end
 
@@ -191,8 +191,7 @@ always_comb begin
                 end
 
                 default: begin 
-                    idle = 1; 
-                    data_out = 32'b0; 
+                    idle = 1;  
                     replace_en = 0; 
                     stall = 1; 
                 end
