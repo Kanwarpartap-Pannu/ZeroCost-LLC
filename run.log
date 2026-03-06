@@ -45,6 +45,10 @@
       |                   ^~
                       ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.042
                       ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Warning-WIDTHEXPAND: design/tag_array.sv:109:29: Operator NEQ expects 32 bits on the RHS, but RHS's VARREF 'replace_way' generates 2 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_tag_array'
+  109 |                     if ( (i != replace_way ) && (valid_array[index_i][i] != 0)) begin 
+      |                             ^~
 %Warning-WIDTHEXPAND: design/lookup.sv:60:6: Input port connection 'addr_i' expects 32 bits on the pin connection, but pin connection's VARREF 'address' generates 14 bits.
                                            : ... note: In instance 'cache_tb.cache'
    60 |     .addr_i(address),
@@ -105,5 +109,5 @@ echo "" > Vcache_tb__ALL.verilator_deplist.tmp
 c++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv   verilated.o verilated_vcd_c.o verilated_timing.o verilated_threads.o Vcache_tb__ALL.a    -pthread -lpthread   -o Vcache_tb
 rm Vcache_tb__ALL.verilator_deplist.tmp
 - V e r i l a t i o n   R e p o r t: Verilator 5.042 2025-11-02 rev UNKNOWN.REV
-- Verilator: Built from 0.135 MB sources in 7 modules, into 0.198 MB in 12 C++ files needing 0.000 MB
-- Verilator: Walltime 6.204 s (elab=0.006, cvt=0.023, bld=6.156); cpu 0.032 s on 1 threads
+- Verilator: Built from 0.136 MB sources in 7 modules, into 0.204 MB in 12 C++ files needing 0.000 MB
+- Verilator: Walltime 5.936 s (elab=0.006, cvt=0.021, bld=5.891); cpu 0.031 s on 1 threads

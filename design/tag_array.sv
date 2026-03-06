@@ -77,14 +77,16 @@ always_comb begin
 end 
 
 // Block aging logic for hit and replacement 
-logic [$clog2(WAYS)-1:0] reset_way = hit ? hit_way : replace_way;
+logic [$clog2(WAYS)-1:0] reset_way = hit_way;
 always_ff @(posedge clk) begin 
     if (!idle) begin // Do not update ages if cache not being used 
         for (int i=0; i<WAYS; i++) begin 
             if (i == reset_way) begin 
                 LRU_array[index_i][i] <= 0; 
             end
-            else if ( ((LRU_array[index_i][i] < LRU_array[index_i][reset_way]) || (valid_array[index_i][reset_way] == 0)) ) begin 
+            else if ( ((LRU_array[index_i][i] < LRU_array[index_i][reset_way]) 
+                        && (valid_array[index_i][reset_way] != 0)) ) begin 
+
                 LRU_array[index_i][i] <= LRU_array[index_i][i] + 1; 
             end 
         end
@@ -99,8 +101,16 @@ assign replace_way_o = replace_way;
 // Cache Insertion Logic 
 always_ff @(posedge clk) begin  
         if (replace_en) begin 
-            tag_array [index_i][replace_way] <= tag_i; 
-            valid_array [index_i][replace_way] <= 1;
+            tag_array[index_i][replace_way] <= tag_i; 
+            valid_array[index_i][replace_way] <= 1;
+            // if inserting into fresh block increment all other valid blocks age
+            if (valid_array[index_i][replace_way] == 0) begin
+                for (int i=0; i<WAYS; i++) begin 
+                    if ( (i != replace_way ) && (valid_array[index_i][i] != 0)) begin 
+                        LRU_array[index_i][i] <= LRU_array[index_i][i] + 1; 
+                    end 
+                end 
+            end
         end 
 end 
 

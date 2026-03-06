@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
-[*] Fri Mar  6 21:56:08 2026
+[*] Fri Mar  6 22:39:37 2026
 [*]
 [dumpfile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/cache.vcd"
-[dumpfile_mtime] "Thu Mar  5 20:50:51 2026"
-[dumpfile_size] 18763
+[dumpfile_mtime] "Fri Mar  6 22:37:21 2026"
+[dumpfile_size] 21295
 [savefile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/cache.gtkw"
-[timestart] 0
+[timestart] 21
 [size] 1333 600
 [pos] 281 243
-*-1.365430 6 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+*-1.365430 24 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 [markername] AA
 [markername] BB
 [markername] CC
@@ -82,9 +82,9 @@ cache_tb.cache.memory1.address_dat[31:0]
 (31)cache_tb.cache.memory1.address_dat[31:0]
 @1401200
 -group_end
-@c00023
+@c00022
 cache_tb.cache.address[13:0]
-@29
+@28
 (0)cache_tb.cache.address[13:0]
 (1)cache_tb.cache.address[13:0]
 (2)cache_tb.cache.address[13:0]
@@ -99,7 +99,7 @@ cache_tb.cache.address[13:0]
 (11)cache_tb.cache.address[13:0]
 (12)cache_tb.cache.address[13:0]
 (13)cache_tb.cache.address[13:0]
-@1401201
+@1401200
 -group_end
 @28
 cache_tb.cache.curr_state
@@ -136,6 +136,11 @@ cache_tb.cache.cache_tag_array.tag_array[1][2][9:0]
 -group_end
 @28
 #{cache_tb.cache.cache_tag_array.valid_array[1][0:2]} cache_tb.cache.cache_tag_array.valid_array[1][0] cache_tb.cache.cache_tag_array.valid_array[1][1] cache_tb.cache.cache_tag_array.valid_array[1][2]
+cache_tb.cache.cache_tag_array.LRU_array[1][0][1:0]
+cache_tb.cache.cache_tag_array.LRU_array[1][1][1:0]
+cache_tb.cache.cache_tag_array.LRU_array[1][2][1:0]
+@29
+cache_tb.cache.cache_tag_array.idle
 @22
 cache_tb.cache.cache_tag_array.tag_i[9:0]
 @28

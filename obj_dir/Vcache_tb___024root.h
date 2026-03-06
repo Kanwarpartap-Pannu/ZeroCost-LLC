@@ -36,9 +36,9 @@ class alignas(VL_CACHE_LINE_BYTES) Vcache_tb___024root final : public VerilatedM
     CData/*1:0*/ cache_tb__DOT__cache__DOT__cache_tag_array__DOT__empty_way;
     CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_tag_array__DOT__empty_found;
     CData/*1:0*/ cache_tb__DOT__cache__DOT__cache_tag_array__DOT__oldest_way;
-    CData/*1:0*/ cache_tb__DOT__cache__DOT__cache_tag_array__DOT__reset_way;
     CData/*1:0*/ cache_tb__DOT__cache__DOT__cache_tag_array__DOT____Vlvbound_h2588fdfd__1;
     CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_tag_array__DOT____Vlvbound_h37075693__0;
+    CData/*1:0*/ cache_tb__DOT__cache__DOT__cache_tag_array__DOT____Vlvbound_h42ad3221__0;
     CData/*1:0*/ cache_tb__DOT__cache__DOT__cache_data_array__DOT__replace_way;
     CData/*7:0*/ __VdfgRegularize_hebeb780c_0_0;
     CData/*0:0*/ __VstlFirstIteration;
@@ -53,6 +53,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vcache_tb___024root final : public VerilatedM
     IData/*31:0*/ cache_tb__DOT__cache__DOT__memory1__DOT__address_dat;
     IData/*31:0*/ cache_tb__DOT__cache__DOT__memory1__DOT__i;
     IData/*31:0*/ cache_tb__DOT__cache__DOT__cache_tag_array__DOT__unnamedblk4__DOT__i;
+    IData/*31:0*/ cache_tb__DOT__cache__DOT__cache_tag_array__DOT__unnamedblk5__DOT__i;
     IData/*31:0*/ __VdfgRegularize_hebeb780c_0_2;
     IData/*31:0*/ __VactIterCount;
     QData/*63:0*/ cache_tb__DOT__cache__DOT__mem_out;
