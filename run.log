@@ -11,37 +11,37 @@
       |         ^
                     ... For warning description see https://verilator.org/warn/VARHIDDEN?v=5.042
                     ... Use "/* verilator lint_off VARHIDDEN */" and lint_on around source to disable this message.
-%Warning-ASCRANGE: design/data_array.sv:22:18: Ascending bit range vector: left < right of bit range: [0:1]
+%Warning-ASCRANGE: design/data_array.sv:22:18: Ascending bit range vector: left < right of bit range: [0:2]
                                              : ... note: In instance 'cache_tb.cache.cache_data_array'
    22 |     output logic [0:WAYS-1][(BLOCK_SIZE*8)-1:0] set_o 
       |                  ^
                    ... For warning description see https://verilator.org/warn/ASCRANGE?v=5.042
                    ... Use "/* verilator lint_off ASCRANGE */" and lint_on around source to disable this message.
-%Warning-ASCRANGE: design/data_array.sv:27:21: Ascending bit range vector: left < right of bit range: [0:1]
+%Warning-ASCRANGE: design/data_array.sv:27:21: Ascending bit range vector: left < right of bit range: [0:2]
                                              : ... note: In instance 'cache_tb.cache.cache_data_array'
    27 | logic [0:NUM_SETS-1][0:WAYS-1][(BLOCK_SIZE*8)-1:0]     data_array ; 
       |                     ^
-%Warning-ASCRANGE: design/data_array.sv:27:7: Ascending bit range vector: left < right of bit range: [0:3]
+%Warning-ASCRANGE: design/data_array.sv:27:7: Ascending bit range vector: left < right of bit range: [0:1]
                                             : ... note: In instance 'cache_tb.cache.cache_data_array'
    27 | logic [0:NUM_SETS-1][0:WAYS-1][(BLOCK_SIZE*8)-1:0]     data_array ; 
       |       ^
-%Warning-WIDTHTRUNC: design/tag_array.sv:45:21: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
+%Warning-WIDTHTRUNC: design/tag_array.sv:47:21: Operator ASSIGN expects 2 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
                                               : ... note: In instance 'cache_tb.cache.cache_tag_array'
-   45 |             hit_way = i; 
+   47 |             hit_way = i; 
       |                     ^
                      ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.042
                      ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
-%Warning-WIDTHTRUNC: design/tag_array.sv:64:23: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
+%Warning-WIDTHTRUNC: design/tag_array.sv:62:23: Operator ASSIGN expects 2 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
                                               : ... note: In instance 'cache_tb.cache.cache_tag_array'
-   64 |             empty_way = i; 
+   62 |             empty_way = i; 
       |                       ^
-%Warning-WIDTHTRUNC: design/tag_array.sv:76:24: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
+%Warning-WIDTHTRUNC: design/tag_array.sv:74:24: Operator ASSIGN expects 2 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
                                               : ... note: In instance 'cache_tb.cache.cache_tag_array'
-   76 |             oldest_way = i;  
+   74 |             oldest_way = i;  
       |                        ^
-%Warning-WIDTHEXPAND: design/tag_array.sv:91:19: Operator EQ expects 32 bits on the RHS, but RHS's VARREF 'reset_way' generates 1 bits.
+%Warning-WIDTHEXPAND: design/tag_array.sv:84:19: Operator EQ expects 32 bits on the RHS, but RHS's VARREF 'reset_way' generates 2 bits.
                                                : ... note: In instance 'cache_tb.cache.cache_tag_array'
-   91 |             if (i == reset_way) begin 
+   84 |             if (i == reset_way) begin 
       |                   ^~
                       ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.042
                       ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
@@ -53,9 +53,13 @@
                                            : ... note: In instance 'cache_tb.cache'
    61 |     .addr_dat(memory_address),
       |      ^~~~~~~~
-%Warning-ASCRANGE: design/lookup.sv:94:7: Ascending bit range vector: left < right of bit range: [0:1]
+%Warning-WIDTHEXPAND: design/lookup.sv:84:6: Input port connection 'index_i' expects 2 bits on the pin connection, but pin connection's VARREF 'index' generates 1 bits.
+                                           : ... note: In instance 'cache_tb.cache'
+   84 |     .index_i(index),
+      |      ^~~~~~~
+%Warning-ASCRANGE: design/lookup.sv:94:7: Ascending bit range vector: left < right of bit range: [0:2]
                                         : ... note: In instance 'cache_tb.cache'
-   94 | logic [0:2-1][(8*8)-1:0] set ; 
+   94 | logic [0:3-1][(8*8)-1:0] set ; 
       |       ^
 %Warning-WIDTHEXPAND: design/lookup.sv:162:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 16 bits.
                                              : ... note: In instance 'cache_tb.cache'
@@ -69,9 +73,9 @@
                                              : ... note: In instance 'cache_tb.cache'
   165 |         default:        data_out = set[hit_way][offset*8 +: 8];  
       |                                  ^
-%Warning-WIDTHTRUNC: design/cache_tb.sv:43:14: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's CONST '?32?shb' generates 32 or 4 bits.
+%Warning-WIDTHTRUNC: design/cache_tb.sv:69:14: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's CONST '?32?shb' generates 32 or 4 bits.
                                              : ... note: In instance 'cache_tb'
-   43 |     funct3_i = 11; 
+   69 |     funct3_i = 11; 
       |              ^
 %Warning-UNUSEDSIGNAL: design/cache_tb.sv:19:20: Signal is not used: 'data_out'
                                                : ... note: In instance 'cache_tb'
@@ -79,10 +83,6 @@
       |                    ^~~~~~~~
                        ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.042
                        ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
-%Warning-UNUSEDSIGNAL: design/cache_tb.sv:20:7: Signal is not used: 'stall'
-                                              : ... note: In instance 'cache_tb'
-   20 | logic stall;  
-      |       ^~~~~
 %Warning-UNUSEDSIGNAL: design/cache_tb.sv:21:7: Signal is not used: 'data_valid'
                                               : ... note: In instance 'cache_tb'
    21 | logic data_valid;
@@ -105,5 +105,5 @@ echo "" > Vcache_tb__ALL.verilator_deplist.tmp
 c++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv   verilated.o verilated_vcd_c.o verilated_timing.o verilated_threads.o Vcache_tb__ALL.a    -pthread -lpthread   -o Vcache_tb
 rm Vcache_tb__ALL.verilator_deplist.tmp
 - V e r i l a t i o n   R e p o r t: Verilator 5.042 2025-11-02 rev UNKNOWN.REV
-- Verilator: Built from 0.132 MB sources in 7 modules, into 0.162 MB in 12 C++ files needing 0.000 MB
-- Verilator: Walltime 6.117 s (elab=0.005, cvt=0.018, bld=6.077); cpu 0.028 s on 1 threads
+- Verilator: Built from 0.135 MB sources in 7 modules, into 0.198 MB in 12 C++ files needing 0.000 MB
+- Verilator: Walltime 6.204 s (elab=0.006, cvt=0.023, bld=6.156); cpu 0.032 s on 1 threads

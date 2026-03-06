@@ -31,14 +31,40 @@ initial begin
     opcode_i = 0; 
     funct3_i = 0;
     store_data = 0; 
+    address = 14'b00000000000000;
+    i=0;
+    $readmemb("test_files/test_address.x", test_addresses); 
 end
 
 always #1 clk = ~clk;
 
+logic [AWIDTH-1:0] test_addresses [0:10]; 
+// Logic to test the LRU replacement Policy
+integer i; 
+always @(posedge clk ) begin 
+    if (!stall) begin 
+        address <= test_addresses[i]; 
+        i<=i+1;
+    end
+    else begin 
+        address <= address; 
+    end
+end 
+
+/* 
+always_ff @(posedge clk) begin 
+    if (!stall) begin 
+        address <= address +1; 
+    end
+    else begin 
+        address <= address; 
+    end 
+end
+*/ 
+
 // simulation 
 initial begin 
     $display("SIMULATION START"); 
-    address = 'h00000093;
     opcode_i = OP_LOAD; 
     funct3_i = 11; 
     store_data = 10; 

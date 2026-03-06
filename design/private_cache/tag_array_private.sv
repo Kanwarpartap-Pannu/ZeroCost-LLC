@@ -1,14 +1,12 @@
 /*
-    Module: Tag Array 
+    Module: Private Cache Tag Array 
 
-    Description: A 2D Array storing the Tag for each block of data stored in each set 
-    of the cache in the data array. Tracks each Tag based on LRU policy to handle conflicts. 
-    Able to add Tag into the array and search for a given tag in the array. Returns whether there
-    was a cache hit or miss, and which block was a hit or needs to be replaced.   
+    Description: A 2D Array Storing Tag for each block. Tracks LRU and Tracks the state of 
+    the data according to MESI protocol handles any conflicts.    
 
 */
 
-module tag_array #(
+module tag_array_private #(
     parameter int TAG_BITS=3,
     parameter int INDEX_BITS=2, 
     parameter int NUM_SETS=4 
@@ -23,6 +21,10 @@ module tag_array #(
     output logic [$clog2(WAYS)-1:0] replace_way_o 
 );
 
+// Coherence Protocol States 
+parameter MODIFIED = 2'b00, EXCLUSIVE = 2'b01, SHARED = 2'b10, INVALID = 2'b11;   
+
+
 localparam int WAYS = `WAYS; 
 
 // Tag Array, Each row is a set, each column holds tag for the block 
@@ -34,19 +36,24 @@ logic                    valid_array [0:NUM_SETS-1][0:WAYS-1];
 // LRU Array 
 logic [$clog2(WAYS)-1:0] LRU_array  [0:NUM_SETS-1][0:WAYS-1]; 
 
+// Coherence State Array 
+logic [1:0] Coherence_array  [0:NUM_SETS-1][0:WAYS-1]; 
+
 // Search for tag in the set, 1 for hit 0 for miss 
 logic [$clog2(WAYS)-1:0] hit_way; 
 assign hit_way_o = hit_way; 
 
 always_comb begin 
-   hit=0; 
-   hit_way=0; 
+
    for (int i = 0; i<WAYS; i++) begin 
-        
         if ((tag_array[index_i][i] == tag_i) && (valid_array[index_i][i] != 0)) begin 
             hit_way = i; 
             hit = 1; 
         end 
+        else begin 
+            hit = 0; 
+            hit_way = 0; 
+        end
     end  
 
 end 
@@ -84,7 +91,7 @@ always_ff @(posedge clk) begin
             if (i == reset_way) begin 
                 LRU_array[index_i][i] <= 0; 
             end
-            else if ( ((LRU_array[index_i][i] < LRU_array[index_i][reset_way]) || (valid_array[index_i][reset_way] == 0)) ) begin 
+            else if ( (LRU_array[index_i][i] < LRU_array[index_i][reset_way]) && (valid_array[index_i][i] != 0)) begin 
                 LRU_array[index_i][i] <= LRU_array[index_i][i] + 1; 
             end 
         end

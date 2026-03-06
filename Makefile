@@ -10,7 +10,7 @@ MEM_PATH_STR          ?= \"$(abspath $(MEM_PATH))\"
 MEM_DEPTH ?= 10024
 CACHE_SIZE ?= 64 
 BLOCK_SIZE ?= 8
-WAYS ?= 2
+WAYS ?= 3
 
 VERILATOR_FLAGS = \
     -DMEM_DEPTH=$(MEM_DEPTH) \
@@ -22,9 +22,11 @@ VERILATOR_FLAGS = \
 	-Idesign
 
 
+# Lint only mode to check for errors and warnings 
 lint:
 	verilator --lint-only $(VERILATOR_FLAGS) -f verilator.f
 
+# Running the Simulation 
 run: 
 	verilator --binary $(VERILATOR_FLAGS) -f verilator.f > run.log 2>&1
 	./obj_dir/Vcache_tb
