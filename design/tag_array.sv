@@ -9,9 +9,11 @@
 */
 
 module tag_array #(
+    parameter int AWIDTH = $clog2(`MEM_DEPTH), 
     parameter int TAG_BITS=3,
     parameter int INDEX_BITS=2, 
-    parameter int NUM_SETS=4 
+    parameter int NUM_SETS=4,
+    parameter int OFFSET_BITS=3
 )(
     input logic                  clk,
     input logic                  idle, 
@@ -20,7 +22,9 @@ module tag_array #(
     input logic replace_en,
     output logic                 hit,
     output logic [$clog2(WAYS)-1:0] hit_way_o,  
-    output logic [$clog2(WAYS)-1:0] replace_way_o 
+    output logic [$clog2(WAYS)-1:0] replace_way_o,
+    output logic [1:0]              replace_way_state,
+    output logic [AWIDTH-1:0]       replace_address
 );
 
 localparam int WAYS = `WAYS; 
@@ -28,8 +32,8 @@ localparam int WAYS = `WAYS;
 // Tag Array, Each row is a set, each column holds tag for the block 
 logic [TAG_BITS-1:0]     tag_array  [0:NUM_SETS-1][0:WAYS-1]; 
 
-// Array to store if each block has valid or invalid data
-logic                    valid_array [0:NUM_SETS-1][0:WAYS-1]; 
+// State Array: 0 = Invalid, 1 = Clean, 2 = Dirty
+logic [1:0]              valid_array [0:NUM_SETS-1][0:WAYS-1]; 
 
 // LRU Array 
 logic [$clog2(WAYS)-1:0] LRU_array  [0:NUM_SETS-1][0:WAYS-1]; 
@@ -37,6 +41,9 @@ logic [$clog2(WAYS)-1:0] LRU_array  [0:NUM_SETS-1][0:WAYS-1];
 // Search for tag in the set, 1 for hit 0 for miss 
 logic [$clog2(WAYS)-1:0] hit_way; 
 assign hit_way_o = hit_way; 
+
+//reconstructed address for evicted way
+assign replace_address = {tag_array[index_i][replace_way],index_i,{OFFSET_BITS{1'b0}}};
 
 always_comb begin 
    hit=0; 
@@ -97,6 +104,7 @@ end
 logic [$clog2(WAYS)-1:0] replace_way; 
 assign replace_way = empty_found ? empty_way : oldest_way; 
 assign replace_way_o = replace_way; 
+assign replace_way_state = valid_array[index_i][replace_way];
 
 // Cache Insertion Logic 
 always_ff @(posedge clk) begin  

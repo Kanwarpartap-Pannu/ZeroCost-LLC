@@ -28,13 +28,14 @@ module memory #(
   input logic rst,
   input logic [AWIDTH-1:0] addr_i = BASE_ADDR,
   input logic [AWIDTH-1:0] addr_dat = BASE_ADDR,
-  input logic [DWIDTH-1:0] data_dat,
+  input logic [(`BLOCK_SIZE*8)-1:0] data_dat,
   input logic read_en_i,
   input logic read_en_dat,
   input logic write_en_dat,
   input logic [2:0] funct3_i,
 
   // outputs
+  output logic              write_finished, 
   output logic              ready, 
   output logic [DWIDTH-1:0] data_o,
   output logic [(`BLOCK_SIZE*8)-1:0] data_dat_o
@@ -148,33 +149,13 @@ module memory #(
     always_ff @(posedge clk) begin
 
         if (write_en_dat) begin
-
-            if (write_en_dat) begin
-
-                case (size_encoded)
-                    2'b00: main_memory[address_dat] <= data_dat[7:0]; // byte
-                    2'b01: begin // halfword
-                        main_memory[address_dat]     <= data_dat[7:0];
-                        main_memory[address_dat + 1] <= data_dat[15:8];
-                        end
-                    2'b10: begin // word
-                         main_memory[address_dat]     <= data_dat[7:0];
-                         main_memory[address_dat + 1] <= data_dat[15:8];
-                         main_memory[address_dat + 2] <= data_dat[23:16];
-                         main_memory[address_dat + 3] <= data_dat[31:24];
-                        end
-                    default: begin // word
-                         main_memory[address_dat]     <= data_dat[7:0];
-                         main_memory[address_dat + 1] <= data_dat[15:8];
-                         main_memory[address_dat + 2] <= data_dat[23:16];
-                         main_memory[address_dat + 3] <= data_dat[31:24];
-                        end
-                endcase
-                
-                $display("[%0t] IMEMORY: Wrote 0x%08h to 0x%08h",$time, data_dat, addr_dat);
-
+            write_finished <= 1; 
+                for (int i=0; i < `BLOCK_SIZE; i++) begin 
+                main_memory[(address_dat+(`BLOCK_SIZE - i)) % MEM_BYTES] <=  data_dat[((`BLOCK_SIZE-1)-i)*8 +: 8];
             end 
-
+        end 
+        else begin
+            write_finished <=0; 
         end
         
  	end   
