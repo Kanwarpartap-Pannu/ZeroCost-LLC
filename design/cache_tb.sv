@@ -26,24 +26,24 @@ lookup #(
 
 initial begin 
     clk=0; 
-    reset=1; 
-    address = 0; 
+    reset=1;  
     opcode_i = 0; 
     funct3_i = 0;
     store_data = 0; 
-    address = 14'b00000000000000;
+    address=0;
     i=0;
     $readmemb("test_files/test_address.x", test_addresses); 
 end
 
 always #1 clk = ~clk;
 
-logic [AWIDTH-1:0] test_addresses [0:10]; 
+logic [21:0] test_addresses [0:10]; 
 // Logic to test the LRU replacement Policy
 integer i; 
 always @(posedge clk ) begin 
     if (!stall) begin 
-        address <= test_addresses[i]; 
+        address <= test_addresses[i][20:7];
+        opcode_i <= test_addresses[i][6:0]; 
         i<=i+1;
     end
     else begin 
@@ -67,7 +67,7 @@ initial begin
     $display("SIMULATION START"); 
     opcode_i = OP_LOAD; 
     funct3_i = 11; 
-    store_data = 10; 
+    store_data = 0; 
     #100
     $finish; 
 end 

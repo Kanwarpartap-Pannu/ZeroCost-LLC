@@ -20,6 +20,7 @@ module tag_array #(
     input logic [TAG_BITS-1:0]   tag_i, 
     input logic [INDEX_BITS-1:0] index_i, 
     input logic replace_en,
+    input logic store_en,
     output logic                 hit,
     output logic [$clog2(WAYS)-1:0] hit_way_o,  
     output logic [$clog2(WAYS)-1:0] replace_way_o,
@@ -119,6 +120,9 @@ always_ff @(posedge clk) begin
                     end 
                 end 
             end
+        end
+        else if (store_en) begin 
+            valid_array[index_i][hit_way] <= 2;
         end 
 end 
 

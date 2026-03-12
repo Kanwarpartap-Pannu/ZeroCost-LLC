@@ -50,6 +50,9 @@ logic curr_state, next_state;
 parameter READING = 0, WRITE_BACK = 1; 
 logic curr_state_mem, next_state_mem; 
 
+// TAG DETECTION STATES
+parameter HIT = 1, MISS = 0; 
+
 // MAIN MEMORY 
 logic read_en;
 logic write_en;
@@ -85,13 +88,17 @@ logic [$clog2(`WAYS)-1:0] replace_way;
 logic [$clog2(`WAYS)-1:0] hit_way; 
 logic [1:0] replace_way_state; 
 tag_array # (
-    .TAG_BITS(TAG_BITS)
+    .TAG_BITS(TAG_BITS),
+    .INDEX_BITS(INDEX_BITS),
+    .NUM_SETS(NUM_SETS),
+    .OFFSET_BITS(OFFSET_BITS)
 ) cache_tag_array (
     .clk(clk),
     .idle(idle),
     .tag_i(tag),
     .index_i(index),
     .replace_en(replace_en),
+    .store_en(store_en),
     .hit(hit),
     .hit_way_o(hit_way),
     .replace_way_o(replace_way),
@@ -107,9 +114,11 @@ logic [0:`WAYS-1][(`BLOCK_SIZE*8)-1:0] set ;
 data_array #(
     .TAG_BITS(TAG_BITS),
     .INDEX_BITS(INDEX_BITS),
+    .OFFSET_BITS(OFFSET_BITS),
     .NUM_SETS(NUM_SETS),
     .BLOCK_SIZE(`BLOCK_SIZE),
-    .WAYS(`WAYS)
+    .WAYS(`WAYS),
+    .DWIDTH(DWIDTH)
 ) cache_data_array (
     .clk(clk),
     .index_i(index),
@@ -226,40 +235,48 @@ end
 always_comb begin  
     data_valid =0;
     replace_en = 0;  
-    store_en = 1;  
+    store_en = 0;  
     idle = 1; 
-    stall = 0; 
+    stall = 1; 
     write_en =0; 
     read_en = 1; 
     unique case(curr_state)
+
         CACHE: begin 
-            unique case (opcode_i)
-                OP_LOAD: begin 
-                    if (hit) begin 
+            unique case (hit)
+                HIT: begin 
+                    if (opcode_i == OP_LOAD) begin 
                         idle = 0; 
                         data_valid = 1; 
                         replace_en = 0; 
                         store_en=0; 
                         stall=0; 
                     end 
-                    else if (!hit) begin 
+                    else if (opcode_i == OP_STORE) begin 
+                        idle = 0;
+                        data_valid = 0; 
+                        stall = 0; 
+                        store_en=1; 
+                        replace_en = 0; 
+                    end
+                    else begin
                         idle = 1;
                         data_valid = 0; 
-                        stall = 1; 
+                        stall = 0; 
                         store_en=0; 
                         replace_en = 0; 
                     end
                 end
 
-                OP_STORE: begin
-                    if (hit) begin 
-                        idle = 0; 
+                MISS: begin
+                    if ((opcode_i != OP_STORE) && (opcode_i != OP_LOAD)) begin 
+                        idle = 1;
                         data_valid = 0; 
-                        replace_en = 0;
-                        store_en=1; 
-                        stall=0; 
-                    end 
-                    if (!hit) begin 
+                        stall = 0; 
+                        store_en=0; 
+                        replace_en = 0; 
+                    end
+                    else begin 
                        idle = 1;
                        data_valid = 0; 
                        stall = 1; 
@@ -272,7 +289,7 @@ always_comb begin
                     idle = 1;  
                     replace_en = 0;
                     store_en=0;  
-                    stall = 1; 
+                    stall = 0; 
                 end
 
             endcase
