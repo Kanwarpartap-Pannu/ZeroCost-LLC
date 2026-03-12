@@ -59,7 +59,7 @@ logic write_en;
 logic [((`BLOCK_SIZE*8)-1):0] mem_out; 
 logic ready; 
 logic write_finished; 
-logic [DWIDTH-1:0] mem_store;
+logic [((`BLOCK_SIZE*8)-1):0] mem_store;
 memory #(
     .AWIDTH(32),
     .DWIDTH(32),
@@ -221,16 +221,7 @@ always_comb begin
     endcase
 end
 
-// Store Data logic
-always_comb begin
-    case (funct3_i)
-        3'b000, 3'b100: mem_store = set[replace_way][offset*8 +: 32];  // word 
-        3'b001, 3'b101: mem_store = set[replace_way][offset*8 +: 16]; // halfword 
-        3'b010:         mem_store = set[replace_way][offset*8 +: 8]; // byte 
-        3'b111, 3'b011:         mem_store = set[replace_way][offset*8 +: 32]; // doubleword
-        default:        mem_store = set[replace_way][offset*8 +: 8]; // default to byte 
-    endcase
-end
+assign mem_store = set[replace_way]; 
 
 always_comb begin  
     data_valid =0;
@@ -330,7 +321,9 @@ always_comb begin
                     stall = 1;
                     idle = 1; 
                     data_valid = 0; 
-                    replace_en = 0; 
+                    replace_en = 0;
+                    write_en=0;
+                    read_en=0; 
                 end
 
             endcase

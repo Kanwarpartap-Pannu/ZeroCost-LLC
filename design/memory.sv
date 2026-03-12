@@ -42,10 +42,9 @@ module memory #(
 );
 
     
-    logic [1:0] size_encoded;
 
     // Total memory size in bytes
-    localparam int MEM_BYTES = (`MEM_DEPTH )* (DWIDTH/8);  
+    localparam int MEM_BYTES = (`MEM_DEPTH )* (`BLOCK_SIZE*8);  
 
 	logic [DWIDTH-1:0] temp_memory [0:`LINE_COUNT - 1];
 
@@ -86,18 +85,6 @@ module memory #(
 		$display("IMEMORY: Loaded %0d 32-bit words from %s", `LINE_COUNT, `MEM_PATH);
 
 	end
-
-
-    // size encoded logic 
-    always_comb begin
-        case (funct3_i)
-            3'b000, 3'b100: size_encoded = 2'b00; // word 
-            3'b001, 3'b101: size_encoded = 2'b01; // halfword 
-            3'b010:         size_encoded = 2'b10; // byte 
-            3'b111:         size_encoded = 2'b11; // doubleword
-            default:        size_encoded = 2'b00; // default to word
-        endcase
-    end
            
 
     // Combinational read logic for instruction memory
