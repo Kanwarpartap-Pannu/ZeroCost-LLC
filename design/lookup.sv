@@ -234,56 +234,47 @@ always_comb begin
     unique case(curr_state)
 
         CACHE: begin 
-            unique case (hit)
-                HIT: begin 
-                    if (opcode_i == OP_LOAD) begin 
-                        idle = 0; 
-                        data_valid = 1; 
-                        replace_en = 0; 
-                        store_en=0; 
-                        stall=0; 
-                    end 
-                    else if (opcode_i == OP_STORE) begin 
-                        idle = 0;
-                        data_valid = 0; 
-                        stall = 0; 
-                        store_en=1; 
-                        replace_en = 0; 
-                    end
-                    else begin
-                        idle = 1;
-                        data_valid = 0; 
-                        stall = 0; 
-                        store_en=0; 
-                        replace_en = 0; 
-                    end
-                end
+            unique case (opcode_i) 
+                OP_LOAD, OP_STORE: begin 
+                    unique case (hit)
+                        HIT: begin 
+                            if (opcode_i == OP_LOAD) begin 
+                                idle = 0; 
+                                data_valid = 1; 
+                                replace_en = 0; 
+                                store_en=0; 
+                                stall=0; 
+                            end 
+                            else if (opcode_i == OP_STORE) begin 
+                                idle = 0;
+                                data_valid = 0; 
+                                stall = 0; 
+                                store_en=1; 
+                                replace_en = 0; 
+                            end
+                        end
 
-                MISS: begin
-                    if ((opcode_i != OP_STORE) && (opcode_i != OP_LOAD)) begin 
-                        idle = 1;
-                        data_valid = 0; 
-                        stall = 0; 
-                        store_en=0; 
-                        replace_en = 0; 
-                    end
-                    else begin 
-                       idle = 1;
-                       data_valid = 0; 
-                       stall = 1; 
-                       store_en=0; 
-                       replace_en = 0; 
-                    end
+                        MISS: begin
+                            idle = 1;
+                            data_valid = 0; 
+                            stall = 1; 
+                            store_en=0; 
+                            replace_en = 0; 
+                        end
+
+                    endcase
                 end
 
                 default: begin 
-                    idle = 1;  
-                    replace_en = 0;
-                    store_en=0;  
+                    idle = 1;
+                    data_valid = 0; 
                     stall = 0; 
+                    store_en=0; 
+                    replace_en = 0; 
                 end
-
+                
             endcase
+            
 
         end
 

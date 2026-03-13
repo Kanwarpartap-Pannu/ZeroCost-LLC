@@ -44,7 +44,7 @@ Vcache_tb__Syms::Vcache_tb__Syms(VerilatedContext* contextp, const char* namep, 
     , TOP{this, namep}
 {
     // Check resources
-    Verilated::stackCheck(434);
+    Verilated::stackCheck(460);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-12);
     _vm_contextp__->timeprecision(-12);

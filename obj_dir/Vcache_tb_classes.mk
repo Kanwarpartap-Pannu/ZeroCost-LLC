@@ -31,7 +31,6 @@ VM_CLASSES_FAST += \
 
 # Generated module classes, non-fast-path, compile with low/medium optimization
 VM_CLASSES_SLOW += \
-  Vcache_tb__ConstPool_0 \
   Vcache_tb___024root__Slow \
   Vcache_tb___024root__0__Slow \
   Vcache_tb___024unit__Slow \

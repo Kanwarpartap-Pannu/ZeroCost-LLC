@@ -84,62 +84,63 @@ void Vcache_tb___024root__trace_chg_0_sub_0(Vcache_tb___024root* vlSelf, Verilat
         bufp->chgBit(oldp+39,(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state));
         bufp->chgBit(oldp+40,(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state_mem));
         bufp->chgBit(oldp+41,(vlSelfRef.cache_tb__DOT__cache__DOT__write_finished));
-        bufp->chgBit(oldp+42,(vlSelfRef.cache_tb__DOT__cache__DOT__hit));
-        bufp->chgCData(oldp+43,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__replace_way),2);
-        bufp->chgCData(oldp+44,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__hit_way),2);
-        bufp->chgWData(oldp+45,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__set_o),192);
-        bufp->chgWData(oldp+51,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__data_array),384);
-        bufp->chgSData(oldp+63,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__tag_array
-                                [0U][0U]),10);
-        bufp->chgSData(oldp+64,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__tag_array
-                                [0U][1U]),10);
+        bufp->chgQData(oldp+42,(vlSelfRef.cache_tb__DOT__cache__DOT__mem_store),64);
+        bufp->chgBit(oldp+44,(vlSelfRef.cache_tb__DOT__cache__DOT__hit));
+        bufp->chgCData(oldp+45,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__replace_way),2);
+        bufp->chgCData(oldp+46,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__hit_way),2);
+        bufp->chgWData(oldp+47,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__set_o),192);
+        bufp->chgWData(oldp+53,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__data_array),384);
         bufp->chgSData(oldp+65,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__tag_array
-                                [0U][2U]),10);
+                                [0U][0U]),10);
         bufp->chgSData(oldp+66,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__tag_array
-                                [1U][0U]),10);
+                                [0U][1U]),10);
         bufp->chgSData(oldp+67,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__tag_array
-                                [1U][1U]),10);
+                                [0U][2U]),10);
         bufp->chgSData(oldp+68,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__tag_array
+                                [1U][0U]),10);
+        bufp->chgSData(oldp+69,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__tag_array
+                                [1U][1U]),10);
+        bufp->chgSData(oldp+70,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__tag_array
                                 [1U][2U]),10);
-        bufp->chgCData(oldp+69,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__valid_array
-                                [0U][0U]),2);
-        bufp->chgCData(oldp+70,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__valid_array
-                                [0U][1U]),2);
         bufp->chgCData(oldp+71,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__valid_array
-                                [0U][2U]),2);
-        bufp->chgCData(oldp+72,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__valid_array
-                                [1U][0U]),2);
-        bufp->chgCData(oldp+73,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__valid_array
-                                [1U][1U]),2);
-        bufp->chgCData(oldp+74,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__valid_array
-                                [1U][2U]),2);
-        bufp->chgCData(oldp+75,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__LRU_array
                                 [0U][0U]),2);
-        bufp->chgCData(oldp+76,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__LRU_array
+        bufp->chgCData(oldp+72,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__valid_array
                                 [0U][1U]),2);
-        bufp->chgCData(oldp+77,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__LRU_array
+        bufp->chgCData(oldp+73,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__valid_array
                                 [0U][2U]),2);
-        bufp->chgCData(oldp+78,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__LRU_array
+        bufp->chgCData(oldp+74,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__valid_array
                                 [1U][0U]),2);
-        bufp->chgCData(oldp+79,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__LRU_array
+        bufp->chgCData(oldp+75,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__valid_array
                                 [1U][1U]),2);
-        bufp->chgCData(oldp+80,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__LRU_array
+        bufp->chgCData(oldp+76,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__valid_array
                                 [1U][2U]),2);
-        bufp->chgCData(oldp+81,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__empty_way),2);
-        bufp->chgBit(oldp+82,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__empty_found));
-        bufp->chgCData(oldp+83,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__oldest_way),2);
-        bufp->chgIData(oldp+84,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__unnamedblk4__DOT__i),32);
-        bufp->chgIData(oldp+85,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__unnamedblk5__DOT__i),32);
-        bufp->chgIData(oldp+86,(vlSelfRef.cache_tb__DOT__cache__DOT____Vcellinp__memory1__addr_i),32);
-        bufp->chgIData(oldp+87,((vlSelfRef.cache_tb__DOT__cache__DOT____Vcellinp__memory1__addr_i 
+        bufp->chgCData(oldp+77,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__LRU_array
+                                [0U][0U]),2);
+        bufp->chgCData(oldp+78,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__LRU_array
+                                [0U][1U]),2);
+        bufp->chgCData(oldp+79,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__LRU_array
+                                [0U][2U]),2);
+        bufp->chgCData(oldp+80,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__LRU_array
+                                [1U][0U]),2);
+        bufp->chgCData(oldp+81,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__LRU_array
+                                [1U][1U]),2);
+        bufp->chgCData(oldp+82,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__LRU_array
+                                [1U][2U]),2);
+        bufp->chgCData(oldp+83,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__empty_way),2);
+        bufp->chgBit(oldp+84,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__empty_found));
+        bufp->chgCData(oldp+85,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__oldest_way),2);
+        bufp->chgIData(oldp+86,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__unnamedblk4__DOT__i),32);
+        bufp->chgIData(oldp+87,(vlSelfRef.cache_tb__DOT__cache__DOT__cache_tag_array__DOT__unnamedblk5__DOT__i),32);
+        bufp->chgIData(oldp+88,(vlSelfRef.cache_tb__DOT__cache__DOT____Vcellinp__memory1__addr_i),32);
+        bufp->chgIData(oldp+89,((vlSelfRef.cache_tb__DOT__cache__DOT____Vcellinp__memory1__addr_i 
                                  - (IData)(0x01000000U))),32);
-        bufp->chgIData(oldp+88,(vlSelfRef.cache_tb__DOT__cache__DOT__memory1__DOT__unnamedblk2__DOT__i),32);
+        bufp->chgIData(oldp+90,(vlSelfRef.cache_tb__DOT__cache__DOT__memory1__DOT__unnamedblk2__DOT__i),32);
     }
-    bufp->chgBit(oldp+89,(vlSelfRef.cache_tb__DOT__clk));
-    bufp->chgIData(oldp+90,(vlSelfRef.cache_tb__DOT__store_data),32);
-    bufp->chgCData(oldp+91,(vlSelfRef.cache_tb__DOT__opcode_i),7);
-    bufp->chgCData(oldp+92,(vlSelfRef.cache_tb__DOT__funct3_i),3);
-    bufp->chgIData(oldp+93,(((2U & (IData)(vlSelfRef.cache_tb__DOT__funct3_i))
+    bufp->chgBit(oldp+91,(vlSelfRef.cache_tb__DOT__clk));
+    bufp->chgIData(oldp+92,(vlSelfRef.cache_tb__DOT__store_data),32);
+    bufp->chgCData(oldp+93,(vlSelfRef.cache_tb__DOT__opcode_i),7);
+    bufp->chgCData(oldp+94,(vlSelfRef.cache_tb__DOT__funct3_i),3);
+    bufp->chgIData(oldp+95,(((2U & (IData)(vlSelfRef.cache_tb__DOT__funct3_i))
                               ? ((1U & (IData)(vlSelfRef.cache_tb__DOT__funct3_i))
                                   ? vlSelfRef.__VdfgRegularize_hebeb780c_0_2
                                   : ((0xbfU >= (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_0))
@@ -191,120 +192,6 @@ void Vcache_tb___024root__trace_chg_0_sub_0(Vcache_tb___024root* vlSelf, Verilat
                                                          & (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_0)))))
                                                   : 0U)
                                                  : vlSelfRef.__VdfgRegularize_hebeb780c_0_2))),32);
-    bufp->chgIData(oldp+94,(((2U & (IData)(vlSelfRef.cache_tb__DOT__funct3_i))
-                              ? ((1U & (IData)(vlSelfRef.cache_tb__DOT__funct3_i))
-                                  ? vlSelfRef.__VdfgRegularize_hebeb780c_0_5
-                                  : ((0xbfU >= (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3))
-                                      ? (0x000000ffU 
-                                         & (((0U == 
-                                              (0x0000001fU 
-                                               & (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3)))
-                                              ? 0U : 
-                                             (vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__set_o[
-                                              (((IData)(7U) 
-                                                + (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3)) 
-                                               >> 5U)] 
-                                              << ((IData)(0x00000020U) 
-                                                  - 
-                                                  (0x0000001fU 
-                                                   & (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3))))) 
-                                            | (vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__set_o[
-                                               ((IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3) 
-                                                >> 5U)] 
-                                               >> (0x0000001fU 
-                                                   & (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3)))))
-                                      : 0U)) : ((1U 
-                                                 & (IData)(vlSelfRef.cache_tb__DOT__funct3_i))
-                                                 ? 
-                                                ((0xbfU 
-                                                  >= (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3))
-                                                  ? 
-                                                 (0x0000ffffU 
-                                                  & (((0U 
-                                                       == 
-                                                       (0x0000001fU 
-                                                        & (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3)))
-                                                       ? 0U
-                                                       : 
-                                                      (vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__set_o[
-                                                       (((IData)(0x0000000fU) 
-                                                         + (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3)) 
-                                                        >> 5U)] 
-                                                       << 
-                                                       ((IData)(0x00000020U) 
-                                                        - 
-                                                        (0x0000001fU 
-                                                         & (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3))))) 
-                                                     | (vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__set_o[
-                                                        ((IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3) 
-                                                         >> 5U)] 
-                                                        >> 
-                                                        (0x0000001fU 
-                                                         & (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3)))))
-                                                  : 0U)
-                                                 : vlSelfRef.__VdfgRegularize_hebeb780c_0_5))),32);
-    bufp->chgQData(oldp+95,((QData)((IData)(((2U & (IData)(vlSelfRef.cache_tb__DOT__funct3_i))
-                                              ? ((1U 
-                                                  & (IData)(vlSelfRef.cache_tb__DOT__funct3_i))
-                                                  ? vlSelfRef.__VdfgRegularize_hebeb780c_0_5
-                                                  : 
-                                                 ((0xbfU 
-                                                   >= (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3))
-                                                   ? 
-                                                  (0x000000ffU 
-                                                   & (((0U 
-                                                        == 
-                                                        (0x0000001fU 
-                                                         & (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3)))
-                                                        ? 0U
-                                                        : 
-                                                       (vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__set_o[
-                                                        (((IData)(7U) 
-                                                          + (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3)) 
-                                                         >> 5U)] 
-                                                        << 
-                                                        ((IData)(0x00000020U) 
-                                                         - 
-                                                         (0x0000001fU 
-                                                          & (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3))))) 
-                                                      | (vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__set_o[
-                                                         ((IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3) 
-                                                          >> 5U)] 
-                                                         >> 
-                                                         (0x0000001fU 
-                                                          & (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3)))))
-                                                   : 0U))
-                                              : ((1U 
-                                                  & (IData)(vlSelfRef.cache_tb__DOT__funct3_i))
-                                                  ? 
-                                                 ((0xbfU 
-                                                   >= (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3))
-                                                   ? 
-                                                  (0x0000ffffU 
-                                                   & (((0U 
-                                                        == 
-                                                        (0x0000001fU 
-                                                         & (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3)))
-                                                        ? 0U
-                                                        : 
-                                                       (vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__set_o[
-                                                        (((IData)(0x0000000fU) 
-                                                          + (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3)) 
-                                                         >> 5U)] 
-                                                        << 
-                                                        ((IData)(0x00000020U) 
-                                                         - 
-                                                         (0x0000001fU 
-                                                          & (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3))))) 
-                                                      | (vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__set_o[
-                                                         ((IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3) 
-                                                          >> 5U)] 
-                                                         >> 
-                                                         (0x0000001fU 
-                                                          & (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_3)))))
-                                                   : 0U)
-                                                  : vlSelfRef.__VdfgRegularize_hebeb780c_0_5))))),64);
-    bufp->chgCData(oldp+97,(vlSelfRef.cache_tb__DOT__cache__DOT__memory1__DOT__size_encoded),2);
 }
 
 void Vcache_tb___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {

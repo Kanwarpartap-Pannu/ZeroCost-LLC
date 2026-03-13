@@ -4,7 +4,6 @@
 #include "Vcache_tb___024root__0.cpp"
 #include "Vcache_tb__main.cpp"
 #include "Vcache_tb__Trace__0.cpp"
-#include "Vcache_tb__ConstPool_0.cpp"
 #include "Vcache_tb___024root__Slow.cpp"
 #include "Vcache_tb___024root__0__Slow.cpp"
 #include "Vcache_tb___024unit__Slow.cpp"
