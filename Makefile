@@ -31,3 +31,6 @@ run:
 	verilator --binary $(VERILATOR_FLAGS) -f verilator.f > run.log 2>&1
 	./obj_dir/Vcache_tb
 
+# Pulling up Waveforms with saved scopes 
+wave: 
+	gtkwave cache.vcd cache.gtkw

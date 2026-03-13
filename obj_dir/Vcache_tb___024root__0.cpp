@@ -264,8 +264,11 @@ void Vcache_tb___024root___act_sequent__TOP__0(Vcache_tb___024root* vlSelf) {
                 vlSelfRef.cache_tb__DOT__cache__DOT__next_state_mem = 1U;
                 vlSelfRef.cache_tb__DOT__cache__DOT__next_state = 1U;
             }
-        } else {
+        } else if (vlSelfRef.cache_tb__DOT__cache__DOT__ready) {
             vlSelfRef.cache_tb__DOT__cache__DOT__next_state = 0U;
+            vlSelfRef.cache_tb__DOT__cache__DOT__next_state_mem = 0U;
+        } else {
+            vlSelfRef.cache_tb__DOT__cache__DOT__next_state = 1U;
             vlSelfRef.cache_tb__DOT__cache__DOT__next_state_mem = 0U;
         }
         if ((1U & (~ VL_ONEHOT_I((((IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state_mem) 
@@ -273,18 +276,18 @@ void Vcache_tb___024root___act_sequent__TOP__0(Vcache_tb___024root* vlSelf) {
             if ((0U == (((IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state_mem) 
                          << 1U) | (1U & (~ (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state_mem)))))) {
                 if (VL_UNLIKELY((vlSymsp->_vm_contextp__->assertOn()))) {
-                    VL_WRITEF_NX("[%0t] %%Error: lookup.sv:179: Assertion failed in %Ncache_tb.cache: unique case, but none matched for '32'h%x'\n",0,
+                    VL_WRITEF_NX("[%0t] %%Error: lookup.sv:181: Assertion failed in %Ncache_tb.cache: unique case, but none matched for '32'h%x'\n",0,
                                  64,VL_TIME_UNITED_Q(1),
                                  -12,vlSymsp->name(),
                                  32,(IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state_mem));
-                    VL_STOP_MT("design/lookup.sv", 179, "");
+                    VL_STOP_MT("design/lookup.sv", 181, "");
                 }
             } else if (VL_UNLIKELY((vlSymsp->_vm_contextp__->assertOn()))) {
-                VL_WRITEF_NX("[%0t] %%Error: lookup.sv:179: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '32'h%x'\n",0,
+                VL_WRITEF_NX("[%0t] %%Error: lookup.sv:181: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '32'h%x'\n",0,
                              64,VL_TIME_UNITED_Q(1),
                              -12,vlSymsp->name(),32,
                              (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state_mem));
-                VL_STOP_MT("design/lookup.sv", 179, "");
+                VL_STOP_MT("design/lookup.sv", 181, "");
             }
         }
     } else {
@@ -293,11 +296,11 @@ void Vcache_tb___024root___act_sequent__TOP__0(Vcache_tb___024root* vlSelf) {
             if ((0U != (((0x23U == (IData)(vlSelfRef.cache_tb__DOT__opcode_i)) 
                          << 1U) | (3U == (IData)(vlSelfRef.cache_tb__DOT__opcode_i))))) {
                 if (VL_UNLIKELY((vlSymsp->_vm_contextp__->assertOn()))) {
-                    VL_WRITEF_NX("[%0t] %%Error: lookup.sv:154: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '7'h%x'\n",0,
+                    VL_WRITEF_NX("[%0t] %%Error: lookup.sv:156: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '7'h%x'\n",0,
                                  64,VL_TIME_UNITED_Q(1),
                                  -12,vlSymsp->name(),
                                  7,(IData)(vlSelfRef.cache_tb__DOT__opcode_i));
-                    VL_STOP_MT("design/lookup.sv", 154, "");
+                    VL_STOP_MT("design/lookup.sv", 156, "");
                 }
             }
         }
@@ -323,17 +326,17 @@ void Vcache_tb___024root___act_sequent__TOP__0(Vcache_tb___024root* vlSelf) {
         if ((0U == (((IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state) 
                      << 1U) | (1U & (~ (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state)))))) {
             if (VL_UNLIKELY((vlSymsp->_vm_contextp__->assertOn()))) {
-                VL_WRITEF_NX("[%0t] %%Error: lookup.sv:152: Assertion failed in %Ncache_tb.cache: unique case, but none matched for '32'h%x'\n",0,
+                VL_WRITEF_NX("[%0t] %%Error: lookup.sv:154: Assertion failed in %Ncache_tb.cache: unique case, but none matched for '32'h%x'\n",0,
                              64,VL_TIME_UNITED_Q(1),
                              -12,vlSymsp->name(),32,
                              (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state));
-                VL_STOP_MT("design/lookup.sv", 152, "");
+                VL_STOP_MT("design/lookup.sv", 154, "");
             }
         } else if (VL_UNLIKELY((vlSymsp->_vm_contextp__->assertOn()))) {
-            VL_WRITEF_NX("[%0t] %%Error: lookup.sv:152: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '32'h%x'\n",0,
+            VL_WRITEF_NX("[%0t] %%Error: lookup.sv:154: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '32'h%x'\n",0,
                          64,VL_TIME_UNITED_Q(1),-12,
                          vlSymsp->name(),32,(IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state));
-            VL_STOP_MT("design/lookup.sv", 152, "");
+            VL_STOP_MT("design/lookup.sv", 154, "");
         }
     }
     vlSelfRef.cache_tb__DOT__data_valid = 0U;
@@ -344,6 +347,7 @@ void Vcache_tb___024root___act_sequent__TOP__0(Vcache_tb___024root* vlSelf) {
     vlSelfRef.cache_tb__DOT__cache__DOT__write_en = 0U;
     vlSelfRef.cache_tb__DOT__cache__DOT__read_en = 1U;
     if (vlSelfRef.cache_tb__DOT__cache__DOT__curr_state) {
+        vlSelfRef.cache_tb__DOT__cache__DOT__request = 1U;
         if (vlSelfRef.cache_tb__DOT__cache__DOT__curr_state_mem) {
             vlSelfRef.cache_tb__DOT__cache__DOT__memory_address 
                 = ((((2U >= (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__replace_way))
@@ -360,27 +364,37 @@ void Vcache_tb___024root___act_sequent__TOP__0(Vcache_tb___024root* vlSelf) {
         } else {
             vlSelfRef.cache_tb__DOT__cache__DOT__memory_address 
                 = (0x00003ff8U & (IData)(vlSelfRef.cache_tb__DOT__address));
-            vlSelfRef.cache_tb__DOT__cache__DOT__idle = 1U;
-            vlSelfRef.cache_tb__DOT__data_valid = 0U;
-            vlSelfRef.cache_tb__DOT__stall = 1U;
-            vlSelfRef.cache_tb__DOT__cache__DOT__replace_en = 1U;
-            vlSelfRef.cache_tb__DOT__cache__DOT__write_en = 0U;
-            vlSelfRef.cache_tb__DOT__cache__DOT__read_en = 1U;
+            if (vlSelfRef.cache_tb__DOT__cache__DOT__ready) {
+                vlSelfRef.cache_tb__DOT__cache__DOT__idle = 1U;
+                vlSelfRef.cache_tb__DOT__data_valid = 0U;
+                vlSelfRef.cache_tb__DOT__stall = 1U;
+                vlSelfRef.cache_tb__DOT__cache__DOT__replace_en = 1U;
+                vlSelfRef.cache_tb__DOT__cache__DOT__write_en = 0U;
+                vlSelfRef.cache_tb__DOT__cache__DOT__read_en = 1U;
+            } else {
+                vlSelfRef.cache_tb__DOT__stall = 1U;
+                vlSelfRef.cache_tb__DOT__cache__DOT__idle = 1U;
+                vlSelfRef.cache_tb__DOT__data_valid = 0U;
+                vlSelfRef.cache_tb__DOT__cache__DOT__replace_en = 0U;
+                vlSelfRef.cache_tb__DOT__cache__DOT__write_en = 0U;
+                vlSelfRef.cache_tb__DOT__cache__DOT__read_en = 1U;
+            }
         }
         if ((1U & (~ VL_ONEHOT_I((((IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state_mem) 
                                    << 1U) | (1U & (~ (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state_mem)))))))) {
             if ((0U != (((IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state_mem) 
                          << 1U) | (1U & (~ (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state_mem)))))) {
                 if (VL_UNLIKELY((vlSymsp->_vm_contextp__->assertOn()))) {
-                    VL_WRITEF_NX("[%0t] %%Error: lookup.sv:282: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '32'h%x'\n",0,
+                    VL_WRITEF_NX("[%0t] %%Error: lookup.sv:285: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '32'h%x'\n",0,
                                  64,VL_TIME_UNITED_Q(1),
                                  -12,vlSymsp->name(),
                                  32,(IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state_mem));
-                    VL_STOP_MT("design/lookup.sv", 282, "");
+                    VL_STOP_MT("design/lookup.sv", 285, "");
                 }
             }
         }
     } else {
+        vlSelfRef.cache_tb__DOT__cache__DOT__request = 0U;
         if (((3U == (IData)(vlSelfRef.cache_tb__DOT__opcode_i)) 
              || (0x23U == (IData)(vlSelfRef.cache_tb__DOT__opcode_i)))) {
             if ((1U & (~ VL_ONEHOT_I(((2U & ((~ (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__hit)) 
@@ -389,18 +403,18 @@ void Vcache_tb___024root___act_sequent__TOP__0(Vcache_tb___024root* vlSelf) {
                 if ((0U == ((2U & ((~ (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__hit)) 
                                    << 1U)) | (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__hit)))) {
                     if (VL_UNLIKELY((vlSymsp->_vm_contextp__->assertOn()))) {
-                        VL_WRITEF_NX("[%0t] %%Error: lookup.sv:239: Assertion failed in %Ncache_tb.cache: unique case, but none matched for '32'h%x'\n",0,
+                        VL_WRITEF_NX("[%0t] %%Error: lookup.sv:242: Assertion failed in %Ncache_tb.cache: unique case, but none matched for '32'h%x'\n",0,
                                      64,VL_TIME_UNITED_Q(1),
                                      -12,vlSymsp->name(),
                                      32,(IData)(vlSelfRef.cache_tb__DOT__cache__DOT__hit));
-                        VL_STOP_MT("design/lookup.sv", 239, "");
+                        VL_STOP_MT("design/lookup.sv", 242, "");
                     }
                 } else if (VL_UNLIKELY((vlSymsp->_vm_contextp__->assertOn()))) {
-                    VL_WRITEF_NX("[%0t] %%Error: lookup.sv:239: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '32'h%x'\n",0,
+                    VL_WRITEF_NX("[%0t] %%Error: lookup.sv:242: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '32'h%x'\n",0,
                                  64,VL_TIME_UNITED_Q(1),
                                  -12,vlSymsp->name(),
                                  32,(IData)(vlSelfRef.cache_tb__DOT__cache__DOT__hit));
-                    VL_STOP_MT("design/lookup.sv", 239, "");
+                    VL_STOP_MT("design/lookup.sv", 242, "");
                 }
             }
             if (vlSelfRef.cache_tb__DOT__cache__DOT__hit) {
@@ -436,11 +450,11 @@ void Vcache_tb___024root___act_sequent__TOP__0(Vcache_tb___024root* vlSelf) {
             if ((0U != (((0x23U == (IData)(vlSelfRef.cache_tb__DOT__opcode_i)) 
                          << 1U) | (3U == (IData)(vlSelfRef.cache_tb__DOT__opcode_i))))) {
                 if (VL_UNLIKELY((vlSymsp->_vm_contextp__->assertOn()))) {
-                    VL_WRITEF_NX("[%0t] %%Error: lookup.sv:237: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '7'h%x'\n",0,
+                    VL_WRITEF_NX("[%0t] %%Error: lookup.sv:240: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '7'h%x'\n",0,
                                  64,VL_TIME_UNITED_Q(1),
                                  -12,vlSymsp->name(),
                                  7,(IData)(vlSelfRef.cache_tb__DOT__opcode_i));
-                    VL_STOP_MT("design/lookup.sv", 237, "");
+                    VL_STOP_MT("design/lookup.sv", 240, "");
                 }
             }
         }
@@ -450,17 +464,17 @@ void Vcache_tb___024root___act_sequent__TOP__0(Vcache_tb___024root* vlSelf) {
         if ((0U == (((IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state) 
                      << 1U) | (1U & (~ (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state)))))) {
             if (VL_UNLIKELY((vlSymsp->_vm_contextp__->assertOn()))) {
-                VL_WRITEF_NX("[%0t] %%Error: lookup.sv:234: Assertion failed in %Ncache_tb.cache: unique case, but none matched for '32'h%x'\n",0,
+                VL_WRITEF_NX("[%0t] %%Error: lookup.sv:236: Assertion failed in %Ncache_tb.cache: unique case, but none matched for '32'h%x'\n",0,
                              64,VL_TIME_UNITED_Q(1),
                              -12,vlSymsp->name(),32,
                              (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state));
-                VL_STOP_MT("design/lookup.sv", 234, "");
+                VL_STOP_MT("design/lookup.sv", 236, "");
             }
         } else if (VL_UNLIKELY((vlSymsp->_vm_contextp__->assertOn()))) {
-            VL_WRITEF_NX("[%0t] %%Error: lookup.sv:234: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '32'h%x'\n",0,
+            VL_WRITEF_NX("[%0t] %%Error: lookup.sv:236: Assertion failed in %Ncache_tb.cache: unique case, but multiple matches found for '32'h%x'\n",0,
                          64,VL_TIME_UNITED_Q(1),-12,
                          vlSymsp->name(),32,(IData)(vlSelfRef.cache_tb__DOT__cache__DOT__curr_state));
-            VL_STOP_MT("design/lookup.sv", 234, "");
+            VL_STOP_MT("design/lookup.sv", 236, "");
         }
     }
     vlSelfRef.cache_tb__DOT__cache__DOT____Vcellinp__memory1__addr_dat 
@@ -624,11 +638,18 @@ void Vcache_tb___024root___eval_act(Vcache_tb___024root* vlSelf) {
     }
 }
 
+extern const VlUnpacked<CData/*2:0*/, 128> Vcache_tb__ConstPool__TABLE_h65dd285e_0;
+extern const VlUnpacked<CData/*0:0*/, 128> Vcache_tb__ConstPool__TABLE_hfc6a6fef_0;
+extern const VlUnpacked<CData/*3:0*/, 128> Vcache_tb__ConstPool__TABLE_h6fb8f3ff_0;
+extern const VlUnpacked<CData/*0:0*/, 128> Vcache_tb__ConstPool__TABLE_h11f3b929_0;
+
 void Vcache_tb___024root___nba_sequent__TOP__0(Vcache_tb___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcache_tb___024root___nba_sequent__TOP__0\n"); );
     Vcache_tb__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Locals
+    CData/*6:0*/ __Vtableidx1;
+    __Vtableidx1 = 0;
     SData/*13:0*/ __Vdly__cache_tb__DOT__address;
     __Vdly__cache_tb__DOT__address = 0;
     CData/*6:0*/ __Vdly__cache_tb__DOT__opcode_i;
@@ -1122,14 +1143,35 @@ void Vcache_tb___024root___nba_sequent__TOP__0(Vcache_tb___024root* vlSelf) {
         __VdlyMask__cache_tb__DOT__opcode_i = 0x7fU;
         vlSelfRef.cache_tb__DOT__i = ((IData)(1U) + vlSelfRef.cache_tb__DOT__i);
     }
-    vlSelfRef.cache_tb__DOT__cache__DOT__write_finished 
-        = vlSelfRef.cache_tb__DOT__cache__DOT__write_en;
     vlSelfRef.cache_tb__DOT__cache__DOT__curr_state 
         = ((IData)(vlSelfRef.cache_tb__DOT__reset) 
            && (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__next_state));
     vlSelfRef.cache_tb__DOT__cache__DOT__curr_state_mem 
         = ((IData)(vlSelfRef.cache_tb__DOT__reset) 
            && (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__next_state_mem));
+    __Vtableidx1 = ((((IData)(vlSelfRef.cache_tb__DOT__cache__DOT__write_en) 
+                      << 6U) | ((IData)(vlSelfRef.cache_tb__DOT__cache__DOT__read_en) 
+                                << 5U)) | (((IData)(vlSelfRef.cache_tb__DOT__cache__DOT__memory1__DOT__delay) 
+                                            << 1U) 
+                                           | (IData)(vlSelfRef.cache_tb__DOT__cache__DOT__request)));
+    if ((1U & Vcache_tb__ConstPool__TABLE_h65dd285e_0
+         [__Vtableidx1])) {
+        vlSelfRef.cache_tb__DOT__cache__DOT__ready 
+            = Vcache_tb__ConstPool__TABLE_hfc6a6fef_0
+            [__Vtableidx1];
+    }
+    if ((2U & Vcache_tb__ConstPool__TABLE_h65dd285e_0
+         [__Vtableidx1])) {
+        vlSelfRef.cache_tb__DOT__cache__DOT__memory1__DOT__delay 
+            = Vcache_tb__ConstPool__TABLE_h6fb8f3ff_0
+            [__Vtableidx1];
+    }
+    if ((4U & Vcache_tb__ConstPool__TABLE_h65dd285e_0
+         [__Vtableidx1])) {
+        vlSelfRef.cache_tb__DOT__cache__DOT__write_finished 
+            = Vcache_tb__ConstPool__TABLE_h11f3b929_0
+            [__Vtableidx1];
+    }
     if (vlSelfRef.cache_tb__DOT__cache__DOT__store_en) {
         vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT____Vlvbound_h95e99ec6__0 
             = vlSelfRef.cache_tb__DOT__cache__DOT__cache_data_array__DOT__temp;

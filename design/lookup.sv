@@ -60,6 +60,7 @@ logic [((`BLOCK_SIZE*8)-1):0] mem_out;
 logic ready; 
 logic write_finished; 
 logic [((`BLOCK_SIZE*8)-1):0] mem_store;
+logic request; 
 memory #(
     .AWIDTH(32),
     .DWIDTH(32),
@@ -74,6 +75,7 @@ memory #(
     .read_en_dat(read_en), // controls for data memory 
     .write_en_dat(write_en),
     .funct3_i(funct3_i),
+    .request(request),
     .write_finished(write_finished),
     .ready(ready),
     .data_o(),
@@ -234,6 +236,7 @@ always_comb begin
     unique case(curr_state)
 
         CACHE: begin 
+            request = 0; 
             unique case (opcode_i) 
                 OP_LOAD, OP_STORE: begin 
                     unique case (hit)
@@ -275,10 +278,10 @@ always_comb begin
                 
             endcase
             
-
         end
 
         MAIN_MEMORY: begin 
+            request = 1; 
             unique case (curr_state_mem)
                 READING: begin
                     memory_address = read_address; 

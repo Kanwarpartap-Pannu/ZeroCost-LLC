@@ -1,29 +1,29 @@
-%Warning-PINCONNECTEMPTY: design/lookup.sv:79:6: Instance pin connected by name with empty reference: 'data_o'
-   79 |     .data_o(),
+%Warning-PINCONNECTEMPTY: design/lookup.sv:81:6: Instance pin connected by name with empty reference: 'data_o'
+   81 |     .data_o(),
       |      ^~~~~~
                           ... For warning description see https://verilator.org/warn/PINCONNECTEMPTY?v=5.042
                           ... Use "/* verilator lint_off PINCONNECTEMPTY */" and lint_on around source to disable this message.
-%Warning-PINMISSING: design/lookup.sv:122:3: Instance has missing pin: 'offset'
-  122 | ) cache_data_array (
+%Warning-PINMISSING: design/lookup.sv:124:3: Instance has missing pin: 'offset'
+  124 | ) cache_data_array (
       |   ^~~~~~~~~~~~~~~~
                      design/data_array.sv:21:38: ... Location of port declaration
    21 |     input logic [OFFSET_BITS-1:0]    offset,
       |                                      ^~~~~~
                      ... For warning description see https://verilator.org/warn/PINMISSING?v=5.042
                      ... Use "/* verilator lint_off PINMISSING */" and lint_on around source to disable this message.
-%Warning-VARHIDDEN: design/memory.sv:127:26: Declaration of signal hides declaration in upper scope: 'i'
-  127 |                 for (int i=0; i < 8; i++) begin 
+%Warning-VARHIDDEN: design/memory.sv:156:26: Declaration of signal hides declaration in upper scope: 'i'
+  156 |                 for (int i=0; i < 8; i++) begin 
       |                          ^
-                    design/memory.sv:66:9: ... Location of original declaration
-   66 |     int i;
+                    design/memory.sv:69:9: ... Location of original declaration
+   69 |     int i;
       |         ^
                     ... For warning description see https://verilator.org/warn/VARHIDDEN?v=5.042
                     ... Use "/* verilator lint_off VARHIDDEN */" and lint_on around source to disable this message.
-%Warning-VARHIDDEN: design/memory.sv:140:26: Declaration of signal hides declaration in upper scope: 'i'
-  140 |                 for (int i=0; i < 8; i++) begin 
+%Warning-VARHIDDEN: design/memory.sv:168:26: Declaration of signal hides declaration in upper scope: 'i'
+  168 |                 for (int i=0; i < 8; i++) begin 
       |                          ^
-                    design/memory.sv:66:9: ... Location of original declaration
-   66 |     int i;
+                    design/memory.sv:69:9: ... Location of original declaration
+   69 |     int i;
       |         ^
 %Warning-ASCRANGE: design/data_array.sv:29:18: Ascending bit range vector: left < right of bit range: [0:2]
                                              : ... note: In instance 'cache_tb.cache.cache_data_array'
@@ -63,29 +63,33 @@
                                                 : ... note: In instance 'cache_tb.cache.cache_tag_array'
   118 |                     if ( (i != replace_way ) && (valid_array[index_i][i] != 0)) begin 
       |                             ^~
-%Warning-WIDTHEXPAND: design/lookup.sv:70:6: Input port connection 'addr_i' expects 32 bits on the pin connection, but pin connection's VARREF 'address' generates 14 bits.
+%Warning-WIDTHEXPAND: design/memory.sv:123:23: Operator GTE expects 32 bits on the LHS, but LHS's VARREF 'delay' generates 4 bits.
+                                             : ... note: In instance 'cache_tb.cache.memory1'
+  123 |             if (delay >= MEM_DELAY) begin 
+      |                       ^~
+%Warning-WIDTHEXPAND: design/lookup.sv:71:6: Input port connection 'addr_i' expects 32 bits on the pin connection, but pin connection's VARREF 'address' generates 14 bits.
                                            : ... note: In instance 'cache_tb.cache'
-   70 |     .addr_i(address),
+   71 |     .addr_i(address),
       |      ^~~~~~
-%Warning-WIDTHEXPAND: design/lookup.sv:71:6: Input port connection 'addr_dat' expects 32 bits on the pin connection, but pin connection's VARREF 'memory_address' generates 14 bits.
+%Warning-WIDTHEXPAND: design/lookup.sv:72:6: Input port connection 'addr_dat' expects 32 bits on the pin connection, but pin connection's VARREF 'memory_address' generates 14 bits.
                                            : ... note: In instance 'cache_tb.cache'
-   71 |     .addr_dat(memory_address),
+   72 |     .addr_dat(memory_address),
       |      ^~~~~~~~
-%Warning-ASCRANGE: design/lookup.sv:113:7: Ascending bit range vector: left < right of bit range: [0:2]
+%Warning-ASCRANGE: design/lookup.sv:115:7: Ascending bit range vector: left < right of bit range: [0:2]
                                          : ... note: In instance 'cache_tb.cache'
-  113 | logic [0:3-1][(8*8)-1:0] set ; 
+  115 | logic [0:3-1][(8*8)-1:0] set ; 
       |       ^
-%Warning-WIDTHEXPAND: design/lookup.sv:217:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 16 bits.
+%Warning-WIDTHEXPAND: design/lookup.sv:219:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 16 bits.
                                              : ... note: In instance 'cache_tb.cache'
-  217 |         3'b001, 3'b101: data_out = set[hit_way][offset*8 +: 16];  
-      |                                  ^
-%Warning-WIDTHEXPAND: design/lookup.sv:218:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 8 bits.
-                                             : ... note: In instance 'cache_tb.cache'
-  218 |         3'b010:         data_out = set[hit_way][offset*8 +: 8];  
+  219 |         3'b001, 3'b101: data_out = set[hit_way][offset*8 +: 16];  
       |                                  ^
 %Warning-WIDTHEXPAND: design/lookup.sv:220:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 8 bits.
                                              : ... note: In instance 'cache_tb.cache'
-  220 |         default:        data_out = set[hit_way][offset*8 +: 8];  
+  220 |         3'b010:         data_out = set[hit_way][offset*8 +: 8];  
+      |                                  ^
+%Warning-WIDTHEXPAND: design/lookup.sv:222:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 8 bits.
+                                             : ... note: In instance 'cache_tb.cache'
+  222 |         default:        data_out = set[hit_way][offset*8 +: 8];  
       |                                  ^
 %Warning-WIDTHTRUNC: design/cache_tb.sv:69:14: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's CONST '?32?shb' generates 32 or 4 bits.
                                              : ... note: In instance 'cache_tb'
@@ -101,27 +105,23 @@
                                               : ... note: In instance 'cache_tb'
    21 | logic data_valid;
       |       ^~~~~~~~~~
-%Warning-UNUSEDSIGNAL: design/memory.sv:28:15: Signal is not used: 'rst'
+%Warning-UNUSEDSIGNAL: design/memory.sv:29:15: Signal is not used: 'rst'
                                              : ... note: In instance 'cache_tb.cache.memory1'
-   28 |   input logic rst,
+   29 |   input logic rst,
       |               ^~~
-%Warning-UNUSEDSIGNAL: design/memory.sv:33:15: Signal is not used: 'read_en_dat'
+%Warning-UNUSEDSIGNAL: design/memory.sv:36:21: Signal is not used: 'funct3_i'
                                              : ... note: In instance 'cache_tb.cache.memory1'
-   33 |   input logic read_en_dat,
-      |               ^~~~~~~~~~~
-%Warning-UNUSEDSIGNAL: design/memory.sv:35:21: Signal is not used: 'funct3_i'
-                                             : ... note: In instance 'cache_tb.cache.memory1'
-   35 |   input logic [2:0] funct3_i,
+   36 |   input logic [2:0] funct3_i,
       |                     ^~~~~~~~
 c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=1 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=1 -DVM_TRACE_SAIF=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.042/share/verilator/include/verilated.cpp
 c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=1 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=1 -DVM_TRACE_SAIF=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_vcd_c.o /opt/homebrew/Cellar/verilator/5.042/share/verilator/include/verilated_vcd_c.cpp
 c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=1 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=1 -DVM_TRACE_SAIF=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.042/share/verilator/include/verilated_timing.cpp
 c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=1 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=1 -DVM_TRACE_SAIF=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.042/share/verilator/include/verilated_threads.cpp
-python3 /opt/homebrew/Cellar/verilator/5.042/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vcache_tb.cpp Vcache_tb___024root__0.cpp Vcache_tb__main.cpp Vcache_tb__Trace__0.cpp Vcache_tb___024root__Slow.cpp Vcache_tb___024root__0__Slow.cpp Vcache_tb___024unit__Slow.cpp Vcache_tb___024unit__0__Slow.cpp Vcache_tb__Syms.cpp Vcache_tb__Trace__0__Slow.cpp Vcache_tb__TraceDecls__0__Slow.cpp > Vcache_tb__ALL.cpp
+python3 /opt/homebrew/Cellar/verilator/5.042/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vcache_tb.cpp Vcache_tb___024root__0.cpp Vcache_tb__main.cpp Vcache_tb__Trace__0.cpp Vcache_tb__ConstPool_0.cpp Vcache_tb___024root__Slow.cpp Vcache_tb___024root__0__Slow.cpp Vcache_tb___024unit__Slow.cpp Vcache_tb___024unit__0__Slow.cpp Vcache_tb__Syms.cpp Vcache_tb__Trace__0__Slow.cpp Vcache_tb__TraceDecls__0__Slow.cpp > Vcache_tb__ALL.cpp
 c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=1 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=1 -DVM_TRACE_SAIF=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vcache_tb__ALL.o Vcache_tb__ALL.cpp
 echo "" > Vcache_tb__ALL.verilator_deplist.tmp
 c++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv   verilated.o verilated_vcd_c.o verilated_timing.o verilated_threads.o Vcache_tb__ALL.a    -pthread -lpthread   -o Vcache_tb
 rm Vcache_tb__ALL.verilator_deplist.tmp
 - V e r i l a t i o n   R e p o r t: Verilator 5.042 2025-11-02 rev UNKNOWN.REV
-- Verilator: Built from 0.148 MB sources in 7 modules, into 0.268 MB in 11 C++ files needing 0.000 MB
-- Verilator: Walltime 5.941 s (elab=0.006, cvt=0.025, bld=5.890); cpu 0.036 s on 1 threads
+- Verilator: Built from 0.149 MB sources in 7 modules, into 0.275 MB in 12 C++ files needing 0.000 MB
+- Verilator: Walltime 6.156 s (elab=0.007, cvt=0.036, bld=6.088); cpu 0.042 s on 1 threads

@@ -20,7 +20,8 @@ module memory #(
   // parameters
   parameter int AWIDTH = 32,
   parameter int DWIDTH = 32,
-  parameter logic [31:0] BASE_ADDR = 32'h01000000
+  parameter logic [31:0] BASE_ADDR = 32'h01000000, 
+  parameter int MEM_DELAY = 10
 ) (
 
   // inputs
@@ -33,6 +34,7 @@ module memory #(
   input logic read_en_dat,
   input logic write_en_dat,
   input logic [2:0] funct3_i,
+  input logic request, 
 
   // outputs
   output logic              write_finished, 
@@ -41,12 +43,13 @@ module memory #(
   output logic [(`BLOCK_SIZE*8)-1:0] data_dat_o
 );
 
-    
-
     // Total memory size in bytes
     localparam int MEM_BYTES = (`MEM_DEPTH )* (`BLOCK_SIZE*8);  
 
 	logic [DWIDTH-1:0] temp_memory [0:`LINE_COUNT - 1];
+
+    // Delay Counter 
+    logic [$clog2(MEM_DELAY)-1:0] delay; 
 
    	// Byte-addressable memory
   	logic [7:0] main_memory [0:MEM_BYTES - 1]; 
@@ -114,11 +117,37 @@ module memory #(
         end
   	end
 
+    // Simulated Memory Delay 
+    always_ff @(posedge clk) begin 
+        if(request) begin 
+            if (delay >= MEM_DELAY) begin 
+                if (read_en_dat) begin 
+                    ready <= 1;
+                    delay<=0;
+                    write_finished<=0;
+                end
+                if (write_en_dat) begin
+                    ready <= 0;
+                    delay<=0;
+                    write_finished<=1;
+                end
+            end
+            else begin
+                delay <= delay + 1;
+                ready <= 0; 
+                write_finished <= 0; 
+            end
+        end
+        else begin
+            ready <= 0;
+            delay <= 0;
+            write_finished <= 0;
+        end
+    end
     
     // Combinational read logic for data memory
     always_comb begin
 	    data_dat_o = 0; // default to zero
-        ready = 1;
         if (read_en_i) begin 
             if ($isunknown(addr_dat)) begin
                 data_dat_o = 0;
@@ -135,15 +164,11 @@ module memory #(
     // Sequential write logic
     always_ff @(posedge clk) begin
 
-        if (write_en_dat) begin
-            write_finished <= 1; 
+        if (write_en_dat) begin 
                 for (int i=0; i < `BLOCK_SIZE; i++) begin 
                 main_memory[(address_dat+(`BLOCK_SIZE - i)) % MEM_BYTES] <=  data_dat[((`BLOCK_SIZE-1)-i)*8 +: 8];
             end 
         end 
-        else begin
-            write_finished <=0; 
-        end
         
  	end   
  

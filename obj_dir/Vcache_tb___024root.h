@@ -29,11 +29,14 @@ class alignas(VL_CACHE_LINE_BYTES) Vcache_tb___024root final : public VerilatedM
         CData/*0:0*/ cache_tb__DOT__cache__DOT__next_state_mem;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__read_en;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__write_en;
+        CData/*0:0*/ cache_tb__DOT__cache__DOT__ready;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__write_finished;
+        CData/*0:0*/ cache_tb__DOT__cache__DOT__request;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__hit;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__idle;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__replace_en;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__store_en;
+        CData/*3:0*/ cache_tb__DOT__cache__DOT__memory1__DOT__delay;
         CData/*7:0*/ cache_tb__DOT__cache__DOT__memory1__DOT____Vlvbound_h9cad2051__0;
         CData/*7:0*/ cache_tb__DOT__cache__DOT__memory1__DOT____Vlvbound_h8832fe4e__0;
         CData/*7:0*/ cache_tb__DOT__cache__DOT__memory1__DOT____Vlvbound_h22887a14__0;
@@ -78,11 +81,11 @@ class alignas(VL_CACHE_LINE_BYTES) Vcache_tb___024root final : public VerilatedM
         QData/*63:0*/ cache_tb__DOT__cache__DOT__cache_data_array__DOT____Vlvbound_h95e99ec6__0;
         VlUnpacked<IData/*21:0*/, 11> cache_tb__DOT__test_addresses;
         VlUnpacked<IData/*31:0*/, 147> cache_tb__DOT__cache__DOT__memory1__DOT__temp_memory;
+    };
+    struct {
         VlUnpacked<CData/*7:0*/, 641536> cache_tb__DOT__cache__DOT__memory1__DOT__main_memory;
         VlUnpacked<VlUnpacked<SData/*9:0*/, 3>, 2> cache_tb__DOT__cache__DOT__cache_tag_array__DOT__tag_array;
         VlUnpacked<VlUnpacked<CData/*1:0*/, 3>, 2> cache_tb__DOT__cache__DOT__cache_tag_array__DOT__valid_array;
-    };
-    struct {
         VlUnpacked<VlUnpacked<CData/*1:0*/, 3>, 2> cache_tb__DOT__cache__DOT__cache_tag_array__DOT__LRU_array;
         VlUnpacked<QData/*63:0*/, 1> __VstlTriggered;
         VlUnpacked<QData/*63:0*/, 1> __VactTriggered;
