@@ -21,6 +21,7 @@ ZeroCost-LLC (ZCLLC) is a SystemVerilog implementation of a last level cache bas
 
 # Architecture and State Diagram 
 ![State Diagram](docs/cache_state_diagram.jpeg)
+
 The Cache has two main states with further sub states in each. The Initial state is the cache state and this remains the state unless there is a miss during a memory operation such as a load or store. On miss the system transitions to the main memory state and returns to the cache state once data is ready. 
 ## Cache State: 
 The Cache will start in an idle state if the main state is main memory or no memory operation is currently being requested. In the idle state the cache does not update LRU ages or evict any cache lines. The cache transitions to the active state when the main state is in cache and there is an active memory request. In this state the cache returns data upon hits and updates LRU ages accordingly, if there is a miss the cache will transition the main state to main memory and follow the eviction procedure. 
@@ -29,9 +30,10 @@ Upon misses the main state transitions to main memory, the default memory state 
 
 # Modules: 
 ![Diagram](docs/Component_Diagram.jpeg)
+
 The cache has four main modules. 
 ## Tag Array: 
-The tag array stores the tags in a k-way set associative array. For each way it also stores the LRU ages and the cache line state(valid/clean, invalid/vacant, dirty). It does tag comparison and hold the LRU replacement logic. 
+The tag array stores the tags in a k-way set associative array. For each way it also stores the LRU ages and the cache line state(valid/clean, invalid/vacant, dirty). It does tag comparison and holds the LRU replacement logic. 
 ## Data Array: 
 Data Array holds the cache lines in a k-way set associative array, it returns the entire set for parallel tag and data accesses.  
 ## Main Memory: 
