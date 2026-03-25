@@ -6,7 +6,7 @@ ZeroCost-LLC (ZCLLC) is a SystemVerilog implementation of a last level cache bas
 - Parameterizable Block size, memory depth, memory delay 
 - LRU Replacement policy 
 - Load/Store Support 
-- Write back Cache 
+- Write-back, Write-allocate Cache 
 - Parallel tag lookup and data access 
 
 # Planned Improvements 
