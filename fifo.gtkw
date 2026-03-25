@@ -1,0 +1,38 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Wed Mar 25 16:18:07 2026
+[*]
+[dumpfile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/fifo.vcd"
+[dumpfile_mtime] "Wed Mar 25 16:14:27 2026"
+[dumpfile_size] 2392
+[savefile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/fifo.gtkw"
+[timestart] 0
+[size] 1333 600
+[pos] -1 -1
+*-1.626081 22 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[treeopen] fifo_tb.
+[sst_width] 255
+[signals_width] 185
+[sst_expanded] 1
+[sst_vpaned_height] 159
+@28
+fifo_tb.reset
+fifo_tb.clk
+@22
+fifo_tb.pop_data[7:0]
+fifo_tb.push_data[7:0]
+@28
+fifo_tb.push_pop[1:0]
+fifo_tb.fifo1.head[2:0]
+fifo_tb.fifo1.tail[2:0]
+fifo_tb.fifo1.empty
+@22
+fifo_tb.fifo1.fifo_buffer[0][7:0]
+fifo_tb.fifo1.fifo_buffer[1][7:0]
+fifo_tb.fifo1.fifo_buffer[2][7:0]
+@23
+fifo_tb.fifo1.fifo_buffer[3][7:0]
+@28
+fifo_tb.buffer_full
+[pattern_trace] 1
+[pattern_trace] 0

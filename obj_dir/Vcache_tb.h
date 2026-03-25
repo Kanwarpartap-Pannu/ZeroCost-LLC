@@ -29,6 +29,12 @@ class alignas(VL_CACHE_LINE_BYTES) Vcache_tb VL_NOT_FINAL : public VerilatedMode
     // PORTS
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
+    VL_IN8(&clk,0,0);
+    VL_IN8(&push_pop,1,0);
+    VL_IN8(&reset,0,0);
+    VL_OUT8(&buffer_full,0,0);
+    VL_IN(&push_data,31,0);
+    VL_OUT(&pop_data,31,0);
 
     // CELLS
     // Public to allow access to /* verilator public */ items.

@@ -4,6 +4,7 @@ design/data_array.sv
 design/lookup.sv
 design/memory.sv
 design/tag_array.sv
+design/fifo_buffer.sv
 --Wall 
 --trace-vcd
 --Wno-fatal

@@ -2,7 +2,7 @@
 # DESCRIPTION: Verilator output: Make include file with class lists
 #
 # This file lists generated Verilated files, for including in higher level makefiles.
-# See Vdata_array.mk for the caller.
+# See Vfifo_tb.mk for the caller.
 
 ### Switches...
 # C11 constructs required?  0/1 (always on now)
@@ -14,39 +14,41 @@ VM_COVERAGE = 0
 # Parallel builds?  0/1 (from --output-split)
 VM_PARALLEL_BUILDS = 0
 # Tracing output mode?  0/1 (from --trace-fst/--trace-saif/--trace-vcd)
-VM_TRACE = 0
+VM_TRACE = 1
 # Tracing output mode in FST format?  0/1 (from --trace-fst)
 VM_TRACE_FST = 0
 # Tracing output mode in SAIF format?  0/1 (from --trace-saif)
 VM_TRACE_SAIF = 0
 # Tracing output mode in VCD format?  0/1 (from --trace-vcd)
-VM_TRACE_VCD = 0
+VM_TRACE_VCD = 1
 
 ### Object file lists...
 # Generated module classes, fast-path, compile with highest optimization
 VM_CLASSES_FAST += \
-  Vdata_array \
-  Vdata_array___024root__0 \
-  Vdata_array__main \
+  Vfifo_tb \
+  Vfifo_tb___024root__0 \
+  Vfifo_tb__main \
 
 # Generated module classes, non-fast-path, compile with low/medium optimization
 VM_CLASSES_SLOW += \
-  Vdata_array__ConstPool_0 \
-  Vdata_array___024root__Slow \
-  Vdata_array___024root__0__Slow \
-  Vdata_array___024unit__Slow \
-  Vdata_array___024unit__0__Slow \
+  Vfifo_tb__ConstPool_0 \
+  Vfifo_tb___024root__Slow \
+  Vfifo_tb___024root__0__Slow \
 
 # Generated support classes, fast-path, compile with highest optimization
 VM_SUPPORT_FAST += \
+  Vfifo_tb__Trace__0 \
 
 # Generated support classes, non-fast-path, compile with low/medium optimization
 VM_SUPPORT_SLOW += \
-  Vdata_array__Syms \
+  Vfifo_tb__Syms \
+  Vfifo_tb__Trace__0__Slow \
+  Vfifo_tb__TraceDecls__0__Slow \
 
 # Global classes, need linked once per executable, fast-path, compile with highest optimization
 VM_GLOBAL_FAST += \
   verilated \
+  verilated_vcd_c \
   verilated_timing \
   verilated_threads \
 

@@ -12,6 +12,8 @@ CACHE_SIZE ?= 64
 BLOCK_SIZE ?= 8
 WAYS ?= 3
 
+CUSTOM_FILES ?= test/verilator_fifo.f
+
 VERILATOR_FLAGS = \
     -DMEM_DEPTH=$(MEM_DEPTH) \
     -DCACHE_SIZE=$(CACHE_SIZE) \
@@ -19,7 +21,8 @@ VERILATOR_FLAGS = \
     -DWAYS=$(WAYS) \
 	-DMEM_PATH=$(MEM_PATH_STR) \
 	-DLINE_COUNT=$(LINE_COUNT) \
-	-Idesign
+	-Idesign \
+	-Itest
 
 
 # Lint only mode to check for errors and warnings 
@@ -31,6 +34,15 @@ run:
 	verilator --binary $(VERILATOR_FLAGS) -f verilator.f > run.log 2>&1
 	./obj_dir/Vcache_tb
 
+# Running Specific Tests
+custom:  
+	verilator --binary $(VERILATOR_FLAGS) -f $(CUSTOM_FILES)
+	./obj_dir/Vfifo_tb
+
 # Pulling up Waveforms with saved scopes 
 wave: 
 	gtkwave cache.vcd cache.gtkw
+
+# Clean workspace 
+clean:
+	rm -rf obj_dir run.log

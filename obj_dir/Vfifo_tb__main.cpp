@@ -2,7 +2,7 @@
 // DESCRIPTION: main() calling loop, created with Verilator --main
 
 #include "verilated.h"
-#include "Vdata_array.h"
+#include "Vfifo_tb.h"
 
 //======================
 
@@ -10,10 +10,11 @@ int main(int argc, char** argv, char**) {
     // Setup context, defaults, and parse command line
     Verilated::debug(0);
     const std::unique_ptr<VerilatedContext> contextp{new VerilatedContext};
+    contextp->traceEverOn(true);
     contextp->commandArgs(argc, argv);
 
     // Construct the Verilated model, from Vtop.h generated from Verilating
-    const std::unique_ptr<Vdata_array> topp{new Vdata_array{contextp.get(), ""}};
+    const std::unique_ptr<Vfifo_tb> topp{new Vfifo_tb{contextp.get(), ""}};
 
     // Simulate until $finish
     while (VL_LIKELY(!contextp->gotFinish())) {

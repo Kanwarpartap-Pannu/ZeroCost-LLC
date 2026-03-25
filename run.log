@@ -1,3 +1,9 @@
+%Warning-EOFNEWLINE: design/fifo_buffer.sv:109:24: Missing newline at end of file (POSIX 3.206).
+                                                 : ... Suggest add newline.
+  109 | endmodule : fifo_buffer
+      |                        ^
+                     ... For warning description see https://verilator.org/warn/EOFNEWLINE?v=5.042
+                     ... Use "/* verilator lint_off EOFNEWLINE */" and lint_on around source to disable this message.
 %Warning-PINCONNECTEMPTY: design/lookup.sv:81:6: Instance pin connected by name with empty reference: 'data_o'
    81 |     .data_o(),
       |      ^~~~~~
@@ -11,14 +17,30 @@
       |                                      ^~~~~~
                      ... For warning description see https://verilator.org/warn/PINMISSING?v=5.042
                      ... Use "/* verilator lint_off PINMISSING */" and lint_on around source to disable this message.
+%Warning-MULTITOP: design/fifo_buffer.sv:10:8: Multiple top level modules
+                                             : ... Suggest see manual; fix the duplicates, or use --top-module to select top.
+                   ... For warning description see https://verilator.org/warn/MULTITOP?v=5.042
+                   ... Use "/* verilator lint_off MULTITOP */" and lint_on around source to disable this message.
+                                             : ... Top module 'cache_tb'
+    3 | module cache_tb; 
+      |        ^~~~~~~~
+                                             : ... Top module 'fifo_buffer'
+   10 | module fifo_buffer #(
+      |        ^~~~~~~~~~~
+%Warning-VARHIDDEN: design/fifo_buffer.sv:27:20: Declaration of signal hides declaration in upper scope: 'fifo_buffer'
+   27 | logic [DWIDTH-1:0] fifo_buffer [0:DEPTH-1];
+      |                    ^~~~~~~~~~~
+                    design/fifo_buffer.sv:10:8: ... Location of original declaration
+   10 | module fifo_buffer #(
+      |        ^~~~~~~~~~~
+                    ... For warning description see https://verilator.org/warn/VARHIDDEN?v=5.042
+                    ... Use "/* verilator lint_off VARHIDDEN */" and lint_on around source to disable this message.
 %Warning-VARHIDDEN: design/memory.sv:156:26: Declaration of signal hides declaration in upper scope: 'i'
   156 |                 for (int i=0; i < 8; i++) begin 
       |                          ^
                     design/memory.sv:69:9: ... Location of original declaration
    69 |     int i;
       |         ^
-                    ... For warning description see https://verilator.org/warn/VARHIDDEN?v=5.042
-                    ... Use "/* verilator lint_off VARHIDDEN */" and lint_on around source to disable this message.
 %Warning-VARHIDDEN: design/memory.sv:168:26: Declaration of signal hides declaration in upper scope: 'i'
   168 |                 for (int i=0; i < 8; i++) begin 
       |                          ^
@@ -95,6 +117,14 @@
                                              : ... note: In instance 'cache_tb'
    69 |     funct3_i = 11; 
       |              ^
+%Warning-WIDTHTRUNC: design/fifo_buffer.sv:82:32: Bit extraction of array[7:0] requires 3 bit index, not 4 bits.
+                                                : ... note: In instance 'fifo_buffer'
+   82 |                     fifo_buffer[tail] <= push_data;
+      |                                ^
+%Warning-WIDTHTRUNC: design/fifo_buffer.sv:90:44: Bit extraction of array[7:0] requires 3 bit index, not 4 bits.
+                                                : ... note: In instance 'fifo_buffer'
+   90 |                     pop_data <= fifo_buffer[head];
+      |                                            ^
 %Warning-UNUSEDSIGNAL: design/cache_tb.sv:19:20: Signal is not used: 'data_out'
                                                : ... note: In instance 'cache_tb'
    19 | logic [DWIDTH-1:0] data_out;
@@ -123,5 +153,5 @@ echo "" > Vcache_tb__ALL.verilator_deplist.tmp
 c++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv   verilated.o verilated_vcd_c.o verilated_timing.o verilated_threads.o Vcache_tb__ALL.a    -pthread -lpthread   -o Vcache_tb
 rm Vcache_tb__ALL.verilator_deplist.tmp
 - V e r i l a t i o n   R e p o r t: Verilator 5.042 2025-11-02 rev UNKNOWN.REV
-- Verilator: Built from 0.149 MB sources in 7 modules, into 0.275 MB in 12 C++ files needing 0.000 MB
-- Verilator: Walltime 6.156 s (elab=0.007, cvt=0.036, bld=6.088); cpu 0.042 s on 1 threads
+- Verilator: Built from 0.188 MB sources in 8 modules, into 0.291 MB in 12 C++ files needing 0.000 MB
+- Verilator: Walltime 5.974 s (elab=0.008, cvt=0.027, bld=5.922); cpu 0.036 s on 1 threads

@@ -14,6 +14,7 @@ module fifo_buffer #(
     input logic [DWIDTH-1:0] push_data,
     input logic [1:0] push_pop,
     input logic reset, 
+    input logic clk,
 
     output logic [DWIDTH-1:0] pop_data,
     output logic buffer_full 
@@ -54,13 +55,13 @@ always_comb begin
 
     else begin
         empty = 0; 
-        full = 0; 
+        buffer_full = 0; 
     end
 
 end
 
 // Push and Pop logic 
-always_ff begin
+always_ff @(posedge clk) begin
 
     if (!reset) begin
         tail <= 0; 
@@ -77,7 +78,7 @@ always_ff begin
             end
 
             PUSH: begin
-                if(!full) begin
+                if(!buffer_full) begin
                     fifo_buffer[tail] <= push_data;
                     tail <= tail+1; 
                 end
@@ -88,6 +89,9 @@ always_ff begin
                 if (!empty) begin
                     pop_data <= fifo_buffer[head];
                     head <= head+1; 
+                end
+                else begin 
+                    pop_data <= 0; 
                 end
             end
 

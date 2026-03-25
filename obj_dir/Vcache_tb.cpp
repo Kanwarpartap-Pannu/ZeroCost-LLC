@@ -10,6 +10,12 @@
 Vcache_tb::Vcache_tb(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vcache_tb__Syms(contextp(), _vcname__, this)}
+    , clk{vlSymsp->TOP.clk}
+    , push_pop{vlSymsp->TOP.push_pop}
+    , reset{vlSymsp->TOP.reset}
+    , buffer_full{vlSymsp->TOP.buffer_full}
+    , push_data{vlSymsp->TOP.push_data}
+    , pop_data{vlSymsp->TOP.pop_data}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context

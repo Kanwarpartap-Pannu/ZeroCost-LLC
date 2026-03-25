@@ -14,6 +14,7 @@ VL_ATTR_COLD void Vcache_tb___024root___eval_static(Vcache_tb___024root* vlSelf)
     // Body
     Vcache_tb___024root___eval_static__TOP(vlSelf);
     Vcache_tb___024root____Vm_traceActivitySetAll(vlSelf);
+    vlSelfRef.__Vtrigprevexpr___TOP__clk__0 = vlSelfRef.clk;
     vlSelfRef.__Vtrigprevexpr___TOP__cache_tb__DOT__clk__0 
         = vlSelfRef.cache_tb__DOT__clk;
 }
@@ -144,7 +145,7 @@ VL_ATTR_COLD void Vcache_tb___024root___eval_settle(Vcache_tb___024root* vlSelf)
 #ifdef VL_DEBUG
             Vcache_tb___024root___dump_triggers__stl(vlSelfRef.__VstlTriggered, "stl"s);
 #endif
-            VL_FATAL_MT("design/cache_tb.sv", 3, "", "Settle region did not converge after 100 tries");
+            VL_FATAL_MT("design/fifo_buffer.sv", 10, "", "Settle region did not converge after 100 tries");
         }
         __VstlIterCount = ((IData)(1U) + __VstlIterCount);
     } while (Vcache_tb___024root___eval_phase__stl(vlSelf));
@@ -196,11 +197,16 @@ VL_ATTR_COLD bool Vcache_tb___024root___trigger_anySet__stl(const VlUnpacked<QDa
     return (0U);
 }
 
+extern const VlUnpacked<CData/*0:0*/, 256> Vcache_tb__ConstPool__TABLE_h627a7f2d_0;
+extern const VlUnpacked<CData/*0:0*/, 256> Vcache_tb__ConstPool__TABLE_hfe0ee99c_0;
+
 VL_ATTR_COLD void Vcache_tb___024root___stl_sequent__TOP__0(Vcache_tb___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcache_tb___024root___stl_sequent__TOP__0\n"); );
     Vcache_tb__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Locals
+    CData/*7:0*/ __Vtableidx1;
+    __Vtableidx1 = 0;
     IData/*31:0*/ __VExpandSel_WordIdx_1;
     IData/*31:0*/ __VExpandSel_LoShift_1;
     CData/*0:0*/ __VExpandSel_Aligned_1;
@@ -209,6 +215,12 @@ VL_ATTR_COLD void Vcache_tb___024root___stl_sequent__TOP__0(Vcache_tb___024root*
     // Body
     vlSelfRef.cache_tb__DOT__cache__DOT____Vcellinp__memory1__addr_i 
         = vlSelfRef.cache_tb__DOT__address;
+    __Vtableidx1 = (((IData)(vlSelfRef.fifo_buffer__DOT__tail) 
+                     << 4U) | (IData)(vlSelfRef.fifo_buffer__DOT__head));
+    vlSelfRef.fifo_buffer__DOT__empty = Vcache_tb__ConstPool__TABLE_h627a7f2d_0
+        [__Vtableidx1];
+    vlSelfRef.buffer_full = Vcache_tb__ConstPool__TABLE_hfe0ee99c_0
+        [__Vtableidx1];
     __VExpandSel_WordIdx_1 = (0x0000000fU & (((IData)(0x000000c0U) 
                                               * ((IData)(1U) 
                                                  - 
@@ -1045,10 +1057,13 @@ VL_ATTR_COLD void Vcache_tb___024root___dump_triggers__act(const VlUnpacked<QDat
         VL_DBG_MSGS("         No '" + tag + "' region triggers active\n");
     }
     if ((1U & (IData)(triggers[0U]))) {
-        VL_DBG_MSGS("         '" + tag + "' region trigger index 0 is active: @(posedge cache_tb.clk)\n");
+        VL_DBG_MSGS("         '" + tag + "' region trigger index 0 is active: @(posedge clk)\n");
     }
     if ((1U & (IData)((triggers[0U] >> 1U)))) {
-        VL_DBG_MSGS("         '" + tag + "' region trigger index 1 is active: @([true] __VdlySched.awaitingCurrentTime())\n");
+        VL_DBG_MSGS("         '" + tag + "' region trigger index 1 is active: @(posedge cache_tb.clk)\n");
+    }
+    if ((1U & (IData)((triggers[0U] >> 2U)))) {
+        VL_DBG_MSGS("         '" + tag + "' region trigger index 2 is active: @([true] __VdlySched.awaitingCurrentTime())\n");
     }
 }
 #endif  // VL_DEBUG
@@ -1063,6 +1078,7 @@ VL_ATTR_COLD void Vcache_tb___024root____Vm_traceActivitySetAll(Vcache_tb___024r
     vlSelfRef.__Vm_traceActivity[2U] = 1U;
     vlSelfRef.__Vm_traceActivity[3U] = 1U;
     vlSelfRef.__Vm_traceActivity[4U] = 1U;
+    vlSelfRef.__Vm_traceActivity[5U] = 1U;
 }
 
 VL_ATTR_COLD void Vcache_tb___024root___ctor_var_reset(Vcache_tb___024root* vlSelf) {
@@ -1071,6 +1087,18 @@ VL_ATTR_COLD void Vcache_tb___024root___ctor_var_reset(Vcache_tb___024root* vlSe
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     const uint64_t __VscopeHash = VL_MURMUR64_HASH(vlSelf->name());
+    vlSelf->push_data = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 8141005003212623892ull);
+    vlSelf->push_pop = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 11877588266294439003ull);
+    vlSelf->reset = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9928399931838511862ull);
+    vlSelf->clk = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16707436170211756652ull);
+    vlSelf->pop_data = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 16659459033433359568ull);
+    vlSelf->buffer_full = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14663875713135549949ull);
+    for (int __Vi0 = 0; __Vi0 < 8; ++__Vi0) {
+        vlSelf->fifo_buffer__DOT__fifo_buffer[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 2749724021340160033ull);
+    }
+    vlSelf->fifo_buffer__DOT__head = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 16278370533682829335ull);
+    vlSelf->fifo_buffer__DOT__tail = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 13989085349174026633ull);
+    vlSelf->fifo_buffer__DOT__empty = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7546054080578156254ull);
     vlSelf->cache_tb__DOT__clk = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5727279950073359593ull);
     vlSelf->cache_tb__DOT__reset = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16174056173423606432ull);
     vlSelf->cache_tb__DOT__address = VL_SCOPED_RAND_RESET_I(14, __VscopeHash, 12553925048007856369ull);
@@ -1160,11 +1188,12 @@ VL_ATTR_COLD void Vcache_tb___024root___ctor_var_reset(Vcache_tb___024root* vlSe
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VactTriggered[__Vi0] = 0;
     }
+    vlSelf->__Vtrigprevexpr___TOP__clk__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9526919608049418986ull);
     vlSelf->__Vtrigprevexpr___TOP__cache_tb__DOT__clk__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14499655531552440901ull);
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VnbaTriggered[__Vi0] = 0;
     }
-    for (int __Vi0 = 0; __Vi0 < 5; ++__Vi0) {
+    for (int __Vi0 = 0; __Vi0 < 6; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = 0;
     }
 }
