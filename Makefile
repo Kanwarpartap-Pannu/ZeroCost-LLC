@@ -13,6 +13,7 @@ BLOCK_SIZE ?= 8
 WAYS ?= 3
 
 CUSTOM_FILES ?= test/verilator_fifo.f
+OBJ_DIR ?= Vfifo_tb
 
 VERILATOR_FLAGS = \
     -DMEM_DEPTH=$(MEM_DEPTH) \
@@ -37,7 +38,7 @@ run:
 # Running Specific Tests
 custom:  
 	verilator --binary $(VERILATOR_FLAGS) -f $(CUSTOM_FILES)
-	./obj_dir/Vfifo_tb
+	./obj_dir/$(OBJ_DIR)
 
 # Pulling up Waveforms with saved scopes 
 wave: 

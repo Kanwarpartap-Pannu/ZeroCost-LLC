@@ -79,7 +79,7 @@ always_ff @(posedge clk) begin
 
             PUSH: begin
                 if(!buffer_full) begin
-                    fifo_buffer[tail] <= push_data;
+                    fifo_buffer[tail[POINTER_BITS-1:0]] <= push_data;
                     tail <= tail+1; 
                 end
                 pop_data <= 0; 
@@ -87,7 +87,7 @@ always_ff @(posedge clk) begin
 
             POP: begin
                 if (!empty) begin
-                    pop_data <= fifo_buffer[head];
+                    pop_data <= fifo_buffer[head[POINTER_BITS-1:0]];
                     head <= head+1; 
                 end
                 else begin 
