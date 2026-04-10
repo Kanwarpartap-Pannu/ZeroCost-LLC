@@ -7,6 +7,8 @@
 #include "Vfifo_tb__ConstPool_0.cpp"
 #include "Vfifo_tb___024root__Slow.cpp"
 #include "Vfifo_tb___024root__0__Slow.cpp"
+#include "Vfifo_tb___024unit__Slow.cpp"
+#include "Vfifo_tb___024unit__0__Slow.cpp"
 #include "Vfifo_tb__Syms.cpp"
 #include "Vfifo_tb__Trace__0__Slow.cpp"
 #include "Vfifo_tb__TraceDecls__0__Slow.cpp"

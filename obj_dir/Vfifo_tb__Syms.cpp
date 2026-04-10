@@ -4,6 +4,7 @@
 #include "Vfifo_tb__pch.h"
 #include "Vfifo_tb.h"
 #include "Vfifo_tb___024root.h"
+#include "Vfifo_tb___024unit.h"
 
 // FUNCTIONS
 Vfifo_tb__Syms::~Vfifo_tb__Syms()
@@ -43,7 +44,7 @@ Vfifo_tb__Syms::Vfifo_tb__Syms(VerilatedContext* contextp, const char* namep, Vf
     , TOP{this, namep}
 {
     // Check resources
-    Verilated::stackCheck(250);
+    Verilated::stackCheck(348);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-12);
     _vm_contextp__->timeprecision(-12);

@@ -27,7 +27,8 @@ module writeback_buffer #(
     output logic [POINTER_BITS:0] found_entry, 
     output logic [DWIDTH-1:0] found_data,
     output logic found,
-    output logic [DWIDTH-1:0] pop_data,
+    output logic [(DWIDTH+AWIDTH):0] pop_data,
+    output logic pop_valid, 
     output logic buffer_full 
 );
 
@@ -108,6 +109,7 @@ always_ff @(posedge clk) begin
                 tail <= tail; 
                 head <= head; 
                 pop_data <= 0; 
+                pop_valid <= 0; 
             end
 
             PUSH: begin
@@ -115,7 +117,8 @@ always_ff @(posedge clk) begin
                     fifo_buffer[tail[POINTER_BITS-1:0]] <= push_data;
                     tail <= tail+1; 
                 end
-                pop_data <= 0; 
+                pop_data <= 0;
+                pop_valid <= 0;  
             end
 
             POP: begin
@@ -123,9 +126,11 @@ always_ff @(posedge clk) begin
                     pop_data <= fifo_buffer[head[POINTER_BITS-1:0]];
                     head <= head+1;
                     fifo_buffer[head[POINTER_BITS-1:0]][DWIDTH+AWIDTH] <= 1; 
+                    pop_valid <= 1; 
                 end
                 else begin 
-                    pop_data <= 0; 
+                    pop_data <= 0;
+                    pop_valid <= 0;  
                 end
             end
 
@@ -136,12 +141,14 @@ always_ff @(posedge clk) begin
                 end
                 fifo_buffer[merge_entry[POINTER_BITS-1:0]][DWIDTH+AWIDTH] <= 1; 
                 pop_data <= 0; 
+                pop_valid <= 0; 
             end 
 
             default: begin
                 tail <= tail; 
                 head <= head; 
                 pop_data <= 0;
+                pop_valid <= 0; 
             end
 
         endcase

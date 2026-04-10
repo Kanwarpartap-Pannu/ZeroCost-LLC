@@ -16,6 +16,7 @@
 
 // INCLUDE MODULE CLASSES
 #include "Vfifo_tb___024root.h"
+#include "Vfifo_tb___024unit.h"
 
 // SYMS CLASS (contains all model state)
 class alignas(VL_CACHE_LINE_BYTES) Vfifo_tb__Syms final : public VerilatedSyms {

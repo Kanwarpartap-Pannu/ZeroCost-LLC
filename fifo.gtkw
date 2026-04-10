@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
-[*] Wed Apr  1 13:45:17 2026
+[*] Mon Apr  6 14:55:54 2026
 [*]
 [dumpfile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/fifo.vcd"
-[dumpfile_mtime] "Tue Mar 31 23:29:26 2026"
-[dumpfile_size] 3075
+[dumpfile_mtime] "Mon Apr  6 14:54:41 2026"
+[dumpfile_size] 9826
 [savefile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/fifo.gtkw"
-[timestart] 4
+[timestart] 24
 [size] 1333 600
 [pos] -1 -1
-*-2.565199 11 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+*-2.565199 31 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 [markername] AA
 [markername] BB
 [markername] CC
@@ -37,6 +37,7 @@
 [markername] YY
 [markername] ZZ
 [treeopen] fifo_tb.
+[treeopen] fifo_tb.mem1.
 [sst_width] 255
 [signals_width] 265
 [sst_expanded] 1
@@ -61,16 +62,19 @@ fifo_tb.push_data[11:0]
 (11)fifo_tb.push_data[11:0]
 @1401200
 -group_end
+@23
+fifo_tb.fifo1.pop_data[12:0]
 @28
+fifo_tb.fifo1.pop_valid
 fifo_tb.fifo1.push_pop[1:0]
 @22
 fifo_tb.fifo1.push_data[11:0]
 @28
 fifo_tb.fifo1.head[2:0]
 fifo_tb.fifo1.tail[2:0]
-@c00023
+@c00022
 fifo_tb.fifo1.fifo_buffer[0][12:0]
-@29
+@28
 (0)fifo_tb.fifo1.fifo_buffer[0][12:0]
 (1)fifo_tb.fifo1.fifo_buffer[0][12:0]
 (2)fifo_tb.fifo1.fifo_buffer[0][12:0]
@@ -84,7 +88,7 @@ fifo_tb.fifo1.fifo_buffer[0][12:0]
 (10)fifo_tb.fifo1.fifo_buffer[0][12:0]
 (11)fifo_tb.fifo1.fifo_buffer[0][12:0]
 (12)fifo_tb.fifo1.fifo_buffer[0][12:0]
-@1401201
+@1401200
 -group_end
 @22
 fifo_tb.fifo1.fifo_buffer[1][12:0]
@@ -96,5 +100,41 @@ fifo_tb.fifo1.found
 fifo_tb.fifo1.found_entry[2:0]
 @22
 fifo_tb.fifo1.search_addr[3:0]
+@28
+[color] 1
+fifo_tb.mem1.curr_state[1:0]
+fifo_tb.mem1.rd_req
+@22
+fifo_tb.mem1.mem_store[63:0]
+fifo_tb.mem1.store_address[3:0]
+fifo_tb.mem1.memory_address[3:0]
+@c00022
+fifo_tb.mem1.buffer_data[12:0]
+@28
+(0)fifo_tb.mem1.buffer_data[12:0]
+(1)fifo_tb.mem1.buffer_data[12:0]
+(2)fifo_tb.mem1.buffer_data[12:0]
+(3)fifo_tb.mem1.buffer_data[12:0]
+(4)fifo_tb.mem1.buffer_data[12:0]
+(5)fifo_tb.mem1.buffer_data[12:0]
+(6)fifo_tb.mem1.buffer_data[12:0]
+(7)fifo_tb.mem1.buffer_data[12:0]
+(8)fifo_tb.mem1.buffer_data[12:0]
+(9)fifo_tb.mem1.buffer_data[12:0]
+(10)fifo_tb.mem1.buffer_data[12:0]
+(11)fifo_tb.mem1.buffer_data[12:0]
+(12)fifo_tb.mem1.buffer_data[12:0]
+@1401200
+-group_end
+@22
+[color] 1
+fifo_tb.mem1.addr[3:0]
+[color] 1
+fifo_tb.mem1.mem_out[63:0]
+@28
+[color] 1
+fifo_tb.mem1.pop_en
+[color] 1
+fifo_tb.mem1.ready_out
 [pattern_trace] 1
 [pattern_trace] 0

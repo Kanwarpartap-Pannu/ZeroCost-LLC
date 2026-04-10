@@ -34,6 +34,8 @@ VM_CLASSES_SLOW += \
   Vfifo_tb__ConstPool_0 \
   Vfifo_tb___024root__Slow \
   Vfifo_tb___024root__0__Slow \
+  Vfifo_tb___024unit__Slow \
+  Vfifo_tb___024unit__0__Slow \
 
 # Generated support classes, fast-path, compile with highest optimization
 VM_SUPPORT_FAST += \
