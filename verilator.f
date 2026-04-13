@@ -8,6 +8,7 @@ design/fifo_buffer.sv
 design/writeback_buffer.sv
 design/memory_controller.sv
 design/cache_controller.sv
+design/top.sv
 --Wall 
 --trace-vcd
 --Wno-fatal
