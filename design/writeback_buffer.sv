@@ -57,7 +57,7 @@ always_comb begin
     found_data = 0;
 
     for(int i=0; i<DEPTH; i++) begin 
-        if ((fifo_buffer[i][(DWIDTH+AWIDTH)-1:DWIDTH] == search_addr) && (fifo_buffer[i][DWIDTH+AWIDTH] != 1)) begin
+        if ((!empty) && (fifo_buffer[i][(DWIDTH+AWIDTH)-1:DWIDTH] == search_addr) && (fifo_buffer[i][DWIDTH+AWIDTH] != 1)) begin
             found = 1; 
             found_entry = i; 
             found_data = fifo_buffer[i][DWIDTH-1:0];

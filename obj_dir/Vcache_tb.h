@@ -5,20 +5,20 @@
 // The class here is then constructed to instantiate the design.
 // See the Verilator manual for examples.
 
-#ifndef VERILATED_VFIFO_TB_H_
-#define VERILATED_VFIFO_TB_H_  // guard
+#ifndef VERILATED_VCACHE_TB_H_
+#define VERILATED_VCACHE_TB_H_  // guard
 
 #include "verilated.h"
 
-class Vfifo_tb__Syms;
-class Vfifo_tb___024root;
+class Vcache_tb__Syms;
+class Vcache_tb___024root;
 class VerilatedVcdC;
 
 // This class is the main interface to the Verilated model
-class alignas(VL_CACHE_LINE_BYTES) Vfifo_tb VL_NOT_FINAL : public VerilatedModel {
+class alignas(VL_CACHE_LINE_BYTES) Vcache_tb VL_NOT_FINAL : public VerilatedModel {
   private:
     // Symbol table holding complete model state (owned by this class)
-    Vfifo_tb__Syms* const vlSymsp;
+    Vcache_tb__Syms* const vlSymsp;
 
   public:
 
@@ -36,19 +36,19 @@ class alignas(VL_CACHE_LINE_BYTES) Vfifo_tb VL_NOT_FINAL : public VerilatedModel
 
     // Root instance pointer to allow access to model internals,
     // including inlined /* verilator public_flat_* */ items.
-    Vfifo_tb___024root* const rootp;
+    Vcache_tb___024root* const rootp;
 
     // CONSTRUCTORS
     /// Construct the model; called by application code
     /// If contextp is null, then the model will use the default global context
     /// If name is "", then makes a wrapper with a
     /// single model invisible with respect to DPI scope names.
-    explicit Vfifo_tb(VerilatedContext* contextp, const char* name = "TOP");
-    explicit Vfifo_tb(const char* name = "TOP");
+    explicit Vcache_tb(VerilatedContext* contextp, const char* name = "TOP");
+    explicit Vcache_tb(const char* name = "TOP");
     /// Destroy the model; called (often implicitly) by application code
-    virtual ~Vfifo_tb();
+    virtual ~Vcache_tb();
   private:
-    VL_UNCOPYABLE(Vfifo_tb);  ///< Copying not allowed
+    VL_UNCOPYABLE(Vcache_tb);  ///< Copying not allowed
 
   public:
     // API METHODS

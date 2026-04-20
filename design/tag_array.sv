@@ -10,18 +10,23 @@
 
 module tag_array #(
     parameter int AWIDTH = $clog2(`MEM_DEPTH), 
-    parameter int TAG_BITS=3,
-    parameter int INDEX_BITS=2, 
-    parameter int NUM_SETS=4,
-    parameter int OFFSET_BITS=3
+    parameter int TAG_BITS = 3,
+    parameter int INDEX_BITS = 2, 
+    parameter int NUM_SETS = 4,
+    parameter int OFFSET_BITS = 3,
+    parameter int LOOKUP_WIDTH = 4 
 )(
     input logic                  clk,
     input logic                  idle, 
     input logic [TAG_BITS-1:0]   tag_i, 
     input logic [INDEX_BITS-1:0] index_i, 
-    input logic replace_en,
-    input logic store_en,
-    output logic                 hit,
+    input logic                  replace_en,
+    input logic                  store_en,
+    input logic                  reset_search, 
+    input logic                  search_en, 
+
+    output logic                    hit,
+    output logic                    search_done, 
     output logic [$clog2(WAYS)-1:0] hit_way_o,  
     output logic [$clog2(WAYS)-1:0] replace_way_o,
     output logic [1:0]              replace_way_state,
@@ -46,17 +51,54 @@ assign hit_way_o = hit_way;
 //reconstructed address for evicted way
 assign replace_address = {tag_array[index_i][replace_way],index_i,{OFFSET_BITS{1'b0}}};
 
+
+
+// Hit detection logic with parametrizable lookup width 
+logic [$clog2(WAYS)-1:0] lookup_way; 
+logic current_idx; 
+logic [TAG_BITS-1:0]     lookup_array  [0:LOOKUP_WIDTH-1]; 
+always_ff @(posedge clk) begin
+    if (reset_search) begin
+        lookup_way <= 0; 
+        search_done <= 0;
+        current_idx <= 1; 
+    end
+    else if (search_en && (!search_done)) begin
+        current_idx <= 0; 
+        if (hit) begin
+            search_done <= 1; 
+        end 
+        else begin
+            for (int i = 0; i<LOOKUP_WIDTH; i++) begin 
+                lookup_array[i] <= tag_array[index_i][(lookup_way+i)]; 
+            end
+            if ((lookup_way+LOOKUP_WIDTH) == (WAYS)) begin
+                search_done <= 1; 
+                lookup_way <= lookup_way; 
+            end
+            else begin
+                lookup_way <= lookup_way + LOOKUP_WIDTH;
+            end
+        end
+    end
+    else begin 
+        lookup_way <= lookup_way; 
+        search_done <= search_done; 
+    end
+end
+
 always_comb begin 
    hit=0; 
    hit_way=0; 
-   for (int i = 0; i<WAYS; i++) begin 
+   for (int i = 0; i<LOOKUP_WIDTH; i++) begin 
         
-        if ((tag_array[index_i][i] == tag_i) && (valid_array[index_i][i] != 0)) begin 
-            hit_way = i; 
+        if ((lookup_array[i] == tag_i) 
+        && (valid_array[index_i][lookup_way+i] != 0) 
+        && (current_idx != 1)) begin 
+            hit_way = lookup_way + i; 
             hit = 1; 
         end 
     end  
-
 end 
 
 // Look for Empty Block 

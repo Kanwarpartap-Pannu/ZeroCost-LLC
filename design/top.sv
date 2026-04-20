@@ -22,20 +22,26 @@ module top #(
     input logic [2:0] funct3_i,  
 
     output logic [DWIDTH-1:0] data_out, 
-    output logic data_valid
+    output logic data_valid, 
+    output logic stall
 ); 
+
+localparam OFFSET_BITS = $clog2(`BLOCK_SIZE);
 
 // STATES: 
 parameter HIT_FOUND = 0, WRITE_BACK = 1, READING = 2;
 
+logic mem_op; 
+assign mem_op = (opcode_i == OP_LOAD) || (opcode_i == OP_STORE); 
 // CACHE CONTROLLER 
 logic [AWIDTH-1:0] mem_addr; 
 logic [DWIDTH-1:0] cache_hit_data;
 logic cache_data_valid;  
 logic [1:0] memory_rq; 
-logic [((`BLOCK_SIZE*8)-1):0] buffer_store; 
-logic stall; 
+logic [((`BLOCK_SIZE*8)-1)+AWIDTH:0] buffer_store; 
 logic write_finished; 
+logic hit_out; 
+logic [OFFSET_BITS-1:0] offset; 
 cache_controller # (
     .AWIDTH(AWIDTH),
     .DWIDTH(DWIDTH)
@@ -55,8 +61,10 @@ cache_controller # (
     .memory_address(mem_addr),
     .mem_store(buffer_store),
     .data_out(cache_hit_data),
+    .hit_out(hit_out),
     .stall(stall),
-    .data_valid(cache_data_valid)
+    .data_valid(cache_data_valid),
+    .offset_out(offset)
 );
 
 
@@ -69,7 +77,7 @@ logic rd_rq;
 logic drain_req; 
 memory_controller # (
     .AWIDTH(AWIDTH),
-    .DWIDTH(((`BLOCK_SIZE*8)-1))
+    .DWIDTH(((`BLOCK_SIZE*8)))
 ) memory1 (
     .clk(clk),
     .reset(reset),
@@ -86,7 +94,7 @@ memory_controller # (
 );
 
 // WRITEBACK BUFFER 
-logic [((`BLOCK_SIZE*8)-1)+AWIDTH:0] pop_data; 
+logic [((`BLOCK_SIZE*8))+AWIDTH:0] pop_data; 
 logic pop_valid; 
 logic wb_buffer_found; 
 logic [$clog2(BUFFER_DEPTH):0] found_entry; 
@@ -95,16 +103,19 @@ logic drain_rq;
 logic buffer_full; 
 logic [1:0] buffer_ctrl; 
 logic [((`BLOCK_SIZE*8)-1)+AWIDTH:0] push_data; 
+logic [AWIDTH-1:0] search_addr; 
+assign search_addr = {addr[AWIDTH-1:OFFSET_BITS], {OFFSET_BITS{1'b0}}};
+
 writeback_buffer #(
     .DEPTH(BUFFER_DEPTH),
-    .DWIDTH(((`BLOCK_SIZE*8)-1)),
+    .DWIDTH(((`BLOCK_SIZE*8))),
     .AWIDTH(AWIDTH)
 ) wb_buffer1 (
     .clk(clk),
     .reset(reset),
     .push_pop(buffer_ctrl),
     .push_data(push_data),
-    .search_addr(addr),
+    .search_addr(search_addr),
     .merge_entry(found_entry),
 
     .drain_rq(drain_rq),
@@ -116,13 +127,27 @@ writeback_buffer #(
     .buffer_full(buffer_full)
 ); 
 
+// Store logic for coalescing in write back buffer 
+logic [(`BLOCK_SIZE*8)-1:0] temp; 
+always_comb begin
+    temp = found_buffer_data;
+    // size encoded logic 
+    case (funct3_i)
+        3'b000, 3'b100:  temp[offset*8 +: 32] = store_data[31:0];  // word 
+        3'b001, 3'b101:  temp[offset*8 +: 16] = store_data[15:0]; // halfword 
+        3'b010:          temp[offset*8 +: 8]= store_data[7:0]; // byte 
+        3'b111, 3'b011:  temp[offset*8 +: 32]= store_data[31:0]; // doubleword
+        default:         temp[offset*8 +: 8]= store_data[7:0]; // default to byte 
+    endcase
+end
+
 // CONTROL LOGIC 
 always_comb begin 
     unique case (memory_rq)
 
-        HIT_FOUND: begin 
-            rd_rq = 0;  
+        HIT_FOUND: begin  
             if(cache_data_valid) begin
+                rd_rq = 0; 
                 data_out = cache_hit_data; 
                 data_valid = 1; 
                 push_data = 0; 
@@ -130,7 +155,8 @@ always_comb begin
                 write_finished = 0;
                 drain_req = drain_rq;  
             end
-            else if (wb_buffer_found) begin
+            else if (wb_buffer_found && mem_op) begin
+                rd_rq = 0; 
                 if (buffer_full || (mem_state == 2)) begin
                     write_finished = 0;
                     buffer_ctrl = pop_en ? 2 : 0;
@@ -140,13 +166,22 @@ always_comb begin
                     drain_req = buffer_full ? drain_rq : 0;   
                 end
                 else begin
-                    write_finished = 0;
+                    write_finished = 1;
                     buffer_ctrl = (opcode_i == OP_STORE ) ? 3 : 0;
                     data_out = found_buffer_data; 
                     data_valid = (opcode_i == OP_LOAD) ? 1 : 0; 
-                    push_data = store_data;
+                    push_data = {search_addr, temp};
                     drain_req = 0;   
                 end
+            end
+            else begin
+                rd_rq = 0; 
+                data_out = cache_hit_data; 
+                data_valid = 0; 
+                push_data = 0; 
+                buffer_ctrl = pop_en ? 2 : 0;
+                write_finished = 0;
+                drain_req = (hit_out || (!mem_op) ) ? drain_rq : 0; 
             end
         end
 
@@ -177,7 +212,7 @@ always_comb begin
             buffer_ctrl = pop_en ? 2 : 0;
             data_out = found_buffer_data; 
             data_valid = 0; 
-            push_data = buffer_store; 
+            push_data = 0; 
         end
 
     endcase

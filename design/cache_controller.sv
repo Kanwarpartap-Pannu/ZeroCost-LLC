@@ -25,10 +25,12 @@ module cache_controller #(
 
     output logic [1:0] memory_rq, 
     output logic [AWIDTH-1:0] memory_address,
-    output logic [((`BLOCK_SIZE*8)-1):0] mem_store,
+    output logic [(((`BLOCK_SIZE*8)-1)+AWIDTH):0] mem_store,
     output logic [DWIDTH-1:0] data_out,
     output logic stall,  
-    output logic data_valid
+    output logic data_valid,
+    output logic hit_out,
+    output logic offset_out
     
 ); 
 
@@ -48,6 +50,8 @@ assign index  = address[((OFFSET_BITS-1)+INDEX_BITS):OFFSET_BITS];
 assign tag    = address[(((OFFSET_BITS+INDEX_BITS)-1)+TAG_BITS):(OFFSET_BITS+INDEX_BITS)]; 
 assign read_address = {address[AWIDTH-1:OFFSET_BITS], {OFFSET_BITS{1'b0}}};
 
+assign offset_out = offset; 
+
 // MAIN STATES 
 parameter CACHE = 0, MAIN_MEMORY =1; 
 logic curr_state, next_state; 
@@ -56,11 +60,9 @@ logic curr_state, next_state;
 parameter READING = 0, WRITE_BACK = 1; 
 logic curr_state_mem, next_state_mem;
 
-
-
 // TAG DETECTION STATES
 parameter HIT = 1, MISS = 0; 
-
+assign hit_out = hit && ((opcode_i == OP_LOAD) || (opcode_i == OP_STORE)); 
 
 // TAG ARRAY 
 logic hit; 
@@ -68,11 +70,15 @@ logic idle;
 logic [$clog2(`WAYS)-1:0] replace_way;
 logic [$clog2(`WAYS)-1:0] hit_way; 
 logic [1:0] replace_way_state; 
+logic reset_search; 
+logic search_en; 
+logic search_done; 
 tag_array # (
     .TAG_BITS(TAG_BITS),
     .INDEX_BITS(INDEX_BITS),
     .NUM_SETS(NUM_SETS),
-    .OFFSET_BITS(OFFSET_BITS)
+    .OFFSET_BITS(OFFSET_BITS),
+    .LOOKUP_WIDTH(4)
 ) cache_tag_array (
     .clk(clk),
     .idle(idle),
@@ -80,6 +86,9 @@ tag_array # (
     .index_i(index),
     .replace_en(replace_en),
     .store_en(store_en),
+    .reset_search(reset_search),
+    .search_en(search_en),
+    .search_done(search_done),
     .hit(hit),
     .hit_way_o(hit_way),
     .replace_way_o(replace_way),
@@ -133,17 +142,22 @@ always_comb begin
     unique case(curr_state)
         CACHE: begin 
             unique case (opcode_i)
-                OP_LOAD, OP_STORE: begin  
-                    if (hit || wb_buffer_found) begin 
+                OP_LOAD, OP_STORE: begin
+                    if (!search_done) begin
                         next_state = CACHE; 
                     end 
-                    else if (!hit) begin 
-                        next_state = MAIN_MEMORY;
-                        if (replace_way_state == 2) begin
-                            next_state_mem = WRITE_BACK; 
-                        end
-                        else begin
-                            next_state_mem = READING; 
+                    else begin 
+                        if (hit || wb_buffer_found) begin 
+                            next_state = CACHE; 
+                        end 
+                        else if (!hit) begin 
+                            next_state = MAIN_MEMORY;
+                            if (replace_way_state == 2) begin
+                                next_state_mem = WRITE_BACK; 
+                            end
+                            else begin
+                                next_state_mem = READING; 
+                            end
                         end
                     end
                 end
@@ -202,7 +216,7 @@ always_comb begin
     endcase
 end
 
-assign mem_store = set[replace_way]; 
+assign mem_store = {replace_address,set[replace_way]}; 
 
 
 // CONTROL LOGIC 
@@ -211,40 +225,55 @@ always_comb begin
     replace_en = 0;  
     store_en = 0;  
     idle = 1; 
-    stall = 1; 
+    stall = 1;
+    reset_search = 0; 
+    search_en = 0;  
     unique case(curr_state)
 
         CACHE: begin 
             memory_rq = 0; 
             unique case (opcode_i) 
-                OP_LOAD, OP_STORE: begin 
-                    unique case (hit)
-                        HIT: begin 
-                            if (opcode_i == OP_LOAD) begin 
-                                idle = 0; 
-                                data_valid = 1; 
-                                replace_en = 0; 
-                                store_en=0; 
-                                stall=0; 
-                            end 
-                            else if (opcode_i == OP_STORE) begin 
-                                idle = 0;
+                OP_LOAD, OP_STORE: begin
+                    if (!search_done) begin
+                        search_en = 1;
+                        reset_search = 0; 
+                        idle = 1; 
+                        data_valid = 0; 
+                        replace_en = 0; 
+                        store_en=0; 
+                        stall=1; 
+                    end 
+                    else begin
+                        search_en = 0; 
+                        reset_search = write_finished ? 1 : 0; 
+                        unique case (hit)
+                            HIT: begin 
+                                if (opcode_i == OP_LOAD) begin 
+                                    idle = 0; 
+                                    data_valid = 1; 
+                                    replace_en = 0; 
+                                    store_en=0; 
+                                    stall=0; 
+                                end 
+                                else if (opcode_i == OP_STORE) begin 
+                                    idle = 0;
+                                    data_valid = 0; 
+                                    stall = 0; 
+                                    store_en=1; 
+                                    replace_en = 0; 
+                                end
+                            end
+
+                            MISS: begin
+                                idle = 1;
                                 data_valid = 0; 
-                                stall = 0; 
-                                store_en=1; 
+                                stall = write_finished ? 0 : 1; 
+                                store_en=0; 
                                 replace_en = 0; 
                             end
-                        end
 
-                        MISS: begin
-                            idle = 1;
-                            data_valid = 0; 
-                            stall = 1; 
-                            store_en=0; 
-                            replace_en = 0; 
-                        end
-
-                    endcase
+                        endcase
+                    end
                 end
 
                 default: begin 
@@ -252,7 +281,9 @@ always_comb begin
                     data_valid = 0; 
                     stall = 0; 
                     store_en=0; 
-                    replace_en = 0; 
+                    replace_en = 0;
+                    search_en = 0; 
+                    reset_search = 1; 
                 end
                 
             endcase
@@ -260,24 +291,28 @@ always_comb begin
         end
 
         MAIN_MEMORY: begin 
+            search_en = 0; 
             unique case (curr_state_mem)
                 READING: begin
                     memory_rq = 2; 
                     memory_address = read_address; 
-                     if (!ready) begin 
+                     if (!ready) begin
+                        reset_search = 0; 
                         stall = 1;
                         idle = 1; 
                         data_valid = 0; 
                         replace_en = 0; 
                     end 
                     else if (ready) begin 
+                        reset_search = 1;
                         idle = 1; 
                         data_valid = 0; 
                         stall = 1; 
                         replace_en = 1; 
                     end 
                 end
-                WRITE_BACK: begin 
+                WRITE_BACK: begin
+                    reset_search = 0;
                     memory_rq = 1; 
                     memory_address = replace_address;
                     stall = 1;
@@ -286,6 +321,7 @@ always_comb begin
                     replace_en = 0;
                 end
                 default: begin 
+                    reset_search = 0;
                     stall = 1;
                     idle = 1; 
                     data_valid = 0; 

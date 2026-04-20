@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
-[*] Wed Mar 11 22:42:42 2026
+[*] Mon Apr 20 15:03:36 2026
 [*]
 [dumpfile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/cache.vcd"
-[dumpfile_mtime] "Tue Mar 10 22:00:09 2026"
-[dumpfile_size] 27488
+[dumpfile_mtime] "Mon Apr 20 14:59:53 2026"
+[dumpfile_size] 41968
 [savefile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/cache.gtkw"
-[timestart] 34
+[timestart] 31
 [size] 1333 600
 [pos] 281 243
-*-1.365430 38 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+*-1.365430 33 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 [markername] AA
 [markername] BB
 [markername] CC
@@ -38,125 +38,46 @@
 [markername] ZZ
 [treeopen] cache_tb.
 [treeopen] cache_tb.cache.
+[treeopen] cache_tb.cache.cache_1.
+[treeopen] cache_tb.cache.memory1.memory1.
 [sst_width] 255
-[signals_width] 263
+[signals_width] 377
 [sst_expanded] 1
 [sst_vpaned_height] 159
 @28
 cache_tb.clk
-cache_tb.cache.replace_en
 @c00022
-cache_tb.cache.memory1.address_dat[31:0]
+cache_tb.addr[13:0]
 @28
-(0)cache_tb.cache.memory1.address_dat[31:0]
-(1)cache_tb.cache.memory1.address_dat[31:0]
-(2)cache_tb.cache.memory1.address_dat[31:0]
-(3)cache_tb.cache.memory1.address_dat[31:0]
-(4)cache_tb.cache.memory1.address_dat[31:0]
-(5)cache_tb.cache.memory1.address_dat[31:0]
-(6)cache_tb.cache.memory1.address_dat[31:0]
-(7)cache_tb.cache.memory1.address_dat[31:0]
-(8)cache_tb.cache.memory1.address_dat[31:0]
-(9)cache_tb.cache.memory1.address_dat[31:0]
-(10)cache_tb.cache.memory1.address_dat[31:0]
-(11)cache_tb.cache.memory1.address_dat[31:0]
-(12)cache_tb.cache.memory1.address_dat[31:0]
-(13)cache_tb.cache.memory1.address_dat[31:0]
-(14)cache_tb.cache.memory1.address_dat[31:0]
-(15)cache_tb.cache.memory1.address_dat[31:0]
-(16)cache_tb.cache.memory1.address_dat[31:0]
-(17)cache_tb.cache.memory1.address_dat[31:0]
-(18)cache_tb.cache.memory1.address_dat[31:0]
-(19)cache_tb.cache.memory1.address_dat[31:0]
-(20)cache_tb.cache.memory1.address_dat[31:0]
-(21)cache_tb.cache.memory1.address_dat[31:0]
-(22)cache_tb.cache.memory1.address_dat[31:0]
-(23)cache_tb.cache.memory1.address_dat[31:0]
-(24)cache_tb.cache.memory1.address_dat[31:0]
-(25)cache_tb.cache.memory1.address_dat[31:0]
-(26)cache_tb.cache.memory1.address_dat[31:0]
-(27)cache_tb.cache.memory1.address_dat[31:0]
-(28)cache_tb.cache.memory1.address_dat[31:0]
-(29)cache_tb.cache.memory1.address_dat[31:0]
-(30)cache_tb.cache.memory1.address_dat[31:0]
-(31)cache_tb.cache.memory1.address_dat[31:0]
-@1401200
--group_end
-@c00022
-cache_tb.cache.address[13:0]
-@28
-(0)cache_tb.cache.address[13:0]
-(1)cache_tb.cache.address[13:0]
-(2)cache_tb.cache.address[13:0]
-(3)cache_tb.cache.address[13:0]
-(4)cache_tb.cache.address[13:0]
-(5)cache_tb.cache.address[13:0]
-(6)cache_tb.cache.address[13:0]
-(7)cache_tb.cache.address[13:0]
-(8)cache_tb.cache.address[13:0]
-(9)cache_tb.cache.address[13:0]
-(10)cache_tb.cache.address[13:0]
-(11)cache_tb.cache.address[13:0]
-(12)cache_tb.cache.address[13:0]
-(13)cache_tb.cache.address[13:0]
+(0)cache_tb.addr[13:0]
+(1)cache_tb.addr[13:0]
+(2)cache_tb.addr[13:0]
+(3)cache_tb.addr[13:0]
+(4)cache_tb.addr[13:0]
+(5)cache_tb.addr[13:0]
+(6)cache_tb.addr[13:0]
+(7)cache_tb.addr[13:0]
+(8)cache_tb.addr[13:0]
+(9)cache_tb.addr[13:0]
+(10)cache_tb.addr[13:0]
+(11)cache_tb.addr[13:0]
+(12)cache_tb.addr[13:0]
+(13)cache_tb.addr[13:0]
 @1401200
 -group_end
 @22
 cache_tb.cache.opcode_i[6:0]
 @28
-cache_tb.cache.curr_state
-cache_tb.cache.next_state
-cache_tb.cache.curr_state_mem
-#{index_i[1:0]} cache_tb.cache.cache_tag_array.index_i[0]
-@22
-cache_tb.cache.data_out[31:0]
-@28
-cache_tb.cache.funct3_i[2:0]
-cache_tb.cache.stall
-@22
-cache_tb.i[31:0]
-cache_tb.cache.memory1.addr_dat[31:0]
-@28
-cache_tb.cache.hit
-cache_tb.cache.cache_tag_array.hit_way_o[1:0]
-@22
-cache_tb.cache.cache_tag_array.tag_array[1][0][9:0]
-cache_tb.cache.cache_tag_array.tag_array[1][1][9:0]
-@c00022
-cache_tb.cache.cache_tag_array.tag_array[1][2][9:0]
-@28
-(0)cache_tb.cache.cache_tag_array.tag_array[1][2][9:0]
-(1)cache_tb.cache.cache_tag_array.tag_array[1][2][9:0]
-(2)cache_tb.cache.cache_tag_array.tag_array[1][2][9:0]
-(3)cache_tb.cache.cache_tag_array.tag_array[1][2][9:0]
-(4)cache_tb.cache.cache_tag_array.tag_array[1][2][9:0]
-(5)cache_tb.cache.cache_tag_array.tag_array[1][2][9:0]
-(6)cache_tb.cache.cache_tag_array.tag_array[1][2][9:0]
-(7)cache_tb.cache.cache_tag_array.tag_array[1][2][9:0]
-(8)cache_tb.cache.cache_tag_array.tag_array[1][2][9:0]
-(9)cache_tb.cache.cache_tag_array.tag_array[1][2][9:0]
-@1401200
--group_end
-@28
-cache_tb.cache.cache_tag_array.LRU_array[1][0][1:0]
-cache_tb.cache.cache_tag_array.LRU_array[1][1][1:0]
-cache_tb.cache.cache_tag_array.LRU_array[1][2][1:0]
-cache_tb.cache.cache_tag_array.valid_array[1][0][1:0]
-cache_tb.cache.cache_tag_array.valid_array[1][1][1:0]
-cache_tb.cache.cache_tag_array.valid_array[1][2][1:0]
-@22
-cache_tb.cache.cache_data_array.set_o[191:0]
-cache_tb.cache.cache_tag_array.tag_i[9:0]
-@28
-cache_tb.cache.cache_tag_array.idle
-cache_tb.cache.write_en
-@29
-cache_tb.cache.write_finished
-@28
-#{index_i[1:0]} cache_tb.cache.cache_tag_array.index_i[0]
-cache_tb.cache.cache_tag_array.empty_way[1:0]
-cache_tb.cache.cache_tag_array.empty_found
-cache_tb.cache.cache_tag_array.replace_way[1:0]
-cache_tb.cache.cache_tag_array.oldest_way[1:0]
+cache_tb.cache.cache_1.cache_tag_array.search_done
+cache_tb.cache.cache_1.cache_tag_array.search_en
+cache_tb.cache.cache_1.cache_tag_array.reset_search
+cache_tb.cache.cache_1.cache_tag_array.hit
+cache_tb.cache.cache_1.cache_tag_array.current_idx
+cache_tb.cache.cache_1.cache_tag_array.lookup_way[2:0]
+cache_tb.cache.cache_1.curr_state
+cache_tb.cache.cache_1.curr_state_mem
+cache_tb.cache.cache_1.cache_tag_array.index_i[1:0]
+@23
+cache_tb.cache.cache_1.cache_tag_array.NUM_SETS[31:0]
 [pattern_trace] 1
 [pattern_trace] 0

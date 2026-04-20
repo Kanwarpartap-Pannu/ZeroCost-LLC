@@ -8,9 +8,9 @@ MEM_PATH_NOT_DIR			:= $(notdir $(MEM_PATH))
 LINE_COUNT            ?= $(shell echo `wc -l < $(MEM_PATH)`)
 MEM_PATH_STR          ?= \"$(abspath $(MEM_PATH))\"
 MEM_DEPTH ?= 10024
-CACHE_SIZE ?= 64 
+CACHE_SIZE ?= 128 
 BLOCK_SIZE ?= 8
-WAYS ?= 3
+WAYS ?= 8
 
 CUSTOM_FILES ?= test/verilator_fifo.f
 OBJ_DIR ?= Vfifo_tb

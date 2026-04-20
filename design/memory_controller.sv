@@ -123,7 +123,12 @@ always_comb begin
                 end
             end
             else begin
-                next_state = POPPING; 
+                if (drain_req) begin
+                    next_state = POPPING; 
+                end
+                else begin
+                    next_state = IDLE; 
+                end
             end
 
         end
@@ -175,7 +180,7 @@ always_comb begin
             write_en = 0;
             read_en = 0; 
             memory_address = addr;
-            if (!pop_valid) begin
+            if ((!pop_valid) && (drain_req)) begin
                 pop_en = 1; 
             end  
             else begin

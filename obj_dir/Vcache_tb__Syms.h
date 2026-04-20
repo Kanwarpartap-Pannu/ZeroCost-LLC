@@ -4,25 +4,25 @@
 // Internal details; most calling programs do not need this header,
 // unless using verilator public meta comments.
 
-#ifndef VERILATED_VFIFO_TB__SYMS_H_
-#define VERILATED_VFIFO_TB__SYMS_H_  // guard
+#ifndef VERILATED_VCACHE_TB__SYMS_H_
+#define VERILATED_VCACHE_TB__SYMS_H_  // guard
 
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 
 // INCLUDE MODEL CLASS
 
-#include "Vfifo_tb.h"
+#include "Vcache_tb.h"
 
 // INCLUDE MODULE CLASSES
-#include "Vfifo_tb___024root.h"
-#include "Vfifo_tb___024unit.h"
+#include "Vcache_tb___024root.h"
+#include "Vcache_tb___024unit.h"
 
 // SYMS CLASS (contains all model state)
-class alignas(VL_CACHE_LINE_BYTES) Vfifo_tb__Syms final : public VerilatedSyms {
+class alignas(VL_CACHE_LINE_BYTES) Vcache_tb__Syms final : public VerilatedSyms {
   public:
     // INTERNAL STATE
-    Vfifo_tb* const __Vm_modelp;
+    Vcache_tb* const __Vm_modelp;
     bool __Vm_dumping = false;  // Dumping is active
     VerilatedMutex __Vm_dumperMutex;  // Protect __Vm_dumperp
     VerilatedVcdC* __Vm_dumperp VL_GUARDED_BY(__Vm_dumperMutex) = nullptr;  /// Trace class for $dump*
@@ -32,11 +32,11 @@ class alignas(VL_CACHE_LINE_BYTES) Vfifo_tb__Syms final : public VerilatedSyms {
     bool __Vm_didInit = false;
 
     // MODULE INSTANCE STATE
-    Vfifo_tb___024root             TOP;
+    Vcache_tb___024root            TOP;
 
     // CONSTRUCTORS
-    Vfifo_tb__Syms(VerilatedContext* contextp, const char* namep, Vfifo_tb* modelp);
-    ~Vfifo_tb__Syms();
+    Vcache_tb__Syms(VerilatedContext* contextp, const char* namep, Vcache_tb* modelp);
+    ~Vcache_tb__Syms();
 
     // METHODS
     const char* name() { return TOP.name(); }
