@@ -32,23 +32,25 @@ initial begin
     store_data = 0; 
     addr = 0;
     i = 0;
-    $readmemb("test_files/test_address.x", test_addresses); 
+    $readmemh("test_files/test_address.x", test_addresses); 
 end
 
 always #1 clk = ~clk;
 
-logic [21:0] test_addresses [0:15]; 
+logic [55:0] test_addresses [0:15]; 
 // Logic to test the LRU replacement Policy
 integer i; 
 always @(posedge clk ) begin 
     if (!stall) begin 
         if (i == 14 ) begin
             addr <= 0;
-            opcode_i <= 0;  
+            opcode_i <= 0; 
+            store_data <= 0;  
         end
         else begin
-            addr <= test_addresses[i][20:7];
-            opcode_i <= test_addresses[i][6:0]; 
+            addr <= test_addresses[i][55:40];
+            opcode_i <= test_addresses[i][39:33];
+            store_data <= test_addresses[i][31:0]; 
             i <= i+1;
         end
     end

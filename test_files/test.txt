@@ -1,0 +1,35 @@
+
+This file is a textual explanation of test_address.x
+             tag         index    offset    hex 
+addr a = 0000000000000     0        001     0001
+addr b = 0000000000001     0        001     0011
+addr c = 0000000000010     0        001     0021
+addr d = 0000000000011     0        001     0031
+addr e = 0000000000100     0        001     0041
+addr f = 0000000000101     0        001     0051
+addr g = 0000000000110     0        001     0061
+addr h = 0000000000111     0        001     0071
+
+
+1. load addr a 
+2. load addr b 
+3. load addr c 
+4. load addr d 
+5. store ffff ffff addr a 
+6. store ace4 1041 addr b 
+7. store b16b 00b5 addr c
+8. store abab abab addr d 
+9. load addr e 
+10. load addr f 
+11. load addr a 
+12. store abab abab addr b
+13. load addr g 
+14. load addr h 
+15. load addr b 
+16. no op 
+17. no op 
+18. no op 
+19. no op 
+20. no op 
+21. load addr a  
+

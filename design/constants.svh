@@ -6,15 +6,16 @@ parameter logic [31:0] ZERO = 32'd0;
     // Opcode group definitions (RV32I base ISA)
     // Constants.svh not working here, so redefining
     parameter logic [6:0]
-        OP_R      = 7'b0110011, // R-type
-        OP_I      = 7'b0010011, // I-type arithmetic
-        OP_LOAD   = 7'b0000011, // Load
-        OP_STORE  = 7'b0100011, // Store
-        OP_BRANCH = 7'b1100011, // Branch
-        OP_JALR   = 7'b1100111, // Jump register
-        OP_JAL    = 7'b1101111, // Jump and link
-        OP_LUI    = 7'b0110111, // Load upper immediate
-        OP_AUIPC  = 7'b0010111; // Add upper immediate to PC
+        OP_R         = 7'b0110011, // R-type
+        OP_I         = 7'b0010011, // I-type arithmetic
+        OP_LOAD      = 7'b0000011, // Load
+        OP_STORE     = 7'b0100011, // Store
+        OP_WRITEBACK = 7'b1111111,
+        OP_BRANCH    = 7'b1100011, // Branch
+        OP_JALR      = 7'b1100111, // Jump register
+        OP_JAL       = 7'b1101111, // Jump and link
+        OP_LUI       = 7'b0110111, // Load upper immediate
+        OP_AUIPC     = 7'b0010111; // Add upper immediate to PC
 
     // ALU operation encodings
     parameter logic [3:0]
