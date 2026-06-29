@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
-[*] Mon Apr 20 15:03:36 2026
+[*] Sun Jun 28 20:50:35 2026
 [*]
 [dumpfile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/cache.vcd"
-[dumpfile_mtime] "Mon Apr 20 14:59:53 2026"
-[dumpfile_size] 41968
+[dumpfile_mtime] "Sun Jun 28 20:48:56 2026"
+[dumpfile_size] 62480
 [savefile] "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/cache.gtkw"
-[timestart] 31
-[size] 1333 600
-[pos] 281 243
-*-1.365430 33 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[timestart] 75
+[size] 1540 600
+[pos] 99 241
+*-2.365430 82 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 [markername] AA
 [markername] BB
 [markername] CC
@@ -39,45 +39,217 @@
 [treeopen] cache_tb.
 [treeopen] cache_tb.cache.
 [treeopen] cache_tb.cache.cache_1.
+[treeopen] cache_tb.cache.cache_1.cache_data_array.
+[treeopen] cache_tb.cache.cache_1.directory_slice.
 [treeopen] cache_tb.cache.memory1.memory1.
 [sst_width] 255
-[signals_width] 377
+[signals_width] 332
 [sst_expanded] 1
 [sst_vpaned_height] 159
-@28
-cache_tb.clk
+@22
+cache_tb.cache.addr[15:0]
+cache_tb.opcode_i[6:0]
 @c00022
-cache_tb.addr[13:0]
+cache_tb.cache.cache_1.mem_in[63:0]
 @28
-(0)cache_tb.addr[13:0]
-(1)cache_tb.addr[13:0]
-(2)cache_tb.addr[13:0]
-(3)cache_tb.addr[13:0]
-(4)cache_tb.addr[13:0]
-(5)cache_tb.addr[13:0]
-(6)cache_tb.addr[13:0]
-(7)cache_tb.addr[13:0]
-(8)cache_tb.addr[13:0]
-(9)cache_tb.addr[13:0]
-(10)cache_tb.addr[13:0]
-(11)cache_tb.addr[13:0]
-(12)cache_tb.addr[13:0]
-(13)cache_tb.addr[13:0]
+(0)cache_tb.cache.cache_1.mem_in[63:0]
+(1)cache_tb.cache.cache_1.mem_in[63:0]
+(2)cache_tb.cache.cache_1.mem_in[63:0]
+(3)cache_tb.cache.cache_1.mem_in[63:0]
+(4)cache_tb.cache.cache_1.mem_in[63:0]
+(5)cache_tb.cache.cache_1.mem_in[63:0]
+(6)cache_tb.cache.cache_1.mem_in[63:0]
+(7)cache_tb.cache.cache_1.mem_in[63:0]
+(8)cache_tb.cache.cache_1.mem_in[63:0]
+(9)cache_tb.cache.cache_1.mem_in[63:0]
+(10)cache_tb.cache.cache_1.mem_in[63:0]
+(11)cache_tb.cache.cache_1.mem_in[63:0]
+(12)cache_tb.cache.cache_1.mem_in[63:0]
+(13)cache_tb.cache.cache_1.mem_in[63:0]
+(14)cache_tb.cache.cache_1.mem_in[63:0]
+(15)cache_tb.cache.cache_1.mem_in[63:0]
+(16)cache_tb.cache.cache_1.mem_in[63:0]
+(17)cache_tb.cache.cache_1.mem_in[63:0]
+(18)cache_tb.cache.cache_1.mem_in[63:0]
+(19)cache_tb.cache.cache_1.mem_in[63:0]
+(20)cache_tb.cache.cache_1.mem_in[63:0]
+(21)cache_tb.cache.cache_1.mem_in[63:0]
+(22)cache_tb.cache.cache_1.mem_in[63:0]
+(23)cache_tb.cache.cache_1.mem_in[63:0]
+(24)cache_tb.cache.cache_1.mem_in[63:0]
+(25)cache_tb.cache.cache_1.mem_in[63:0]
+(26)cache_tb.cache.cache_1.mem_in[63:0]
+(27)cache_tb.cache.cache_1.mem_in[63:0]
+(28)cache_tb.cache.cache_1.mem_in[63:0]
+(29)cache_tb.cache.cache_1.mem_in[63:0]
+(30)cache_tb.cache.cache_1.mem_in[63:0]
+(31)cache_tb.cache.cache_1.mem_in[63:0]
+(32)cache_tb.cache.cache_1.mem_in[63:0]
+(33)cache_tb.cache.cache_1.mem_in[63:0]
+(34)cache_tb.cache.cache_1.mem_in[63:0]
+(35)cache_tb.cache.cache_1.mem_in[63:0]
+(36)cache_tb.cache.cache_1.mem_in[63:0]
+(37)cache_tb.cache.cache_1.mem_in[63:0]
+(38)cache_tb.cache.cache_1.mem_in[63:0]
+(39)cache_tb.cache.cache_1.mem_in[63:0]
+(40)cache_tb.cache.cache_1.mem_in[63:0]
+(41)cache_tb.cache.cache_1.mem_in[63:0]
+(42)cache_tb.cache.cache_1.mem_in[63:0]
+(43)cache_tb.cache.cache_1.mem_in[63:0]
+(44)cache_tb.cache.cache_1.mem_in[63:0]
+(45)cache_tb.cache.cache_1.mem_in[63:0]
+(46)cache_tb.cache.cache_1.mem_in[63:0]
+(47)cache_tb.cache.cache_1.mem_in[63:0]
+(48)cache_tb.cache.cache_1.mem_in[63:0]
+(49)cache_tb.cache.cache_1.mem_in[63:0]
+(50)cache_tb.cache.cache_1.mem_in[63:0]
+(51)cache_tb.cache.cache_1.mem_in[63:0]
+(52)cache_tb.cache.cache_1.mem_in[63:0]
+(53)cache_tb.cache.cache_1.mem_in[63:0]
+(54)cache_tb.cache.cache_1.mem_in[63:0]
+(55)cache_tb.cache.cache_1.mem_in[63:0]
+(56)cache_tb.cache.cache_1.mem_in[63:0]
+(57)cache_tb.cache.cache_1.mem_in[63:0]
+(58)cache_tb.cache.cache_1.mem_in[63:0]
+(59)cache_tb.cache.cache_1.mem_in[63:0]
+(60)cache_tb.cache.cache_1.mem_in[63:0]
+(61)cache_tb.cache.cache_1.mem_in[63:0]
+(62)cache_tb.cache.cache_1.mem_in[63:0]
+(63)cache_tb.cache.cache_1.mem_in[63:0]
 @1401200
 -group_end
 @22
-cache_tb.cache.opcode_i[6:0]
+cache_tb.cache.cache_1.set[127:0]
 @28
-cache_tb.cache.cache_1.cache_tag_array.search_done
-cache_tb.cache.cache_1.cache_tag_array.search_en
-cache_tb.cache.cache_1.cache_tag_array.reset_search
-cache_tb.cache.cache_1.cache_tag_array.hit
-cache_tb.cache.cache_1.cache_tag_array.current_idx
-cache_tb.cache.cache_1.cache_tag_array.lookup_way[2:0]
+cache_tb.cache.cache_1.relocation_state[1:0]
+cache_tb.cache.cache_1.relocate_en
+cache_tb.cache.cache_1.search_done
+cache_tb.cache.cache_1.search_en
+cache_tb.cache.requester[0]
 cache_tb.cache.cache_1.curr_state
+cache_tb.cache.cache_1.curr_state_active_cache[1:0]
 cache_tb.cache.cache_1.curr_state_mem
-cache_tb.cache.cache_1.cache_tag_array.index_i[1:0]
-@23
-cache_tb.cache.cache_1.cache_tag_array.NUM_SETS[31:0]
+cache_tb.cache.cache_1.memory_rq[1:0]
+@22
+cache_tb.cache.cache_1.data_out[31:0]
+@28
+cache_tb.cache.cache_1.data_valid
+@22
+cache_tb.cache.cache_1.directory_slice.tag_array[0][3][11:0]
+cache_tb.cache.cache_1.directory_slice.tag_array[0][2][11:0]
+cache_tb.cache.cache_1.directory_slice.tag_array[0][1][11:0]
+cache_tb.cache.cache_1.directory_slice.tag_array[0][0][11:0]
+@c00028
+cache_tb.cache.cache_1.directory_slice.relocation_data[0][3][1:0]
+@28
+(0)cache_tb.cache.cache_1.directory_slice.relocation_data[0][3][1:0]
+(1)cache_tb.cache.cache_1.directory_slice.relocation_data[0][3][1:0]
+@1401200
+-group_end
+@28
+cache_tb.cache.cache_1.directory_slice.tag_way[1:0]
+cache_tb.cache.cache_1.index_in_dir[0]
+cache_tb.cache.cache_1.directory_slice.hit_set_o[0]
+cache_tb.cache.cache_1.directory_slice.hit_way_dir[0]
+cache_tb.cache.cache_1.directory_slice.hit_way_o[0]
+cache_tb.cache.cache_1.cache_data_array.index_i[0]
+cache_tb.cache.cache_1.relocation.next_rs[0]
+cache_tb.cache.cache_1.relocation.next_rs_out
+@c00028
+cache_tb.cache.cache_1.relocation.has_re_pv[1:0]
+@28
+(0)cache_tb.cache.cache_1.relocation.has_re_pv[1:0]
+(1)cache_tb.cache.cache_1.relocation.has_re_pv[1:0]
+@1401200
+-group_end
+@28
+cache_tb.cache.cache_1.cache_tag_array.has_re_out
+cache_tb.cache.cache_1.relocation.index_i
+@22
+cache_tb.cache.cache_1.cache_data_array.data_array[255:0]
+@c00022
+cache_tb.cache.cache_1.cache_tag_array.tag_array[0][0][11:0]
+@28
+(0)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][0][11:0]
+(1)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][0][11:0]
+(2)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][0][11:0]
+(3)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][0][11:0]
+(4)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][0][11:0]
+(5)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][0][11:0]
+(6)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][0][11:0]
+(7)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][0][11:0]
+(8)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][0][11:0]
+(9)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][0][11:0]
+(10)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][0][11:0]
+(11)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][0][11:0]
+@1401200
+-group_end
+@28
+cache_tb.cache.cache_1.valid_ornot
+cache_tb.cache.cache_1.way_i_state_o[1:0]
+cache_tb.cache.cache_1.cre_way[0]
+cache_tb.cache.cache_1.way_i_tag[0]
+@c00022
+cache_tb.cache.cache_1.cache_tag_array.tag_array[0][1][11:0]
+@28
+(0)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][1][11:0]
+(1)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][1][11:0]
+(2)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][1][11:0]
+(3)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][1][11:0]
+(4)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][1][11:0]
+(5)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][1][11:0]
+(6)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][1][11:0]
+(7)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][1][11:0]
+(8)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][1][11:0]
+(9)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][1][11:0]
+(10)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][1][11:0]
+(11)cache_tb.cache.cache_1.cache_tag_array.tag_array[0][1][11:0]
+@1401200
+-group_end
+@c00022
+cache_tb.cache.cache_1.directory_slice.tag_metadata_o[11:0]
+@28
+(0)cache_tb.cache.cache_1.directory_slice.tag_metadata_o[11:0]
+(1)cache_tb.cache.cache_1.directory_slice.tag_metadata_o[11:0]
+(2)cache_tb.cache.cache_1.directory_slice.tag_metadata_o[11:0]
+(3)cache_tb.cache.cache_1.directory_slice.tag_metadata_o[11:0]
+(4)cache_tb.cache.cache_1.directory_slice.tag_metadata_o[11:0]
+(5)cache_tb.cache.cache_1.directory_slice.tag_metadata_o[11:0]
+(6)cache_tb.cache.cache_1.directory_slice.tag_metadata_o[11:0]
+(7)cache_tb.cache.cache_1.directory_slice.tag_metadata_o[11:0]
+(8)cache_tb.cache.cache_1.directory_slice.tag_metadata_o[11:0]
+(9)cache_tb.cache.cache_1.directory_slice.tag_metadata_o[11:0]
+(10)cache_tb.cache.cache_1.directory_slice.tag_metadata_o[11:0]
+(11)cache_tb.cache.cache_1.directory_slice.tag_metadata_o[11:0]
+@1401200
+-group_end
+@c00028
+cache_tb.cache.cache_1.directory_slice.tag_way[1:0]
+@28
+(0)cache_tb.cache.cache_1.directory_slice.tag_way[1:0]
+(1)cache_tb.cache.cache_1.directory_slice.tag_way[1:0]
+@1401200
+-group_end
+@22
+cache_tb.cache.cache_1.cache_tag_array.tag_array[1][0][11:0]
+cache_tb.cache.cache_1.cache_tag_array.tag_array[1][1][11:0]
+@c00028
+cache_tb.cache.cache_1.cache_tag_array.valid_array[0][1][1:0]
+@28
+(0)cache_tb.cache.cache_1.cache_tag_array.valid_array[0][1][1:0]
+(1)cache_tb.cache.cache_1.cache_tag_array.valid_array[0][1][1:0]
+@1401200
+-group_end
+@28
+cache_tb.cache.cache_1.cache_tag_array.valid_array[0][0][1:0]
+cache_tb.cache.cache_1.cache_tag_array.valid_array[1][1][1:0]
+cache_tb.cache.cache_1.cache_tag_array.valid_array[1][0][1:0]
+cache_tb.cache.cache_1.cache_tag_array.oldest_way[0]
+@22
+cache_tb.cache.cache_1.replace_way_meta_data[11:0]
+@28
+cache_tb.cache.cache_1.relocation_dir_index[0]
+@29
+cache_tb.cache.cache_1.relocation_dir_way[1:0]
 [pattern_trace] 1
 [pattern_trace] 0

@@ -1,30 +1,73 @@
+%Warning-EOFNEWLINE: design/tag_array.sv:226:22: Missing newline at end of file (POSIX 3.206).
+                                               : ... Suggest add newline.
+  226 | endmodule : tag_array
+      |                      ^
+                     ... For warning description see https://verilator.org/warn/EOFNEWLINE?v=5.042
+                     ... Use "/* verilator lint_off EOFNEWLINE */" and lint_on around source to disable this message.
+%Warning-NULLPORT: design/tag_array.sv:46:1: Null port on module (perhaps extraneous comma)
+   46 | );
+      | ^
+                   ... For warning description see https://verilator.org/warn/NULLPORT?v=5.042
+                   ... Use "/* verilator lint_off NULLPORT */" and lint_on around source to disable this message.
 %Warning-EOFNEWLINE: design/writeback_buffer.sv:159:29: Missing newline at end of file (POSIX 3.206).
                                                       : ... Suggest add newline.
   159 | endmodule : writeback_buffer
       |                             ^
-                     ... For warning description see https://verilator.org/warn/EOFNEWLINE?v=5.042
-                     ... Use "/* verilator lint_off EOFNEWLINE */" and lint_on around source to disable this message.
 %Warning-EOFNEWLINE: design/memory_controller.sv:225:30: Missing newline at end of file (POSIX 3.206).
                                                        : ... Suggest add newline.
   225 | endmodule : memory_controller
       |                              ^
-%Warning-EOFNEWLINE: design/top.sv:222:17: Missing newline at end of file (POSIX 3.206).
+%Warning-EOFNEWLINE: design/top.sv:224:17: Missing newline at end of file (POSIX 3.206).
                                          : ... Suggest add newline.
-  222 | endmodule : top 
+  224 | endmodule : top 
       |                 ^
+%Warning-EOFNEWLINE: design/relocation.sv:44:23: Missing newline at end of file (POSIX 3.206).
+                                               : ... Suggest add newline.
+   44 | endmodule : relocation
+      |                       ^
 %Warning-PINCONNECTEMPTY: design/memory_controller.sv:62:6: Instance pin connected by name with empty reference: 'data_o'
    62 |     .data_o(),
       |      ^~~~~~
                           ... For warning description see https://verilator.org/warn/PINCONNECTEMPTY?v=5.042
                           ... Use "/* verilator lint_off PINCONNECTEMPTY */" and lint_on around source to disable this message.
-%Warning-PINMISSING: design/cache_controller.sv:111:3: Instance has missing pin: 'offset'
-  111 | ) cache_data_array (
+%Warning-PINMISSING: design/cache_controller.sv:107:3: Instance has missing pin: 'relocate_state'
+  107 | ) cache_tag_array (
+      |   ^~~~~~~~~~~~~~~
+                     design/tag_array.sv:34:37: ... Location of port declaration
+   34 |     input logic [1:0]               relocate_state, 
+      |                                     ^~~~~~~~~~~~~~
+                     ... For warning description see https://verilator.org/warn/PINMISSING?v=5.042
+                     ... Use "/* verilator lint_off PINMISSING */" and lint_on around source to disable this message.
+%Warning-PINMISSING: design/cache_controller.sv:107:3: Instance has missing pin: 'replace_address'
+  107 | ) cache_tag_array (
+      |   ^~~~~~~~~~~~~~~
+                     design/tag_array.sv:42:37: ... Location of port declaration
+   42 |     output logic [AWIDTH-1:0]       replace_address,
+      |                                     ^~~~~~~~~~~~~~~
+%Warning-PINMISSING: design/cache_controller.sv:107:3: Instance has missing pin: 'relocate_set_o'
+  107 | ) cache_tag_array (
+      |   ^~~~~~~~~~~~~~~
+                     design/tag_array.sv:44:37: ... Location of port declaration
+   44 |     output logic [INDEX_BITS-1:0]   relocate_set_o, 
+      |                                     ^~~~~~~~~~~~~~
+%Warning-PINMISSING: design/cache_controller.sv:107:3: Instance has missing pin: 'relocate_way_o'
+  107 | ) cache_tag_array (
+      |   ^~~~~~~~~~~~~~~
+                     design/tag_array.sv:45:41: ... Location of port declaration
+   45 |     output logic [$clog2(2*WAYS)-1:0]   relocate_way_o,
+      |                                         ^~~~~~~~~~~~~~
+%Warning-PINMISSING: design/cache_controller.sv:107:3: Instance has missing pin: '__pinNumber25'
+  107 | ) cache_tag_array (
+      |   ^~~~~~~~~~~~~~~
+                     design/tag_array.sv:46:1: ... Location of port declaration
+   46 | );
+      | ^
+%Warning-PINMISSING: design/cache_controller.sv:145:3: Instance has missing pin: 'offset'
+  145 | ) cache_data_array (
       |   ^~~~~~~~~~~~~~~~
                      design/data_array.sv:21:38: ... Location of port declaration
    21 |     input logic [OFFSET_BITS-1:0]    offset,
       |                                      ^~~~~~
-                     ... For warning description see https://verilator.org/warn/PINMISSING?v=5.042
-                     ... Use "/* verilator lint_off PINMISSING */" and lint_on around source to disable this message.
 %Warning-VARHIDDEN: design/memory.sv:156:26: Declaration of signal hides declaration in upper scope: 'i'
   156 |                 for (int i=0; i < 8; i++) begin 
       |                          ^
@@ -48,13 +91,125 @@
 %Warning-IMPLICIT: design/memory_controller.sv:58:15: Signal definition not found, creating implicitly: 'funct3_i'
    58 |     .funct3_i(funct3_i),
       |               ^~~~~~~~
-%Warning-ASCRANGE: design/data_array.sv:29:18: Ascending bit range vector: left < right of bit range: [0:7]
+%Warning-WIDTHTRUNC: design/relocation.sv:38:25: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
+                                               : ... note: In instance 'cache_tb.cache.cache_1.relocation'
+   38 |             next_rs_out = i; 
+      |                         ^
+                     ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.042
+                     ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
+%Warning-WIDTHEXPAND: design/directory.sv:74:45: Bit extraction of array[3:0] requires 2 bit index, not 1 bits.
+                                               : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+   74 | assign replace_address = {tag_array[index_i][hit_way_dir],index_i,{OFFSET_BITS{1'b0}}};
+      |                                             ^
+                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.042
+                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Warning-WIDTHEXPAND: design/directory.sv:75:54: Bit extraction of array[3:0] requires 2 bit index, not 1 bits.
+                                               : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+   75 | assign evicting_state =  ((num_sharers_array[index_i][hit_way_dir]-1) == 0);
+      |                                                      ^
+%Warning-WIDTHEXPAND: design/directory.sv:107:66: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'lookup_way' generates 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  107 |                 lookup_array[i] <= tag_array[index_i][(lookup_way+i)]; 
+      |                                                                  ^
+%Warning-WIDTHEXPAND: design/directory.sv:114:42: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'lookup_way' generates 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  114 |                 lookup_way <= lookup_way + LOOKUP_WIDTH;
+      |                                          ^
+%Warning-WIDTHTRUNC: design/directory.sv:114:28: Operator ASSIGNDLY expects 1 bits on the Assign RHS, but Assign RHS's ADD generates 32 bits.
+                                               : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  114 |                 lookup_way <= lookup_way + LOOKUP_WIDTH;
+      |                            ^~
+%Warning-WIDTHEXPAND: design/directory.sv:109:28: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'lookup_way' generates 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  109 |             if ((lookup_way+LOOKUP_WIDTH) == (2*WAYS)) begin
+      |                            ^
+%Warning-WIDTHEXPAND: design/directory.sv:134:58: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'lookup_way' generates 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  134 |             hit_way = relocation_data[index_i][lookup_way+i].way; 
+      |                                                          ^
+%Warning-WIDTHEXPAND: design/directory.sv:135:58: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'lookup_way' generates 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  135 |             hit_set = relocation_data[index_i][lookup_way+i].set; 
+      |                                                          ^
+%Warning-WIDTHEXPAND: design/directory.sv:137:37: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'lookup_way' generates 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  137 |             hit_way_dir = lookup_way+i; 
+      |                                     ^
+%Warning-WIDTHTRUNC: design/directory.sv:137:25: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's ADD generates 32 bits.
+                                               : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  137 |             hit_way_dir = lookup_way+i; 
+      |                         ^
+%Warning-WIDTHEXPAND: design/directory.sv:132:44: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'lookup_way' generates 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  132 |         && (valid_array[index_i][lookup_way+i] != 0) 
+      |                                            ^
+%Warning-WIDTHTRUNC: design/directory.sv:151:23: Operator ASSIGN expects 2 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
+                                               : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  151 |             empty_way = i; 
+      |                       ^
+%Warning-WIDTHEXPAND: design/directory.sv:165:24: Operator ASSIGN expects 12 bits on the Assign RHS, but Assign RHS's REPLICATE generates 4 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  165 |         tag_metadata_o = {index_i, empty_way, '0};
+      |                        ^
+%Warning-WIDTHEXPAND: design/directory.sv:168:52: Bit extraction of array[3:0] requires 2 bit index, not 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  168 |         evict_en_tag = ((num_sharers_array[index_i][hit_way_dir]-1) == 0); 
+      |                                                    ^
+%Warning-WIDTHEXPAND: design/directory.sv:172:23: Operator ASSIGN expects 12 bits on the Assign RHS, but Assign RHS's REPLICATE generates 4 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  172 |        tag_metadata_o = {index_i, tag_way, '0}; 
+      |                       ^
+%Warning-WIDTHTRUNC: design/directory.sv:185:49: Operator ASSIGNDLY expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'tag_way' generates 2 bits.
+                                               : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  185 |         relocation_data[index_i][empty_way].way <= tag_way;
+      |                                                 ^~
+%Warning-WIDTHEXPAND: design/directory.sv:190:35: Bit extraction of array[3:0] requires 2 bit index, not 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  190 |             sharers_array[index_i][hit_way_dir][requester] <= 1;
+      |                                   ^
+%Warning-WIDTHEXPAND: design/directory.sv:191:39: Bit extraction of array[3:0] requires 2 bit index, not 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  191 |             num_sharers_array[index_i][hit_way_dir] <= num_sharers_array[index_i][hit_way_dir] + 1; 
+      |                                       ^
+%Warning-WIDTHEXPAND: design/directory.sv:191:82: Bit extraction of array[3:0] requires 2 bit index, not 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  191 |             num_sharers_array[index_i][hit_way_dir] <= num_sharers_array[index_i][hit_way_dir] + 1; 
+      |                                                                                  ^
+%Warning-WIDTHEXPAND: design/directory.sv:189:36: Bit extraction of array[3:0] requires 2 bit index, not 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  189 |         if (!sharers_array[index_i][hit_way_dir][requester]) begin
+      |                                    ^
+%Warning-WIDTHEXPAND: design/directory.sv:196:31: Bit extraction of array[3:0] requires 2 bit index, not 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  196 |         sharers_array[index_i][hit_way_dir][requester] <= 0;
+      |                               ^
+%Warning-WIDTHEXPAND: design/directory.sv:197:35: Bit extraction of array[3:0] requires 2 bit index, not 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  197 |         num_sharers_array[index_i][hit_way_dir] <= num_sharers_array[index_i][hit_way_dir] - 1; 
+      |                                   ^
+%Warning-WIDTHEXPAND: design/directory.sv:197:78: Bit extraction of array[3:0] requires 2 bit index, not 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  197 |         num_sharers_array[index_i][hit_way_dir] <= num_sharers_array[index_i][hit_way_dir] - 1; 
+      |                                                                              ^
+%Warning-WIDTHEXPAND: design/directory.sv:199:33: Bit extraction of array[3:0] requires 2 bit index, not 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  199 |             valid_array[index_i][hit_way_dir] <= 0;
+      |                                 ^
+%Warning-WIDTHEXPAND: design/directory.sv:198:40: Bit extraction of array[3:0] requires 2 bit index, not 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  198 |         if ((num_sharers_array[index_i][hit_way_dir]-1) == 0) begin
+      |                                        ^
+%Warning-WIDTHTRUNC: design/directory.sv:205:47: Operator ASSIGNDLY expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'relocate_way' generates 2 bits.
+                                               : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  205 |         relocation_data[index_i][tag_way].way <= relocate_way; 
+      |                                               ^~
+%Warning-ASCRANGE: design/data_array.sv:29:18: Ascending bit range vector: left < right of bit range: [0:1]
                                              : ... note: In instance 'cache_tb.cache.cache_1.cache_data_array'
    29 |     output logic [0:WAYS-1][(BLOCK_SIZE*8)-1:0] set_o 
       |                  ^
                    ... For warning description see https://verilator.org/warn/ASCRANGE?v=5.042
                    ... Use "/* verilator lint_off ASCRANGE */" and lint_on around source to disable this message.
-%Warning-ASCRANGE: design/data_array.sv:34:21: Ascending bit range vector: left < right of bit range: [0:7]
+%Warning-ASCRANGE: design/data_array.sv:34:21: Ascending bit range vector: left < right of bit range: [0:1]
                                              : ... note: In instance 'cache_tb.cache.cache_1.cache_data_array'
    34 | logic [0:NUM_SETS-1][0:WAYS-1][(BLOCK_SIZE*8)-1:0]     data_array ; 
       |                     ^
@@ -62,54 +217,34 @@
                                             : ... note: In instance 'cache_tb.cache.cache_1.cache_data_array'
    34 | logic [0:NUM_SETS-1][0:WAYS-1][(BLOCK_SIZE*8)-1:0]     data_array ; 
       |       ^
-%Warning-WIDTHEXPAND: design/tag_array.sv:73:66: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'lookup_way' generates 3 bits.
-                                               : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
-   73 |                 lookup_array[i] <= tag_array[index_i][(lookup_way+i)]; 
-      |                                                                  ^
-                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.042
-                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
-%Warning-WIDTHEXPAND: design/tag_array.sv:80:42: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'lookup_way' generates 3 bits.
-                                               : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
-   80 |                 lookup_way <= lookup_way + LOOKUP_WIDTH;
-      |                                          ^
-%Warning-WIDTHTRUNC: design/tag_array.sv:80:28: Operator ASSIGNDLY expects 3 bits on the Assign RHS, but Assign RHS's ADD generates 32 bits.
+%Warning-WIDTHTRUNC: design/tag_array.sv:88:21: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
                                               : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
-   80 |                 lookup_way <= lookup_way + LOOKUP_WIDTH;
-      |                            ^~
-                     ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.042
-                     ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
-%Warning-WIDTHEXPAND: design/tag_array.sv:75:28: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'lookup_way' generates 3 bits.
-                                               : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
-   75 |             if ((lookup_way+LOOKUP_WIDTH) == (WAYS)) begin
-      |                            ^
-%Warning-WIDTHEXPAND: design/tag_array.sv:98:34: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'lookup_way' generates 3 bits.
-                                               : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
-   98 |             hit_way = lookup_way + i; 
-      |                                  ^
-%Warning-WIDTHTRUNC: design/tag_array.sv:98:21: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's ADD generates 32 bits.
-                                              : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
-   98 |             hit_way = lookup_way + i; 
+   88 |             hit_way = i; 
       |                     ^
-%Warning-WIDTHEXPAND: design/tag_array.sv:96:44: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'lookup_way' generates 3 bits.
+%Warning-WIDTHTRUNC: design/tag_array.sv:102:23: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
                                                : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
-   96 |         && (valid_array[index_i][lookup_way+i] != 0) 
-      |                                            ^
-%Warning-WIDTHTRUNC: design/tag_array.sv:112:23: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
-                                               : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
-  112 |             empty_way = i; 
+  102 |             empty_way = i; 
       |                       ^
-%Warning-WIDTHTRUNC: design/tag_array.sv:124:24: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
+%Warning-WIDTHTRUNC: design/tag_array.sv:118:24: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
                                                : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
-  124 |             oldest_way = i;  
+  118 |             oldest_way = i;  
       |                        ^
-%Warning-WIDTHEXPAND: design/tag_array.sv:134:19: Operator EQ expects 32 bits on the RHS, but RHS's VARREF 'reset_way' generates 3 bits.
+%Warning-WIDTHEXPAND: design/tag_array.sv:128:19: Operator EQ expects 32 bits on the RHS, but RHS's VARREF 'reset_way' generates 1 bits.
                                                 : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
-  134 |             if (i == reset_way) begin 
+  128 |             if (i == reset_way) begin 
       |                   ^~
-%Warning-WIDTHEXPAND: design/tag_array.sv:160:29: Operator NEQ expects 32 bits on the RHS, but RHS's VARREF 'replace_way' generates 3 bits.
+%Warning-WIDTHEXPAND: design/tag_array.sv:156:29: Operator NEQ expects 32 bits on the RHS, but RHS's VARREF 'way_i' generates 1 bits.
                                                 : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
-  160 |                     if ( (i != replace_way ) && (valid_array[index_i][i] != 0)) begin 
+  156 |                     if ( (i != way_i ) && (valid_array[index_i][i] != 0)) begin 
       |                             ^~
+%Warning-WIDTHEXPAND: design/tag_array.sv:175:29: Operator NEQ expects 32 bits on the RHS, but RHS's VARREF 'cre_way' generates 1 bits.
+                                                : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
+  175 |                     if ( (i != cre_way ) && (valid_array[index_i][i] != 0)) begin 
+      |                             ^~
+%Warning-WIDTHTRUNC: design/tag_array.sv:218:21: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
+                                               : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
+  218 |             cre_way = i; 
+      |                     ^
 %Warning-WIDTHEXPAND: design/memory.sv:123:23: Operator GTE expects 32 bits on the LHS, but LHS's VARREF 'delay' generates 4 bits.
                                              : ... note: In instance 'cache_tb.cache.memory1.memory1'
   123 |             if (delay >= MEM_DELAY) begin 
@@ -118,11 +253,11 @@
                                                      : ... note: In instance 'cache_tb.cache.wb_buffer1'
    62 |             found_entry = i; 
       |                         ^
-%Warning-WIDTHEXPAND: design/writeback_buffer.sv:117:57: Operator ASSIGNDLY expects 79 bits on the Assign RHS, but Assign RHS's VARREF 'push_data' generates 78 bits.
+%Warning-WIDTHEXPAND: design/writeback_buffer.sv:117:57: Operator ASSIGNDLY expects 81 bits on the Assign RHS, but Assign RHS's VARREF 'push_data' generates 80 bits.
                                                        : ... note: In instance 'cache_tb.cache.wb_buffer1'
   117 |                     fifo_buffer[tail[POINTER_BITS-1:0]] <= push_data;
       |                                                         ^~
-%Warning-WIDTHEXPAND: design/writeback_buffer.sv:139:57: Operator ASSIGNDLY expects 79 bits on the Assign RHS, but Assign RHS's VARREF 'push_data' generates 78 bits.
+%Warning-WIDTHEXPAND: design/writeback_buffer.sv:139:57: Operator ASSIGNDLY expects 81 bits on the Assign RHS, but Assign RHS's VARREF 'push_data' generates 80 bits.
                                                        : ... note: In instance 'cache_tb.cache.wb_buffer1'
   139 |                     fifo_buffer[tail[POINTER_BITS-1:0]] <= push_data;
       |                                                         ^~
@@ -130,7 +265,7 @@
                                                       : ... note: In instance 'cache_tb.cache.memory1'
    52 |     .addr_i(address),
       |      ^~~~~~
-%Warning-WIDTHEXPAND: design/memory_controller.sv:53:6: Input port connection 'addr_dat' expects 32 bits on the pin connection, but pin connection's VARREF 'memory_address' generates 14 bits.
+%Warning-WIDTHEXPAND: design/memory_controller.sv:53:6: Input port connection 'addr_dat' expects 32 bits on the pin connection, but pin connection's VARREF 'memory_address' generates 16 bits.
                                                       : ... note: In instance 'cache_tb.cache.memory1'
    53 |     .addr_dat(memory_address),
       |      ^~~~~~~~
@@ -138,54 +273,88 @@
                                                       : ... note: In instance 'cache_tb.cache.memory1'
    58 |     .funct3_i(funct3_i),
       |      ^~~~~~~~
-%Warning-WIDTHTRUNC: design/cache_controller.sv:53:19: Operator ASSIGNW expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'offset' generates 3 bits.
+%Warning-WIDTHTRUNC: design/cache_controller.sv:56:19: Operator ASSIGNW expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'offset' generates 3 bits.
                                                      : ... note: In instance 'cache_tb.cache.cache_1'
-   53 | assign offset_out = offset; 
+   56 | assign offset_out = offset; 
       |                   ^
-%Warning-ASCRANGE: design/cache_controller.sv:102:7: Ascending bit range vector: left < right of bit range: [0:7]
+%Warning-ASCRANGE: design/cache_controller.sv:134:7: Ascending bit range vector: left < right of bit range: [0:1]
                                                    : ... note: In instance 'cache_tb.cache.cache_1'
-  102 | logic [0:8-1][(8*8)-1:0] set ; 
+  134 | logic [0:2-1][(8*8)-1:0] set;
       |       ^
-%Warning-WIDTHEXPAND: design/cache_controller.sv:211:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 16 bits.
+%Warning-WIDTHEXPAND: design/cache_controller.sv:190:6: Input port connection 'relocate_way' expects 2 bits on the pin connection, but pin connection's VARREF 'cre_way' generates 1 bits.
+                                                      : ... note: In instance 'cache_tb.cache.cache_1'
+  190 |     .relocate_way(cre_way),
+      |      ^~~~~~~~~~~~
+%Warning-WIDTHTRUNC: design/cache_controller.sv:208:6: Output port connection 'evicting_state' expects 1 bits on the pin connection, but pin connection's VARREF 'evicting_state' generates 2 bits.
+                                                     : ... note: In instance 'cache_tb.cache.cache_1'
+  208 |     .evicting_state(evicting_state)
+      |      ^~~~~~~~~~~~~~
+%Warning-WIDTHEXPAND: design/cache_controller.sv:393:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 16 bits.
                                                        : ... note: In instance 'cache_tb.cache.cache_1'
-  211 |         3'b001, 3'b101: data_out = set[hit_way][offset*8 +: 16];  
+  393 |         3'b001, 3'b101: data_out = set[hit_way_data_out][offset*8 +: 16];  
       |                                  ^
-%Warning-WIDTHEXPAND: design/cache_controller.sv:212:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 8 bits.
+%Warning-WIDTHEXPAND: design/cache_controller.sv:394:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 8 bits.
                                                        : ... note: In instance 'cache_tb.cache.cache_1'
-  212 |         3'b010:         data_out = set[hit_way][offset*8 +: 8];  
+  394 |         3'b010:         data_out = set[hit_way_data_out][offset*8 +: 8];  
       |                                  ^
-%Warning-WIDTHEXPAND: design/cache_controller.sv:214:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 8 bits.
+%Warning-WIDTHEXPAND: design/cache_controller.sv:396:34: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SEL generates 8 bits.
                                                        : ... note: In instance 'cache_tb.cache.cache_1'
-  214 |         default:        data_out = set[hit_way][offset*8 +: 8];  
+  396 |         default:        data_out = set[hit_way_data_out][offset*8 +: 8];  
       |                                  ^
-%Warning-WIDTHTRUNC: design/top.sv:67:6: Output port connection 'offset_out' expects 1 bits on the pin connection, but pin connection's VARREF 'offset' generates 3 bits.
+%Warning-WIDTHEXPAND: design/cache_controller.sv:458:37: Operator ASSIGN expects 2 bits on the Assign RHS, but Assign RHS's VARREF 'hit_way' generates 1 bits.
+                                                       : ... note: In instance 'cache_tb.cache.cache_1'
+  458 |                             tag_way = hit_way;  
+      |                                     ^
+%Warning-WIDTHEXPAND: design/cache_controller.sv:558:33: Operator ASSIGN expects 2 bits on the Assign RHS, but Assign RHS's VARREF 'cre_way' generates 1 bits.
+                                                       : ... note: In instance 'cache_tb.cache.cache_1'
+  558 |                         tag_way = cre_way;
+      |                                 ^
+%Warning-WIDTHTRUNC: design/cache_controller.sv:552:39: Logical operator LOGNOT expects 1 bit on the LHS, but LHS's VARREF 'relocation_state' generates 2 bits.
+                                                      : ... note: In instance 'cache_tb.cache.cache_1'
+  552 |                     else if (ready && !(relocation_state)) begin 
+      |                                       ^
+%Warning-WIDTHTRUNC: design/top.sv:69:6: Output port connection 'offset_out' expects 1 bits on the pin connection, but pin connection's VARREF 'offset' generates 3 bits.
                                        : ... note: In instance 'cache_tb.cache'
-   67 |     .offset_out(offset)
+   69 |     .offset_out(offset)
       |      ^~~~~~~~~~
-%Warning-WIDTHTRUNC: design/top.sv:163:30: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'found_buffer_data' generates 64 bits.
+%Warning-WIDTHTRUNC: design/top.sv:165:30: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'found_buffer_data' generates 64 bits.
                                          : ... note: In instance 'cache_tb.cache'
-  163 |                     data_out = found_buffer_data; 
+  165 |                     data_out = found_buffer_data; 
       |                              ^
-%Warning-WIDTHTRUNC: design/top.sv:171:30: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'found_buffer_data' generates 64 bits.
+%Warning-WIDTHTRUNC: design/top.sv:173:30: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'found_buffer_data' generates 64 bits.
                                          : ... note: In instance 'cache_tb.cache'
-  171 |                     data_out = found_buffer_data; 
+  173 |                     data_out = found_buffer_data; 
       |                              ^
-%Warning-WIDTHTRUNC: design/top.sv:193:26: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'found_buffer_data' generates 64 bits.
+%Warning-WIDTHTRUNC: design/top.sv:195:26: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'found_buffer_data' generates 64 bits.
                                          : ... note: In instance 'cache_tb.cache'
-  193 |                 data_out = found_buffer_data; 
+  195 |                 data_out = found_buffer_data; 
       |                          ^
-%Warning-WIDTHTRUNC: design/top.sv:201:26: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'found_buffer_data' generates 64 bits.
+%Warning-WIDTHTRUNC: design/top.sv:203:26: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'found_buffer_data' generates 64 bits.
                                          : ... note: In instance 'cache_tb.cache'
-  201 |                 data_out = found_buffer_data; 
+  203 |                 data_out = found_buffer_data; 
       |                          ^
-%Warning-WIDTHTRUNC: design/top.sv:213:22: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'found_buffer_data' generates 64 bits.
+%Warning-WIDTHTRUNC: design/top.sv:215:22: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'found_buffer_data' generates 64 bits.
                                          : ... note: In instance 'cache_tb.cache'
-  213 |             data_out = found_buffer_data; 
+  215 |             data_out = found_buffer_data; 
       |                      ^
-%Warning-WIDTHTRUNC: design/cache_tb.sv:75:14: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's CONST '?32?shb' generates 32 or 4 bits.
+%Warning-WIDTHTRUNC: design/cache_tb.sv:58:23: Operator ASSIGNDLY expects 1 bits on the Assign RHS, but Assign RHS's ARRAYSEL generates 32 bits.
                                              : ... note: In instance 'cache_tb'
-   75 |     funct3_i = 11; 
+   58 |             requester <= my_array[i]; 
+      |                       ^~
+%Warning-WIDTHTRUNC: design/cache_tb.sv:73:14: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's CONST '?32?shb' generates 32 or 4 bits.
+                                             : ... note: In instance 'cache_tb'
+   73 |     funct3_i = 11; 
       |              ^
+%Warning-MULTIDRIVEN: design/cache_controller.sv:436:5: Variable written to in always_comb also written by other process (IEEE 1800-2023 9.2.2.2): 'relocation_flag'
+                                                      : ... note: In instance 'cache_tb.cache.cache_1'
+                      design/cache_controller.sv:436:5: 
+  436 |     relocation_flag = 0; 
+      |     ^~~~~~~~~~~~~~~
+                      design/cache_controller.sv:278:41: ... Location of other write
+  278 |                                         relocation_flag = 0; 
+      |                                         ^~~~~~~~~~~~~~~
+                      ... For warning description see https://verilator.org/warn/MULTIDRIVEN?v=5.042
+                      ... Use "/* verilator lint_off MULTIDRIVEN */" and lint_on around source to disable this message.
 %Warning-UNUSEDSIGNAL: design/cache_tb.sv:19:20: Signal is not used: 'data_out'
                                                : ... note: In instance 'cache_tb'
    19 | logic [DWIDTH-1:0] data_out;
@@ -196,6 +365,18 @@
                                               : ... note: In instance 'cache_tb'
    21 | logic data_valid;
       |       ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: design/cache_controller.sv:91:22: Bits of signal are not used: 'replace_way_meta_data'[11:3]
+                                                       : ... note: In instance 'cache_tb.cache.cache_1'
+   91 | logic [TAG_BITS-1:0] replace_way_meta_data; 
+      |                      ^~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: design/cache_controller.sv:96:24: Signal is not driven, nor used: 'relocate_set_tag'
+                                                       : ... note: In instance 'cache_tb.cache.cache_1'
+   96 | logic [INDEX_BITS-1:0] relocate_set_tag; 
+      |                        ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: design/cache_controller.sv:97:23: Signal is not driven, nor used: 'relocate_way_tag'
+                                                       : ... note: In instance 'cache_tb.cache.cache_1'
+   97 | logic [$clog2(2)-1:0] relocate_way_tag; 
+      |                       ^~~~~~~~~~~~~~~~
 %Warning-UNDRIVEN: design/memory_controller.sv:52:13: Signal is not driven: 'address'
                                                     : ... note: In instance 'cache_tb.cache.memory1'
    52 |     .addr_i(address),
@@ -218,16 +399,108 @@
                                              : ... note: In instance 'cache_tb.cache.memory1.memory1'
    36 |   input logic [2:0] funct3_i,
       |                     ^~~~~~~~
-%Warning-UNOPTFLAT: design/top.sv:42:7: Signal unoptimizable: Circular combinational logic: 'cache_tb.cache.write_finished'
-   42 | logic write_finished; 
+%Warning-UNUSEDSIGNAL: design/tag_array.sv:34:37: Signal is not used: 'relocate_state'
+                                                : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
+   34 |     input logic [1:0]               relocate_state, 
+      |                                     ^~~~~~~~~~~~~~
+%Warning-UNDRIVEN: design/tag_array.sv:44:37: Signal is not driven: 'relocate_set_o'
+                                            : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
+   44 |     output logic [INDEX_BITS-1:0]   relocate_set_o, 
+      |                                     ^~~~~~~~~~~~~~
+%Warning-UNDRIVEN: design/tag_array.sv:45:41: Signal is not driven: 'relocate_way_o'
+                                            : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
+   45 |     output logic [$clog2(2*WAYS)-1:0]   relocate_way_o,
+      |                                         ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: design/tag_array.sv:46:1: Signal is not used: '__pinNumber25'
+                                               : ... note: In instance 'cache_tb.cache.cache_1.cache_tag_array'
+   46 | );
+      | ^
+%Warning-UNUSEDSIGNAL: design/directory.sv:30:35: Bits of signal are not used: 'relocate_way'[1]
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+   30 |     input logic [$clog2(2*2)-1:0] relocate_way, 
+      |                                   ^~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: design/directory.sv:145:7: Signal is not used: 'empty_found'
+                                                : ... note: In instance 'cache_tb.cache.cache_1.directory_slice'
+  145 | logic empty_found; 
+      |       ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: design/relocation.sv:21:30: Signal is not driven, nor used: 'next_rs'
+                                                 : ... note: In instance 'cache_tb.cache.cache_1.relocation'
+   21 | logic [$clog2(NUM_SETS)-1:0] next_rs;  
+      |                              ^~~~~~~
+%Warning-CASEINCOMPLETE: design/cache_controller.sv:303:40: Case values incompletely covered (example pattern 0x0)
+  303 |                                 unique case (opcode_i)
+      |                                        ^~~~
+                         ... For warning description see https://verilator.org/warn/CASEINCOMPLETE?v=5.042
+                         ... Use "/* verilator lint_off CASEINCOMPLETE */" and lint_on around source to disable this message.
+%Warning-CASEINCOMPLETE: design/cache_controller.sv:488:44: Case values incompletely covered (example pattern 0x0)
+  488 |                                     unique case (opcode_i)
+      |                                            ^~~~
+%Warning-LATCH: design/directory.sv:125:1: Latch inferred for signal 'cache_tb.cache.cache_1.directory_slice.hit_set' (not all control paths of combinational always assign a value)
+                                         : ... Suggest use of always_latch for intentional latches
+  125 | always_comb begin 
+      | ^~~~~~~~~~~
+                ... For warning description see https://verilator.org/warn/LATCH?v=5.042
+                ... Use "/* verilator lint_off LATCH */" and lint_on around source to disable this message.
+%Warning-LATCH: design/directory.sv:160:1: Latch inferred for signal 'cache_tb.cache.cache_1.tag_metadata_o' (not all control paths of combinational always assign a value)
+                                         : ... Suggest use of always_latch for intentional latches
+  160 | always_comb begin
+      | ^~~~~~~~~~~
+%Warning-UNOPTFLAT: design/top.sv:43:7: Signal unoptimizable: Circular combinational logic: 'cache_tb.cache.write_finished'
+   43 | logic write_finished; 
       |       ^~~~~~~~~~~~~~
                     ... For warning description see https://verilator.org/warn/UNOPTFLAT?v=5.042
                     ... Use "/* verilator lint_off UNOPTFLAT */" and lint_on around source to disable this message.
-                    design/top.sv:42:7:      Example path: cache_tb.cache.write_finished
-                    design/cache_controller.sv:222:1:      Example path: ALWAYS
-                    design/top.sv:39:7:      Example path: cache_tb.cache.cache_data_valid
-                    design/top.sv:145:1:      Example path: ALWAYS
-                    design/top.sv:42:7:      Example path: cache_tb.cache.write_finished
+                    design/top.sv:43:7:      Example path: cache_tb.cache.write_finished
+                    design/cache_controller.sv:415:1:      Example path: ALWAYS
+                    design/top.sv:40:7:      Example path: cache_tb.cache.cache_data_valid
+                    design/top.sv:147:1:      Example path: ALWAYS
+                    design/top.sv:43:7:      Example path: cache_tb.cache.write_finished
+%Warning-UNOPTFLAT: design/cache_controller.sv:98:13: Signal unoptimizable: Circular combinational logic: 'cache_tb.cache.cache_1.way_i_state_o'
+   98 | logic [1:0] way_i_state_o;  
+      |             ^~~~~~~~~~~~~
+                    design/cache_controller.sv:98:13:      Example path: cache_tb.cache.cache_1.way_i_state_o
+                    design/cache_controller.sv:415:1:      Example path: ALWAYS
+                    design/top.sv:40:7:      Example path: cache_tb.cache.cache_data_valid
+                    design/top.sv:147:1:      Example path: ALWAYS
+                    design/top.sv:43:7:      Example path: cache_tb.cache.write_finished
+                    design/cache_controller.sv:415:1:      Example path: ALWAYS
+%Warning-UNOPTFLAT: design/cache_controller.sv:93:24: Signal unoptimizable: Circular combinational logic: 'cache_tb.cache.cache_1.index_in'
+   93 | logic [INDEX_BITS-1:0] index_in; 
+      |                        ^~~~~~~~
+                    design/cache_controller.sv:93:24:      Example path: cache_tb.cache.cache_1.index_in
+                    design/tag_array.sv:74:22:      Example path: ASSIGNW
+                    design/cache_controller.sv:98:13:      Example path: cache_tb.cache.cache_1.way_i_state_o
+                    design/cache_controller.sv:415:1:      Example path: ALWAYS
+                    design/top.sv:40:7:      Example path: cache_tb.cache.cache_data_valid
+                    design/top.sv:147:1:      Example path: ALWAYS
+                    design/top.sv:43:7:      Example path: cache_tb.cache.write_finished
+                    design/cache_controller.sv:415:1:      Example path: ALWAYS
+%Warning-UNOPTFLAT: design/cache_controller.sv:171:24: Signal unoptimizable: Circular combinational logic: 'cache_tb.cache.cache_1.index_in_dir'
+  171 | logic [INDEX_BITS-1:0] index_in_dir; 
+      |                        ^~~~~~~~~~~~
+                    design/cache_controller.sv:171:24:      Example path: cache_tb.cache.cache_1.index_in_dir
+                    design/directory.sv:74:24:      Example path: ASSIGNW
+                    design/cache_controller.sv:49:20:      Example path: cache_tb.cache.cache_1.replace_address
+                    design/cache_controller.sv:415:1:      Example path: ALWAYS
+                    design/top.sv:40:7:      Example path: cache_tb.cache.cache_data_valid
+                    design/top.sv:147:1:      Example path: ALWAYS
+                    design/top.sv:43:7:      Example path: cache_tb.cache.write_finished
+                    design/cache_controller.sv:415:1:      Example path: ALWAYS
+%Warning-UNOPTFLAT: design/memory_controller.sv:44:20: Signal unoptimizable: Circular combinational logic: 'cache_tb.cache.memory1.memory_address'
+   44 | logic [AWIDTH-1:0] memory_address; 
+      |                    ^~~~~~~~~~~~~~
+                    design/memory_controller.sv:44:20:      Example path: cache_tb.cache.memory1.memory_address
+                    design/memory_controller.sv:44:20:      Example path: ASSIGNW
+                    design/memory.sv:31:28:      Example path: cache_tb.cache.memory1.__Vcellinp__memory1__addr_dat
+                    design/memory.sv:67:24:      Example path: ASSIGNW
+                    design/memory.sv:61:24:      Example path: cache_tb.cache.memory1.memory1.address_dat
+                    design/memory.sv:149:5:      Example path: ALWAYS
+                    design/memory_controller.sv:38:21:      Example path: cache_tb.cache.memory1.mem_out
+                    design/cache_controller.sv:415:1:      Example path: ALWAYS
+                    design/top.sv:40:7:      Example path: cache_tb.cache.cache_data_valid
+                    design/top.sv:147:1:      Example path: ALWAYS
+                    design/top.sv:43:7:      Example path: cache_tb.cache.write_finished
+                    design/cache_controller.sv:415:1:      Example path: ALWAYS
 c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=1 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=1 -DVM_TRACE_SAIF=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.042/share/verilator/include/verilated.cpp
 c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=1 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=1 -DVM_TRACE_SAIF=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_vcd_c.o /opt/homebrew/Cellar/verilator/5.042/share/verilator/include/verilated_vcd_c.cpp
 c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.042/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=1 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=1 -DVM_TRACE_SAIF=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.042/share/verilator/include/verilated_timing.cpp
@@ -238,5 +511,5 @@ echo "" > Vcache_tb__ALL.verilator_deplist.tmp
 c++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv   verilated.o verilated_vcd_c.o verilated_timing.o verilated_threads.o Vcache_tb__ALL.a    -pthread -lpthread   -o Vcache_tb
 rm Vcache_tb__ALL.verilator_deplist.tmp
 - V e r i l a t i o n   R e p o r t: Verilator 5.042 2025-11-02 rev UNKNOWN.REV
-- Verilator: Built from 0.280 MB sources in 10 modules, into 0.493 MB in 12 C++ files needing 0.001 MB
-- Verilator: Walltime 6.317 s (elab=0.009, cvt=0.043, bld=6.237); cpu 0.058 s on 1 threads
+- Verilator: Built from 0.467 MB sources in 12 modules, into 0.549 MB in 12 C++ files needing 0.001 MB
+- Verilator: Walltime 6.167 s (elab=0.010, cvt=0.053, bld=6.078); cpu 0.074 s on 1 threads

@@ -11,18 +11,18 @@ addr g = 0000000000110     0        001     0061
 addr h = 0000000000111     0        001     0071
 
 
-1. load addr a 
-2. load addr b 
-3. load addr c 
-4. load addr d 
-5. store ffff ffff addr a 
-6. store ace4 1041 addr b 
-7. store b16b 00b5 addr c
-8. store abab abab addr d 
-9. load addr e 
-10. load addr f 
+1. load addr a core 0
+2. load addr b core 0
+3. load addr c core 1
+4. load addr d core 1
+5. store ffff ffff addr a core 0 
+6. store ace4 1041 addr b core 0
+7. store b16b 00b5 addr c core 1
+8. store abab abab addr d core 1
+9. evict addr a core 0
+10. write_back addr b core 0
 11. load addr a 
-12. store abab abab addr b
+12. store abab abab addr b 
 13. load addr g 
 14. load addr h 
 15. load addr b 

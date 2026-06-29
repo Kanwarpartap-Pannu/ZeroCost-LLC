@@ -8,137 +8,85 @@
 
 */
 
-// Set, Way Tuple struct 
-typedef struct packed {
-    logic [$clog2(`NUM_SETS)-1:0] set;
-    logic [$clog2(`WAYS)-1:0] way; 
-} set_way_tuple;
-
 module tag_array #(
     parameter int AWIDTH = $clog2(`MEM_DEPTH), 
     parameter int TAG_BITS = 3,
     parameter int INDEX_BITS = 2, 
     parameter int NUM_SETS = 4,
     parameter int OFFSET_BITS = 3,
-    parameter int LOOKUP_WIDTH = 4
+    parameter int LOOKUP_WIDTH = 4 
 )(
     input logic                  clk,
-    input logic                  reset, 
     input logic                  idle, 
     input logic [TAG_BITS-1:0]   tag_i, 
     input logic [INDEX_BITS-1:0] index_i, 
-    input logic [$clog2(`CORE_COUNT)-1:0] requester, 
-    input logic                  replace_en,
-    input logic                  store_en,
-    input logic                  reset_search, 
-    input logic                  search_en, 
 
-    output logic                    hit,
-    output logic                    search_done, 
+    // Control Logic
+    input logic                    replace_en,
+    input logic                    share_en, // 0 means keep state unchanged, 1 means toggle
+    input logic                    store_en,
+    input logic                    evict_en,
+    input logic                    enable, 
+    input logic                    valid_or_not, 
+    input logic [$clog2(WAYS)-1:0] way_i,  
+    input logic                    relocate_en, 
+    input logic [TAG_BITS-1:0]      tag_metadata_i,  
+    input logic [1:0]               relocate_state, 
+
+    output logic [$clog2(WAYS)-1:0] cre_way_o,   
+    output logic                    hit, 
     output logic [$clog2(WAYS)-1:0] hit_way_o,  
     output logic [$clog2(WAYS)-1:0] replace_way_o,
-    output logic [1:0]              replace_way_state,
-    output logic [AWIDTH-1:0]       replace_address
+    output logic [TAG_BITS-1:0]              replace_way_meta_data,
+    output logic [1:0]              way_i_state_o,
+    output logic [AWIDTH-1:0]       replace_address,
+    output logic                    has_re_out,
+    output logic [INDEX_BITS-1:0]   relocate_set_o, 
+    output logic [$clog2(2*WAYS)-1:0]   relocate_way_o,
 );
 
 localparam int WAYS = `WAYS; 
 
-
-// These Structures track the tags and their meta data the tag array is
-// slightly larger than the data array 
-
 // Tag Array, Each row is a set, each column holds tag for the block 
 logic [TAG_BITS-1:0]     tag_array  [0:NUM_SETS-1][0:WAYS-1]; 
-
-// Set, Way Meta Data 
-set_way_tuple relocation_data[NUM_SETS][WAYS]; 
-
-// The following data structures track the state of the ways in the 
-// data array 
 
 // State Array: 0 = Invalid, 1 = Clean, 2 = Dirty
 logic [1:0]              valid_array [0:NUM_SETS-1][0:WAYS-1]; 
 
+// Relocated Array: 0 = Not Relocated, 1 = Relocated 
+logic                    relocated_array [0:NUM_SETS-1][0:WAYS-1]; 
+
+// Shared Array: 0 = Unshared, 1 = Shared 
+logic                    shared_array  [0:NUM_SETS-1][0:WAYS-1];
+
 // LRU Array 
-logic [$clog2(WAYS)-1:0] LRU_array  [0:NUM_SETS-1][0:WAYS-1];
-
-// Sharers Array
-logic [`CORE_COUNT-1:0] sharers_array  [0:NUM_SETS-1][0:WAYS-1];
-
-// Has Relocation Entry Vector
-logic [NUM_SETS-1:0] has_re; 
-logic [$clog2(NUM_SETS)-1:0] next_rs; // next relocation set  
-
-
+logic [$clog2(WAYS)-1:0] LRU_array  [0:NUM_SETS-1][0:WAYS-1]; 
 
 // Search for tag in the set, 1 for hit 0 for miss 
 logic [$clog2(WAYS)-1:0] hit_way; 
 assign hit_way_o = hit_way; 
 
-// Reconstructed address for evicted way
+
+logic [$clog2(WAYS)-1:0] cre_way; 
+
+//reconstructed address for evicted way
 assign replace_address = {tag_array[index_i][replace_way],index_i,{OFFSET_BITS{1'b0}}};
+assign way_i_state_o = ((valid_array[index_i][way_i]==2)) ? ((!(relocated_array[index_i][way_i])) ? 2'b11 : 2'b01) : ((!(relocated_array[index_i][way_i])) ? 2'b00 : 2'b10) ;
 
-// Reset logic 
-always_ff @(posedge clk) begin 
-    if (!reset) begin 
-        has_re <= 1; 
-        for (int i = 0; i < NUM_SETS; i++) begin
-           for (int j = 0; j < WAYS; j++) begin
-                tag_array[i][j] <= 0; 
-                valid_array[i][j] <= 0; 
-                LRU_array[i][j] <= 0; 
-                sharers_array[i][j] <= 0; 
-                relocation_data[i][j] <= 0; 
-            end 
-        end
-    end
-end
-
-// Hit detection logic with parametrizable lookup width 
-logic [$clog2(WAYS)-1:0] lookup_way; 
-logic current_idx; 
-logic [TAG_BITS-1:0]     lookup_array  [0:LOOKUP_WIDTH-1]; 
-always_ff @(posedge clk) begin
-    if (reset_search) begin
-        lookup_way <= 0; 
-        search_done <= 0;
-        current_idx <= 1; 
-    end
-    else if (search_en && (!search_done)) begin
-        current_idx <= 0; 
-        if (hit) begin
-            search_done <= 1; 
-        end 
-        else begin
-            for (int i = 0; i<LOOKUP_WIDTH; i++) begin 
-                lookup_array[i] <= tag_array[index_i][(lookup_way+i)]; 
-            end
-            if ((lookup_way+LOOKUP_WIDTH) == (WAYS)) begin
-                search_done <= 1; 
-                lookup_way <= lookup_way; 
-            end
-            else begin
-                lookup_way <= lookup_way + LOOKUP_WIDTH;
-            end
-        end
-    end
-    else begin 
-        lookup_way <= lookup_way; 
-        search_done <= search_done; 
-    end
-end
+// 00 = no re clean
+// 01 = re dirty 
+// 10 = re clean 
+// 11 = no re dirty 
 
 always_comb begin 
    hit=0; 
-   hit_way=0; 
-   for (int i = 0; i<LOOKUP_WIDTH; i++) begin 
-        
-        if ((lookup_array[i] == tag_i) 
-        && (valid_array[index_i][lookup_way+i] != 0) 
-        && (current_idx != 1) && 
-        (relocation_data[index_i][lookup_way+i].set == index_i)) begin 
-            hit_way = lookup_way + i; 
-            hit = 1; 
+   hit_way=0;  
+   for (int i = 0; i<WAYS; i++) begin 
+        if ((tag_array[index_i][i] == tag_i) 
+        && (valid_array[index_i][i] != 0) 
+        && (!relocated_array[index_i][i])) begin 
+            hit_way = i; 
+            hit = 1;  
         end 
     end  
 end 
@@ -157,36 +105,8 @@ always_comb begin
     end 
 end 
 
-// Look for Non Privately Cached Clean Blocks and set HASRE to zero 
-// if not found
-logic [$clog2(WAYS)-1:0] unshared_way; 
-logic unshared_found; 
-always_comb begin
-    unshared_found = 0;
-    unshared_way = 0;  
-    for (int i=0; i<WAYS; i++) begin
-        if ((sharers_array[index_i][i] == 0) && (valid_array[index_i][i] != 2)) begin
-            unshared_found = 1; 
-            unshared_way = i; 
-        end
-    end
-end
+assign cre_way_o = empty_found ? empty_way : cre_way; 
 
-always_ff @(posedge clk) begin
-    if (!(unshared_found || empty_found)) begin
-        has_re[index_i] <= 0; 
-    end
-end
-
-// Next Relocation set Logic 
-always_comb begin 
-    next_rs = 0; 
-    for (int i=0; i<WAYS; i++) begin
-        if (has_re[i] == 1) begin
-            next_rs = i; 
-        end
-    end 
-end
 
 
 // LRU Logic 
@@ -201,7 +121,7 @@ always_comb begin
 end 
 
 // Block aging logic for hit and replacement 
-logic [$clog2(WAYS)-1:0] reset_way = hit_way;
+logic [$clog2(WAYS)-1:0] reset_way = way_i;
 always_ff @(posedge clk) begin 
     if (!idle) begin // Do not update ages if cache not being used 
         for (int i=0; i<WAYS; i++) begin 
@@ -219,34 +139,88 @@ end
 
 // Block to replace logic
 logic [$clog2(WAYS)-1:0] replace_way; 
-assign replace_way = empty_found ? empty_way : (unshared_found ? unshared_way : oldest_way); 
-assign replace_way_o = replace_way; 
-// 0 invalid, 1 Unshared Clean, 2 Shared or Dirty 
-assign replace_way_state = valid_array[index_i][replace_way]; 
+assign replace_way = way_i; 
+assign replace_way_o = oldest_way; 
 
+assign replace_way_meta_data = tag_array[index_i][oldest_way];
 
 // Cache Insertion Logic 
 always_ff @(posedge clk) begin  
-        if (replace_en) begin 
-            tag_array[index_i][replace_way] <= tag_i; 
-            valid_array[index_i][replace_way] <= 1;
-            sharers_array[index_i][replace_way][requester] <= 1; 
-            relocation_data[index_i][replace_way].set <= index_i;
-            relocation_data[index_i][replace_way].way <= replace_way;
+        if (replace_en && !(share_en)) begin 
+            tag_array[index_i][way_i] <= tag_metadata_i; 
+            valid_array[index_i][way_i] <= 1;
+            shared_array[index_i][way_i] <= ~shared_array[index_i][way_i];
             // if inserting into fresh block increment all other valid blocks age
-            if (valid_array[index_i][replace_way] == 0) begin
+            if (valid_array[index_i][way_i] == 0) begin
                 for (int i=0; i<WAYS; i++) begin 
-                    if ( (i != replace_way ) && (valid_array[index_i][i] != 0)) begin 
+                    if ( (i != way_i ) && (valid_array[index_i][i] != 0)) begin 
                         LRU_array[index_i][i] <= LRU_array[index_i][i] + 1; 
                     end 
                 end 
             end
         end
-        else if (store_en) begin
-            sharers_array[index_i][replace_way][requester] <= 1; 
+
+        else if (store_en) begin 
             valid_array[index_i][hit_way] <= 2;
         end 
+
+        if (relocate_en) begin
+            relocated_array[index_i][cre_way] <= 1;
+            tag_array[index_i][cre_way] <= tag_metadata_i; 
+            valid_array[index_i][cre_way] <= valid_or_not ? 2'b10 : 2'b01;
+            shared_array[index_i][cre_way] <= 1;
+            // if inserting into fresh block increment all other valid blocks age
+            if (valid_array[index_i][cre_way] == 0) begin
+                for (int i=0; i<WAYS; i++) begin 
+                    if ( (i != cre_way ) && (valid_array[index_i][i] != 0)) begin 
+                        LRU_array[index_i][i] <= LRU_array[index_i][i] + 1; 
+                    end 
+                end 
+            end
+        end
+
+        if (share_en) begin
+            tag_array[index_i][way_i] <= tag_metadata_i; 
+            shared_array[index_i][way_i] <= ~shared_array[index_i][way_i];
+        end
 end 
 
+
+// Cache Eviction Logic 
+always_ff @(posedge clk) begin
+    if (evict_en) begin
+        if (relocated_array[index_i][way_i]) begin
+            valid_array[index_i][way_i] <= 0;
+            relocated_array[index_i][way_i] <= 0;  
+        end
+        valid_array[index_i][way_i] <= valid_or_not ? 2'b10 : 2'b01;
+        shared_array[index_i][way_i] <= 0;
+        tag_array[index_i][way_i] <= tag_metadata_i; 
+    end
+    if (enable) begin
+        valid_array[index_i][way_i] <= 0;
+        relocated_array[index_i][way_i] <= 0;
+        shared_array[index_i][way_i] <= 0;
+    end
+end
+
+
+// Has Relocation Entry Vector
+logic has_re; 
+// Look for Non Privately Cached Clean Blocks and set HASRE to zero 
+// if not found
+always_comb begin
+    has_re=0; 
+    cre_way=0;
+    for (int i=0; i<WAYS; i++) begin
+        if ((shared_array[index_i][i] == 0) && (valid_array[index_i][i] != 2)) begin
+            has_re = 1;  
+            cre_way = i; 
+        end
+    end
+end
+
+assign has_re_out = has_re; 
+ 
 
 endmodule : tag_array

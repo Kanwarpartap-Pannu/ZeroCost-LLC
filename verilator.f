@@ -7,6 +7,8 @@ design/writeback_buffer.sv
 design/memory_controller.sv
 design/cache_controller.sv
 design/top.sv
+design/directory.sv
+design/relocation.sv
 --Wall 
 --trace-vcd
 --Wno-fatal

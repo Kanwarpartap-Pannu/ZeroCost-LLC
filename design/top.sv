@@ -19,7 +19,8 @@ module top #(
     input logic [AWIDTH-1:0] addr, 
     input logic [DWIDTH-1:0] store_data, 
     input logic [6:0] opcode_i, 
-    input logic [2:0] funct3_i,  
+    input logic [2:0] funct3_i, 
+    input logic [$clog2(`CORE_COUNT)-1:0] requester,  
 
     output logic [DWIDTH-1:0] data_out, 
     output logic data_valid, 
@@ -53,6 +54,7 @@ cache_controller # (
     .opcode_i(opcode_i),
     .funct3_i(funct3_i),
     .wb_buffer_found(wb_buffer_found),
+    .requester(requester),
     .mem_in(mem_out),
     .write_finished(write_finished),
     .ready(ready),
