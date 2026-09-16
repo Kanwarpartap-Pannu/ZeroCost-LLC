@@ -37,6 +37,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vcache_tb___024root final : public VerilatedM
         CData/*3:0*/ cache_tb__DOT__cache__DOT__found_entry;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__buffer_full;
         CData/*1:0*/ cache_tb__DOT__cache__DOT__buffer_ctrl;
+        CData/*2:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__q;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__curr_state;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__next_state;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__active_req;
@@ -72,6 +73,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vcache_tb___024root final : public VerilatedM
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__relocate_en;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT____Vcellout__directory_slice__evicting_state;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__next_rs;
+        CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__q_en;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__hit_way_data_out;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__relocation_dir_index;
         CData/*1:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__relocation_dir_way;
@@ -79,10 +81,10 @@ class alignas(VL_CACHE_LINE_BYTES) Vcache_tb___024root final : public VerilatedM
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT____VdfgExtracted_h03db6b6c__0;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT____VdfgExtracted_ha4ce45db__0;
         CData/*1:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_tag_array__DOT__relocate_state;
-        CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_tag_array__DOT__cre_way_o;
-        CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_tag_array__DOT__relocate_set_o;
     };
     struct {
+        CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_tag_array__DOT__cre_way_o;
+        CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_tag_array__DOT__relocate_set_o;
         CData/*1:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_tag_array__DOT__relocate_way_o;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_tag_array__DOT__hit_way;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_tag_array__DOT__cre_way;
@@ -91,6 +93,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vcache_tb___024root final : public VerilatedM
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_tag_array__DOT__oldest_way;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_tag_array__DOT__has_re;
         CData/*2:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_data_array__DOT__offset;
+        CData/*2:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__directory_slice__DOT__q;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__directory_slice__DOT__hit_way;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__directory_slice__DOT__hit_set;
         CData/*0:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__directory_slice__DOT__hit_way_dir;
@@ -144,11 +147,11 @@ class alignas(VL_CACHE_LINE_BYTES) Vcache_tb___024root final : public VerilatedM
         IData/*31:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_tag_array__DOT__unnamedblk4__DOT__i;
         IData/*31:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_tag_array__DOT__unnamedblk5__DOT__i;
         IData/*31:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__cache_tag_array__DOT__unnamedblk6__DOT__i;
+    };
+    struct {
         IData/*31:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__directory_slice__DOT__unnamedblk1__DOT__i;
         IData/*31:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__directory_slice__DOT__unnamedblk1__DOT__unnamedblk2__DOT__j;
         IData/*31:0*/ cache_tb__DOT__cache__DOT__cache_1__DOT__directory_slice__DOT__unnamedblk3__DOT__i;
-    };
-    struct {
         IData/*31:0*/ cache_tb__DOT__cache__DOT__memory1__DOT____Vcellinp__memory1__addr_dat;
         IData/*31:0*/ cache_tb__DOT__cache__DOT__memory1__DOT____Vcellinp__memory1__addr_i;
         IData/*31:0*/ cache_tb__DOT__cache__DOT__memory1__DOT__memory1__DOT__data_o;

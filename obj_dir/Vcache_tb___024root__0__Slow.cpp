@@ -73,15 +73,16 @@ VL_ATTR_COLD void Vcache_tb___024root___eval_initial__TOP(Vcache_tb___024root* v
     Vcache_tb__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
+    vlSelfRef.cache_tb__DOT__cache__DOT__cache_1__DOT__q_en = 0U;
     vlSelfRef.cache_tb__DOT__clk = 0U;
     vlSelfRef.cache_tb__DOT__reset = 0U;
     vlSelfRef.cache_tb__DOT__addr = 0U;
     vlSelfRef.cache_tb__DOT__start = 0U;
     vlSelfRef.cache_tb__DOT__i = 0U;
-    VL_READMEM_N(true, 56, 21, 0, "test_files/test_address.x"s
+    VL_READMEM_N(true, 56, 21, 0, "test/test_files/test_address.x"s
                  ,  &(vlSelfRef.cache_tb__DOT__test_addresses)
                  , 0, ~0ULL);
-    vlSymsp->_vm_contextp__->dumpfile("cache.vcd"s);
+    vlSymsp->_vm_contextp__->dumpfile("sim/sim_out/cache.vcd"s);
     vlSymsp->_traceDumpOpen();
     vlSelfRef.cache_tb__DOT__cache__DOT__memory1__DOT__memory1__DOT__i = 0U;
     while (VL_GTS_III(32, 0x00400000U, vlSelfRef.cache_tb__DOT__cache__DOT__memory1__DOT__memory1__DOT__i)) {
@@ -90,7 +91,7 @@ VL_ATTR_COLD void Vcache_tb___024root___eval_initial__TOP(Vcache_tb___024root* v
         vlSelfRef.cache_tb__DOT__cache__DOT__memory1__DOT__memory1__DOT__i 
             = ((IData)(1U) + vlSelfRef.cache_tb__DOT__cache__DOT__memory1__DOT__memory1__DOT__i);
     }
-    VL_READMEM_N(true, 32, 146, 0, "/Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/test_files/test1.x"s
+    VL_READMEM_N(true, 32, 146, 0, "/Users/kanwarpannu/Desktop/PROJECTS/ZeroCostLLC/ZeroCost-LLC/test/test_files/test1.x"s
                  ,  &(vlSelfRef.cache_tb__DOT__cache__DOT__memory1__DOT__memory1__DOT__temp_memory)
                  , 0, ~0ULL);
     vlSelfRef.cache_tb__DOT__cache__DOT__memory1__DOT__memory1__DOT__i = 0U;
@@ -130,7 +131,7 @@ VL_ATTR_COLD void Vcache_tb___024root___eval_initial__TOP(Vcache_tb___024root* v
         vlSelfRef.cache_tb__DOT__cache__DOT__memory1__DOT__memory1__DOT__i 
             = ((IData)(1U) + vlSelfRef.cache_tb__DOT__cache__DOT__memory1__DOT__memory1__DOT__i);
     }
-    VL_WRITEF_NX("IMEMORY: Loaded 146 32-bit words from /Users/kanwarpannu/Desktop/ZeroCostLLC/ZeroCost-LLC/test_files/test1.x\n",0);
+    VL_WRITEF_NX("IMEMORY: Loaded 146 32-bit words from /Users/kanwarpannu/Desktop/PROJECTS/ZeroCostLLC/ZeroCost-LLC/test/test_files/test1.x\n",0);
 }
 
 VL_ATTR_COLD void Vcache_tb___024root___eval_final(Vcache_tb___024root* vlSelf) {
@@ -158,7 +159,7 @@ VL_ATTR_COLD void Vcache_tb___024root___eval_settle(Vcache_tb___024root* vlSelf)
 #ifdef VL_DEBUG
             Vcache_tb___024root___dump_triggers__stl(vlSelfRef.__VstlTriggered, "stl"s);
 #endif
-            VL_FATAL_MT("design/cache_tb.sv", 3, "", "Settle region did not converge after 100 tries");
+            VL_FATAL_MT("test/cache_tb.sv", 3, "", "Settle region did not converge after 100 tries");
         }
         __VstlIterCount = ((IData)(1U) + __VstlIterCount);
     } while (Vcache_tb___024root___eval_phase__stl(vlSelf));
@@ -928,6 +929,7 @@ VL_ATTR_COLD void Vcache_tb___024root___ctor_var_reset(Vcache_tb___024root* vlSe
     VL_SCOPED_RAND_RESET_W(80, vlSelf->cache_tb__DOT__cache__DOT__push_data, __VscopeHash, 14526280547135856028ull);
     vlSelf->cache_tb__DOT__cache__DOT__temp = VL_SCOPED_RAND_RESET_Q(64, __VscopeHash, 1092780027363646232ull);
     vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__data_out = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1834702383798751316ull);
+    vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__q = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 8067552298927728043ull);
     vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__replace_address = VL_SCOPED_RAND_RESET_I(16, __VscopeHash, 2467369720074357525ull);
     vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__curr_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17377484328047876996ull);
     vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__next_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15574765928337878711ull);
@@ -967,6 +969,7 @@ VL_ATTR_COLD void Vcache_tb___024root___ctor_var_reset(Vcache_tb___024root* vlSe
     vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__relocate_en = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15522599095787786294ull);
     vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT____Vcellout__directory_slice__evicting_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6143939357116155244ull);
     vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__next_rs = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13290011057021275090ull);
+    vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__q_en = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3888239990319244224ull);
     vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__hit_way_data_out = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7037549832991673488ull);
     vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__relocation_block = VL_SCOPED_RAND_RESET_Q(64, __VscopeHash, 7106086334483350217ull);
     vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__relocation_dir_index = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4178018093397922171ull);
@@ -1041,6 +1044,7 @@ VL_ATTR_COLD void Vcache_tb___024root___ctor_var_reset(Vcache_tb___024root* vlSe
             vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__directory_slice__DOT__num_sharers_array[__Vi0][__Vi1] = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11956744639101062257ull);
         }
     }
+    vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__directory_slice__DOT__q = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 303897142650553948ull);
     vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__directory_slice__DOT__hit_way = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11012897964356705001ull);
     vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__directory_slice__DOT__hit_set = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12782512262693272936ull);
     vlSelf->cache_tb__DOT__cache__DOT__cache_1__DOT__directory_slice__DOT__hit_way_dir = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6597937287161940882ull);

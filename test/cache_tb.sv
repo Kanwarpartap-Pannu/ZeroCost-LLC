@@ -34,7 +34,7 @@ initial begin
     addr = 0;
     start=0; 
     i = 0;
-    $readmemh("test_files/test_address.x", test_addresses); 
+    $readmemh("test/test_files/test_address.x", test_addresses); 
 end
 
 always #1 clk = ~clk;
@@ -80,7 +80,7 @@ initial begin
 end 
 
 initial begin 
-    $dumpfile("cache.vcd");
+    $dumpfile("sim/sim_out/cache.vcd");
     $dumpvars(0, cache_tb);  
 end
 

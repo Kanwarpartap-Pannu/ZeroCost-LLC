@@ -1,5 +1,5 @@
 lint.vlt
-design/cache_tb.sv
+test/cache_tb.sv
 design/data_array.sv
 design/memory.sv
 design/tag_array.sv

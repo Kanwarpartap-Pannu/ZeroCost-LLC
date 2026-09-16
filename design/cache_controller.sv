@@ -42,7 +42,7 @@ localparam INDEX_BITS    = $clog2(NUM_SETS);
 localparam TAG_BITS      = AWIDTH - INDEX_BITS - OFFSET_BITS;
 localparam DIRECTORY_WAY_BITS = $clog2(`WAYS*2); 
 
-logic [$clog2(`WAYS*`NUM_SETS)] q; 
+logic [$clog2(`WAYS*`NUM_SETS):0] q; 
 logic [OFFSET_BITS-1:0] offset;
 logic [INDEX_BITS-1:0] index;
 logic [TAG_BITS-1:0] tag; 

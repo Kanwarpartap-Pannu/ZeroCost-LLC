@@ -63,7 +63,7 @@ logic [1:0]              valid_array [0:NUM_SETS-1][0:(2*WAYS)-1];
 // Sharers Array
 logic [`CORE_COUNT-1:0] sharers_array  [0:NUM_SETS-1][0:(2*WAYS)-1];
 logic [$clog2(`CORE_COUNT)-1:0] num_sharers_array  [0:NUM_SETS-1][0:(2*WAYS)-1];
-logic [$clog2(`WAYS*`NUM_SETS)] q; 
+logic [$clog2(`WAYS*`NUM_SETS):0] q; 
 // Search for tag in the set, 1 for hit 0 for miss 
 logic [$clog2(WAYS)-1:0] hit_way;
 logic [$clog2(NUM_SETS)-1:0] hit_set;
