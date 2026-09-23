@@ -29,6 +29,7 @@ VERILATOR_FLAGS = \
 	-Idesign \
 	-Isim/simconfig \
 	-Isim \
+	-I$(UVM_HOME)/src \
 	-Itest
 
 

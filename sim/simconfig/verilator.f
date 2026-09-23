@@ -1,5 +1,7 @@
 lint.vlt
 test/cache_tb.sv
+uvm_pkg.sv
+uvm_macros.svh
 design/data_array.sv
 design/memory.sv
 design/tag_array.sv
