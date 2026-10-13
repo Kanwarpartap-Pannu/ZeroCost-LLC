@@ -31,31 +31,35 @@ class cache_driver extends uvm_driver #(cache_transaction);
 
         seq_item_port.get_next_item(tx);
         `uvm_info("DRIVE", $sformatf("Received %s data=%0d", tx.op.name(), tx.data), UVM_LOW)
-        vif.addr <= tx.addr; 
+        vif.address <= tx.addr; 
         vif.funct3_i <= tx.funct_3; 
         vif.requester <= tx.requester; 
         vif.store_data <= tx.data; 
         case (tx.op)
 
             LOAD: begin
-                vif.opcode_i <= OP_LOAD;
+                vif.op <= LOAD;
+            end
+
+            NO_OP: begin
+                vif.op <= NO_OP;
             end
 
             STORE: begin
-                vif.opcode_i <= OP_STORE;
+                vif.op <= STORE;
             end
             WRITEBACK: begin
-                vif.opcode_i <= OP_WRITEBACK;
+                vif.op <= WRITEBACK;
             end
             EVICT: begin
-                vif.opcode_i <= OP_EVICT;
+                vif.op <= EVICT;
             end
             
         endcase
 
         @(posedge vif.clk);
         
-        vif.opcode_i <= OP_R;
+        vif.op <= NO_OP;
 
         seq_item_port.item_done();
 

@@ -15,7 +15,8 @@ BLOCK_SIZE ?= 8
 NUM_SETS ?= $(shell echo $$(( $(CACHE_SIZE) / ($(BLOCK_SIZE) * $(WAYS)) )))
 WAYS ?= 2
 CORE_COUNT ?= 2
-
+PRIV_CAP ?= 4
+LLC_CAP ?= 4
 
 VERILATOR_FLAGS = \
     -DMEM_DEPTH=$(MEM_DEPTH) \
@@ -26,7 +27,9 @@ VERILATOR_FLAGS = \
 	-DLINE_COUNT=$(LINE_COUNT) \
 	-DCORE_COUNT=$(CORE_COUNT) \
 	-DNUM_SETS=$(NUM_SETS) \
-	-Idesign \
+	-DPRIV_CAP=$(PRIV_CAP) \
+	-DLLC_CAP=$(LLC_CAP) \
+	-Irtl \
 	-Isim/simconfig \
 	-Isim \
 	-I$(UVM_HOME)/src \

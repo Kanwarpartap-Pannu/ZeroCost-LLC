@@ -16,24 +16,30 @@ module top #(
 )(
     input logic clk, 
     input logic reset, 
-    input logic [AWIDTH-1:0] addr, 
+
+    // Meomry Request Metadata 
+    input logic [AWIDTH-1:0] addr,        
     input logic [DWIDTH-1:0] store_data, 
     input logic [6:0] opcode_i, 
     input logic [2:0] funct3_i, 
     input logic [$clog2(`CORE_COUNT)-1:0] requester,  
 
+    // Output Singals to Cores or private caches 
     output logic [DWIDTH-1:0] data_out, 
     output logic data_valid, 
     output logic stall
 ); 
 
+// BYTE OFFSET 
 localparam OFFSET_BITS = $clog2(`BLOCK_SIZE);
 
 // STATES: 
 parameter HIT_FOUND = 0, WRITE_BACK = 1, READING = 2;
 
+// Control signal to indicate if current op is a memory operation  
 logic mem_op; 
 assign mem_op = (opcode_i == OP_LOAD) || (opcode_i == OP_STORE); 
+
 // CACHE CONTROLLER 
 logic [AWIDTH-1:0] mem_addr; 
 logic [DWIDTH-1:0] cache_hit_data;
@@ -146,9 +152,11 @@ end
 // CONTROL LOGIC 
 always_comb begin 
     unique case (memory_rq)
-
+        
+        // Data found in either cache or writeback Buffer 
         HIT_FOUND: begin  
             if(cache_data_valid) begin
+                // Found in Cache 
                 rd_rq = 0; 
                 data_out = cache_hit_data; 
                 data_valid = 1; 
@@ -158,8 +166,10 @@ always_comb begin
                 drain_req = drain_rq;  
             end
             else if (wb_buffer_found && mem_op) begin
+                // Found in Writeback Buffer 
                 rd_rq = 0; 
                 if (buffer_full || (mem_state == 2)) begin
+                    // Buffer is full or being used by Memory 
                     write_finished = 0;
                     buffer_ctrl = pop_en ? 2 : 0;
                     data_out = found_buffer_data; 
@@ -168,6 +178,7 @@ always_comb begin
                     drain_req = buffer_full ? drain_rq : 0;   
                 end
                 else begin
+                    // Buffer is free 
                     write_finished = 1;
                     buffer_ctrl = (opcode_i == OP_STORE ) ? 3 : 0;
                     data_out = found_buffer_data; 

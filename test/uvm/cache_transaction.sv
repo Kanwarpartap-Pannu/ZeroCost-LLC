@@ -3,6 +3,7 @@ import uvm_pkg::*;
 
 typedef enum {
     LOAD,
+    NO_OP,
     STORE,
     WRITEBACK, 
     EVICT   
