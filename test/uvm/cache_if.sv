@@ -4,10 +4,10 @@ interface cache_if #(
     parameter int DWIDTH = 32,
     parameter int AWIDTH = 32
 )(
-     input logic clk,
-     input logic reset
+     input logic clk
 );
 
+     logic reset; 
 
      logic [2:0] op; 
      logic [AWIDTH-1:0] address; 

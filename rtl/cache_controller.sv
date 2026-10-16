@@ -35,8 +35,8 @@ localparam TAG_BITS      = AWIDTH - SET_BITS - OFFSET_BITS;
 localparam DIRECTORY_WAY_BITS = $clog2(`WAYS*2); 
 
 logic [OFFSET_BITS-1:0] offset;
-logic [SET_BITS-1:0] set;
-logic [TAG_BITS-1:0] tag; 
+logic [SET_BITS-1:0] set_i;
+logic [TAG_BITS-1:0] tag_i; 
 logic [AWIDTH-1:0] read_address;
 
 assign offset = address[OFFSET_BITS-1:0];
@@ -97,7 +97,7 @@ logic [(DWIDTH)-1:0] search_data_o;
 logic buffer_data_valid; 
 writeback_buffer #(
     ) wr_buffer1 (
-        .search_addr(addr),
+        .search_addr(address),
         .data_i(buffer_data_i),
         .data_o(buffer_data_o),
         .data_valid(buffer_data_valid),
@@ -126,9 +126,9 @@ memory_controller #(
 // STATES 
 // ACTIVE, MISS_BUFFER_HIT, READING_MEM, INSERT, RELOC_ONE, RELOC_TWO, RELOC_THREE, WRITE_BUFFER,
 // WRITE_MEM, POP_BUFFER, WAITING 
-localparam int ACTIVE = 4'd1, MISS_BUFFER_HIT = 4'd2, READING_MEM = 4'd3, INSERT = 4'd4, RELOC_ONE = 4'd5, RELOC_TWO = 4'd6, RELOC_THREE = 4'd7, WRITE_BUFFER = 4'd8, WRITE_MEM = 4'd9, POP_BUFFER = 4'd10; 
-logic [4:0] curr_state; 
-logic [4:0] next_state; 
+localparam int ACTIVE = 4'd0, MISS_BUFFER_HIT = 4'd2, READING_MEM = 4'd3, INSERT = 4'd4, RELOC_ONE = 4'd5, RELOC_TWO = 4'd6, RELOC_THREE = 4'd7, WRITE_BUFFER = 4'd8, WRITE_MEM = 4'd9, POP_BUFFER = 4'd10; 
+logic [3:0] curr_state; 
+logic [3:0] next_state; 
 
 //Data Out logic 
 always_comb begin
@@ -155,29 +155,17 @@ always_ff @(posedge clk) begin
 end
 
 always_ff @(posedge clk) begin 
-    next_state <= ACTIVE; 
-    temp <= temp; 
-    mem_addr <= mem_addr; 
-    buff_write <= buff_write; 
     unique case (curr_state) 
 
         ACTIVE: begin 
             if (op == C_IDLE) begin 
                 if (drain_rq) begin 
                     buff_write <= 0; 
-                    next_state <= POP_BUFFER;  
                 end
             end
             else begin 
                 if (!hit) begin 
-                    if (relocate_ctrl) begin 
-                        next_state <= RELOC_ONE; 
-                    end
-                    else if (found) begin 
-                        next_state <= MISS_BUFFER_HIT; 
-                    end
-                    else begin 
-                        next_state <= READING_MEM; 
+                    if ((!relocate_ctrl) && (!found)) begin 
                         mem_addr <= read_address;
                     end
                 end
@@ -185,56 +173,24 @@ always_ff @(posedge clk) begin
                     if (evict_ctrl) begin 
                         if (full) begin 
                             buff_write <= 1; 
-                            next_state <= POP_BUFFER; 
                         end
-                        else begin 
-                            next_state <= WRITE_BUFFER; 
-                        end
-                    end
-                    else begin 
-                        next_state <= ACTIVE;
                     end
                 end
             end
         end
 
         READING_MEM: begin 
-            if (!ready_out) begin 
-                next_state <= READING_MEM; 
-            end
+            if (!ready_out) ; 
             else begin 
                 temp <= mem_data_out; 
-                next_state <= INSERT; 
             end
-        end
-
-        INSERT: begin 
-            next_state <= ACTIVE; 
-        end
-
-        MISS_BUFFER_HIT: begin 
-            next_state <= ACTIVE; 
         end
 
         RELOC_ONE: begin 
-            next_state <= RELOC_TWO; 
             temp <= way_data_o;  
         end
 
-        RELOC_TWO: begin 
-            next_state <= RELOC_THREE; 
-        end
-
-        RELOC_THREE: begin 
-            next_state <= READING_MEM; 
-        end
-
-        WRITE_BUFFER: begin 
-            next_state <= ACTIVE; 
-        end
-
         POP_BUFFER: begin 
-            next_state <= WRITE_MEM; 
             mem_addr <= buffer_data_o[(DWIDTH+AWIDTH)-1:DWIDTH];
             temp <= buffer_data_o[DWIDTH-1:0];
         end
@@ -243,13 +199,9 @@ always_ff @(posedge clk) begin
             if (buff_write) begin 
                 buff_write <= 0; 
             end
-            if (!wr_finished) begin 
-                next_state <= WRITE_MEM; 
-            end
-            else begin 
-                next_state <= ACTIVE; 
-            end
         end
+        
+        default: ;
 
     endcase 
 end
@@ -268,10 +220,15 @@ always_comb begin
     D_op = D_IDLE;
     M_op = M_IDLE; 
     stall = 0;
+    next_state = ACTIVE; 
 
     unique case (curr_state)
         ACTIVE: begin
-            if (op == C_IDLE) ; 
+            if (op == C_IDLE) begin
+                if (drain_rq) begin 
+                    next_state = POP_BUFFER;  
+                end
+            end
             else begin 
                 if (hit) begin 
                     stall = evict_ctrl ? 1 : 0;
@@ -295,9 +252,34 @@ always_comb begin
                         end 
                         default: ;
                     endcase
+                    if (evict_ctrl) begin 
+                        if (full) begin 
+                            next_state = POP_BUFFER; 
+                        end
+                        else begin 
+                            next_state = WRITE_BUFFER; 
+                        end
+                    end
+                    else begin 
+                        next_state = ACTIVE;
+                    end
                 end 
                 else begin 
-                    stall = 1; 
+                    if (relocate_ctrl && ((op == C_LOAD) || (op == C_STORE)) ) begin 
+                        next_state = RELOC_ONE; 
+                        stall = 1; 
+                    end
+                    else if (found) begin 
+                        next_state = MISS_BUFFER_HIT; 
+                        stall = 1; 
+                    end
+                    else if ((op == C_LOAD) || (op == C_STORE))begin 
+                        next_state = READING_MEM; 
+                        stall = 1; 
+                    end
+                    else begin 
+                        next_state = ACTIVE;
+                    end
                     T_op = T_IDLE; 
                     D_op = D_IDLE;
                 end
@@ -307,9 +289,16 @@ always_comb begin
         READING_MEM: begin 
             stall = 1; 
             M_op = M_READ;
+            if (!ready_out) begin 
+                next_state = READING_MEM; 
+            end
+            else begin 
+                next_state = INSERT; 
+            end
         end
 
         INSERT: begin 
+            next_state = ACTIVE; 
             stall = 1; 
             T_op = T_INSERT;
             D_op = D_WRITE;
@@ -317,6 +306,7 @@ always_comb begin
         end
         
         MISS_BUFFER_HIT: begin 
+            next_state = ACTIVE; 
             stall = 1; 
             push_en = 1;
             pop_en = 1; 
@@ -326,12 +316,14 @@ always_comb begin
         end
 
         RELOC_ONE: begin 
+            next_state = RELOC_TWO; 
             stall = 1; 
             T_op = T_RELOC_ONE;
             D_op = D_READ;
         end
 
         RELOC_TWO: begin 
+            next_state = RELOC_THREE; 
             stall = 1; 
             T_op = T_RELOC_TWO;
             D_op = D_WRITE;
@@ -339,18 +331,21 @@ always_comb begin
         end
 
         RELOC_THREE: begin 
+            next_state = found ? MISS_BUFFER_HIT : READING_MEM; 
             stall = 1; 
             T_op = T_RELOC_THREE;
         end
 
         WRITE_BUFFER: begin 
-            stall = 1; 
+            next_state = ACTIVE; 
+            stall = 0; 
             push_en = 1; 
             T_op = T_REMOVE;
-            buffer_data_i = {addr, way_data_o}; 
+            buffer_data_i = {address, way_data_o}; 
         end
 
         POP_BUFFER: begin
+            next_state = WRITE_MEM; 
             stall = 1; 
             pop_en = 1; 
         end
@@ -362,7 +357,13 @@ always_comb begin
             if (buff_write) begin 
                 push_en = 1; 
                 T_op = T_REMOVE;
-                buffer_data_i = {addr, way_data_o}; 
+                buffer_data_i = {address, way_data_o}; 
+            end
+            if (!wr_finished) begin 
+                next_state = WRITE_MEM; 
+            end
+            else begin 
+                next_state = ACTIVE; 
             end
         end
 

@@ -1,0 +1,36 @@
+
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+
+class cache_agent extends uvm_agent;
+
+    `uvm_component_utils(cache_agent)
+
+    cache_sequencer sequencer;
+    cache_driver    driver;
+    cache_monitor monitor;
+
+    function new(string name = "cache_agent",
+                 uvm_component parent = null);
+        super.new(name, parent);
+    endfunction
+
+    function void build_phase(uvm_phase phase);
+
+        super.build_phase(phase);
+
+        sequencer = cache_sequencer::type_id::create("sequencer", this);
+        driver    = cache_driver::type_id::create("driver", this);
+        monitor = cache_monitor::type_id::create("monitor", this);
+
+    endfunction
+
+    function void connect_phase(uvm_phase phase);
+
+        super.connect_phase(phase);
+
+        driver.seq_item_port.connect(sequencer.seq_item_export);
+
+    endfunction
+
+endclass

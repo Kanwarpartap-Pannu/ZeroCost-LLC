@@ -15,7 +15,7 @@ BLOCK_SIZE ?= 8
 NUM_SETS ?= $(shell echo $$(( $(CACHE_SIZE) / ($(BLOCK_SIZE) * $(WAYS)) )))
 WAYS ?= 2
 CORE_COUNT ?= 2
-PRIV_CAP ?= 4
+PRIV_CAP ?= 2
 LLC_CAP ?= 4
 
 VERILATOR_FLAGS = \
@@ -41,10 +41,13 @@ lint:
 	verilator --lint-only $(VERILATOR_FLAGS) -f sim/simconfig/verilator.f
 
 # Running the Simulation 
-run: 
-	verilator --binary $(VERILATOR_FLAGS) -f sim/simconfig/verilator.f > sim/sim_out/run.log 2>&1
-	./obj_dir/Vcache_tb
+run_uvm: 
+	verilator --binary $(VERILATOR_FLAGS) --top-module tb_top -f sim/simconfig/verilator_uvm.f > sim/sim_out/run.log 2>&1
+	./obj_dir/Vtb_top
 
+run: 
+	verilator --binary $(VERILATOR_FLAGS) --top-module cache_tb -f sim/simconfig/verilator.f > sim/sim_out/run.log 2>&1
+	./obj_dir/Vcache_tb
 # Pulling up Waveforms with saved scopes 
 wave: 
 	gtkwave sim/sim_out/cache.vcd sim/sim_out/cache.gtkw

@@ -1,0 +1,29 @@
++define+UVM_NO_DPI
+# Use UVM's alternate delta-cycle wait with this Verilator version.
++define+UVM_NO_WAIT_FOR_NBA
++define+UVM_POUND_ZERO_COUNT=1
+--converge-limit 10000
+lint.vlt
+uvm_pkg.sv
+uvm_macros.svh
+rtl/cache_controller.sv
+rtl/data_array.sv
+rtl/memory.sv
+rtl/memory_controller.sv
+rtl/tag_array.sv
+rtl/writeback_buffer.sv
+test/uvm/cache_if.sv
+test/uvm/cache_transaction.sv
+test/uvm/cache_sequence.sv
+test/uvm/cache_sequencer.sv
+test/uvm/cache_driver.sv
+test/uvm/cache_monitor.sv
+test/uvm/cache_agent.sv
+test/uvm/cache_scoreboard.sv
+test/uvm/cache_env.sv
+test/uvm/cache_test.sv
+test/uvm/tb_top.sv
+--Wall 
+--trace-vcd
+--Wno-fatal
+--timing

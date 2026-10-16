@@ -1,4 +1,6 @@
-Vcache_tb__ALL.o: Vcache_tb__ALL.cpp Vcache_tb.cpp Vcache_tb__pch.h \
+Vcache_tb__ALL.o: \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.json \
+  Vcache_tb__ALL.cpp Vcache_tb.cpp Vcache_tb__pch.h \
   /opt/homebrew/Cellar/verilator/5.042/share/verilator/include/verilated.h \
   /opt/homebrew/Cellar/verilator/5.042/share/verilator/include/verilated_config.h \
   /opt/homebrew/Cellar/verilator/5.042/share/verilator/include/verilatedos.h \

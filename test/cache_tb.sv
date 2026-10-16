@@ -12,26 +12,27 @@ localparam OFFSET_BITS   = $clog2(`BLOCK_SIZE);
 localparam INDEX_BITS    = $clog2(NUM_SETS);
 localparam TAG_BITS      = AWIDTH - INDEX_BITS - OFFSET_BITS;
 
-logic [AWIDTH-1:0] addr; 
+logic [AWIDTH-1:0] address; 
 logic [DWIDTH-1:0] store_data; 
-logic [6:0] opcode_i; 
+logic [2:0] op; 
 logic [2:0] funct3_i;  
 logic [DWIDTH-1:0] data_out;
 logic stall;  
 logic data_valid;
 logic [$clog2(`CORE_COUNT)-1:0] requester; 
-logic start; 
+
 // dut 
-top #(
+cache_controller #(
 ) cache (.*); 
 
+logic start; 
 initial begin 
     clk = 0; 
     reset = 0;  
-    opcode_i = 0; 
+    op = 0; 
     funct3_i = 0;
     store_data = 0; 
-    addr = 0;
+    address = 0;
     start=0; 
     i = 0;
     $readmemh("test/test_files/test_address.x", test_addresses); 
@@ -46,21 +47,21 @@ integer i;
 always @(posedge clk ) begin 
     if ((!stall) && start) begin 
         if (i == 21 ) begin
-            addr <= 0;
-            opcode_i <= 0; 
+            address <= 0;
+            op <= 0; 
             store_data <= 0;  
             requester <= 0; 
         end
         else begin
-            addr <= test_addresses[i][55:40];
-            opcode_i <= test_addresses[i][39:33];
+            address <= test_addresses[i][55:40];
+            op <= test_addresses[i][34:32];
             store_data <= test_addresses[i][31:0]; 
             requester <= my_array[i]; 
             i <= i+1;
         end
     end
     else begin 
-        addr <= addr; 
+        address <= address; 
     end
 end 
 
@@ -69,7 +70,7 @@ end
 // simulation 
 initial begin 
     $display("SIMULATION START"); 
-    opcode_i = 0; 
+    op = 0; 
     funct3_i = 11; 
     store_data = 0;
     #2

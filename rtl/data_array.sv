@@ -56,7 +56,7 @@ always_ff @(posedge clk) begin
 			data_array[set_i][way_i] <= temp; 
 		end 
 		D_WRITE: begin 
-			data_array[set_i][way_i] <= temp; 
+			data_array[set_i][way_i] <= cache_line_i; 
 		end
 		D_READ: ; 
 		D_IDLE: ; 

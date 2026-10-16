@@ -7,7 +7,6 @@
 * */
 
 `include "constants.svh"
-parameter int TAG_BITS = 3; 
 
 // TAG ARRAY STRUCT 
 // Stores Tags
@@ -16,7 +15,7 @@ parameter int TAG_BITS = 3;
 // 	Set (set of corresponding entry in data array)
 // 	Way (way of corresponding entry in data array)
 typedef struct packed {
-	logic [TAG_BITS-1:0] tag;
+	logic [11:0] tag;
 	logic [`CORE_COUNT-1:0] sharers; 
 	logic [$clog2(`NUM_SETS)-1:0] set; 
 	logic [$clog2(`WAYS)-1:0] way; 
@@ -47,7 +46,7 @@ typedef struct packed {
 	logic is_cre; 
 	logic [$clog2(`WAYS)-1:0] LRU; 
 	logic [$clog2(`NUM_SETS)-1:0] set; 
-	logic [$clog2(`WAYS)-1:0] way; 
+	logic [$clog2(`WAYS*2)-1:0] way; 
 } data_metadata_e;
 
 
@@ -75,14 +74,14 @@ module tag_array #(
 	output logic evict_ctrl 
 	); 
 
-parameter int WAY_BITS = $clog2(`WAYS); 
+parameter int WAY_BITS = $clog2(`WAYS*2); 
 
 // Capacity of entire privace cache 
 parameter int CAPACITY = `CORE_COUNT * `PRIV_CAP;
 
 // Data Structures 
-tag_array_e tag_array [NUM_SETS][`WAYS]; 
-tag_metadata_e tag_metadata [NUM_SETS][`WAYS]; 
+tag_array_e tag_array [NUM_SETS][`WAYS*2]; 
+tag_metadata_e tag_metadata [NUM_SETS][`WAYS*2]; 
 data_metadata_e data_metadata [NUM_SETS][`WAYS]; 
 
 // Vector indicating whether a particular set holds a valid relocation entry  
@@ -90,7 +89,7 @@ logic [NUM_SETS-1:0] has_cre;
 // Pointer to next set with a valid relocation entry  
 logic [$clog2(`NUM_SETS)-1:0] next_rs; 
 // Q - Tracks dirty cache lines not currently cached in a private cache 
-logic [$clog2(`LLC_CAP)-1:0] q;
+logic [`LLC_CAP:0] q;
 
 // Next_rs logic 
 always_comb begin
@@ -115,7 +114,7 @@ always_comb begin
 	hit_set=0; 
 	hit_way_tag=0; 
 
-	for (int i = 0; i<WAYS; i++) begin 
+	for (int i = 0; i<(2*WAYS); i++) begin 
 		// Hit if tag matches and entry is valid 
 		if ( (tag_array[set_i][i].tag == tag_i) && 
 			( !(tag_metadata[set_i][i].empty) ) ) begin 
@@ -142,7 +141,7 @@ assign free_way = empty_found ? empty_way : cre_way;
 // If relocation stage two seach in next_rs set otherwise search in inputted
 // set
 logic [$clog2(`NUM_SETS)-1:0] search_set;
-assign search_set = (T_op == T_RELOC_TWO) ? next_rs : set_i;
+assign search_set = ((T_op == T_RELOC_TWO) || (T_op == T_RELOC_THREE)) ? next_rs : set_i;
 always_comb begin
 	cre_found=0; 
 	cre_way=0; 
@@ -151,7 +150,7 @@ always_comb begin
 	for (int i = 0; i<WAYS; i++) begin 
 		// look for empty block 
 		if (data_metadata[search_set][i].empty) begin   
-			empty_found=i; 
+			empty_found=1; 
 			empty_way=i; 
 		end
 		// look for clean and unshared block  
@@ -176,9 +175,9 @@ assign replace_way_tag = empty_found ? empty_way_tag : data_metadata[set_i][free
 always_comb begin
 	empty_found_tag=0; 
 	empty_way_tag=0; 
-	for (int i = 0; i<WAYS; i++) begin 
+	for (int i = 0; i<(2*WAYS); i++) begin 
 		if (tag_metadata[set_i][i].empty) begin   
-			empty_found_tag=i; 
+			empty_found_tag=1; 
 			empty_way_tag=i; 
 		end
 	end
@@ -210,8 +209,8 @@ always_comb begin
 
 	// If cache missed and no cre or empty entry exists in current state
 	// set relocate_ctrl high to notify cache controller
-	if ( ((T_op == T_LOAD) || (T_op == T_STORE)) && (!hit) ) begin 
-		if ( (!(empty_found)) && (!(cre_found)) ) begin 
+	if ( !hit ) begin 
+		if ( (!empty_found) && (!cre_found) ) begin 
 			relocate_ctrl = 1; 
 		end	
 	end
@@ -219,7 +218,7 @@ always_comb begin
 			
 	if ( ((T_op == T_EVICT) || (T_op == T_WRITEBACK))  ) begin 
 		// If no sharers remaining 
-		if ( (tag_array[set_i][hit_way].sharers & ~sharer_mask) == 0) begin 
+		if ( tag_array[set_i][hit_way_tag].sharers == sharer_mask ) begin 
 			// if clean update cre state of the set 
 			if ((T_op != T_WRITEBACK) && (tag_metadata[set_i][hit_way_tag].clean)) begin
 				cre_update=1; 
@@ -234,7 +233,17 @@ always_comb begin
 	end
 end
 
-
+// has_cre updates 
+always_ff @(posedge clk) begin 
+	if ( !((T_op == T_EVICT) || (T_op == T_WRITEBACK))) begin  
+		if (empty_found || cre_found) begin 
+			has_cre[search_set] <= 1; 
+		end
+		else begin 
+			has_cre[search_set] <= 0; 
+		end
+	end
+end
 
 // Update lru ages
 always_ff @(posedge clk) begin
@@ -245,7 +254,7 @@ always_ff @(posedge clk) begin
 			if (i == hit_way) begin 
 				data_metadata[hit_set][hit_way].LRU <= 0; 
 			end
-			else if ( ((data_metadata[hit_set][i].LRU < data_metadata[hit_set][hit_way].LRU ) && (!(data_metadata[hit_set][i].empty))) ) begin 
+			else if ( ((data_metadata[hit_set][i].LRU <= data_metadata[hit_set][hit_way].LRU ) && (!(data_metadata[hit_set][i].empty))) ) begin 
 				data_metadata[hit_set][i].LRU <= data_metadata[hit_set][i].LRU + 1; 
 			end 
 		end
@@ -255,27 +264,28 @@ end
 // reset logic 
 always_ff @(posedge clk) begin 
 	if (!reset) begin
-		has_cre <= 0; 
+		has_cre <= {NUM_SETS{1'b1}}; 
 		q <= 0; 
-		for (int i =0; i<WAYS; i++) begin 
-			tag_array[set_i][i].tag <= 0; 	
-			tag_metadata[set_i][i].empty <= 1; 	
-			tag_metadata[set_i][i].clean <= 1; 	
-			tag_metadata[set_i][i].relocated <= 0; 	
-			tag_metadata[set_i][i].shared <= 0; 	
-			tag_array[set_i][i].sharers <= 0; 	
-			tag_array[set_i][i].set <= 0; 	
-			tag_array[set_i][i].way <= 0; 	
-
+		for (int j =0; j<NUM_SETS; j++) begin  
+			for (int i =0; i<(2*WAYS); i++) begin 
+				tag_array[j][i].tag <= 0; 	
+				tag_metadata[j][i].empty <= 1; 	
+				tag_metadata[j][i].clean <= 1; 	
+				tag_metadata[j][i].relocated <= 0; 	
+				tag_metadata[j][i].shared <= 0; 	
+				tag_array[j][i].sharers <= 0; 	
+				tag_array[j][i].set <= 0; 	
+				tag_array[j][i].way <= 0; 	
+			end
+			
+			for (int i =0; i<WAYS; i++) begin 
+				data_metadata[j][i].empty <= 1; 
+				data_metadata[j][i].is_cre<= 1; 
+				data_metadata[j][i].set<= 1; 
+				data_metadata[j][i].way <= 1; 
+				data_metadata[j][i].LRU <= 0; 
+			end	
 		end
-		
-		for (int i =0; i<WAYS; i++) begin 
-			data_metadata[set_i][i].empty <= 1; 
-			data_metadata[set_i][i].is_cre<= 0; 
-			data_metadata[set_i][i].set<= 0; 
-			data_metadata[set_i][i].way <= 0; 
-			data_metadata[set_i][i].LRU <= 0; 
-		end	
 	end
 end
 
@@ -329,7 +339,7 @@ always_ff @(posedge clk) begin
 			
 			// Update data array tracking and set correct reverse pointer 
 			data_metadata[set_i][free_way].empty <= 0; 
-			data_metadata[set_i][free_way].is_cre <= 1; 
+			data_metadata[set_i][free_way].is_cre <= 0; 
 			data_metadata[set_i][free_way].set <= set_i; 
 			data_metadata[set_i][free_way].way <= replace_way_tag; 
 			data_metadata[set_i][free_way].LRU <= 0; 
@@ -380,6 +390,9 @@ always_ff @(posedge clk) begin
 		T_RELOC_TWO: begin
 			tag_array[victim_set][victim_way].set <= next_rs;
 			tag_array[victim_set][victim_way].way <= free_way;
+
+			data_metadata[next_rs][free_way].empty <= 0;
+			data_metadata[next_rs][free_way].is_cre <= 0;
 			data_metadata[next_rs][free_way].set <= victim_set;
 			data_metadata[next_rs][free_way].way <= victim_way;
 			// if cre was not empty we need to evict corresponding

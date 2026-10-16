@@ -5,14 +5,14 @@ parameter logic [31:0] ZERO = 32'd0;
 
     // TAG Array Operations 
     parameter logic [3:0]
-        T_IDLE         = 4'b1000, // Insert in TAG  
+        T_IDLE         = 4'b0000, // Insert in TAG  
         T_INSERT         = 4'b1110, // Insert in TAG  
         T_REMOVE         = 4'b1111, // 
         T_RELOC_ONE         = 4'b1000, // 
         T_RELOC_TWO         = 4'b1010, // 
         T_RELOC_THREE         = 4'b1100, // 
         T_LOAD         = 4'b0010, // 
-        T_STORE         = 4'b0000, // 
+        T_STORE         = 4'b0011, // 
         T_EVICT         = 4'b0110, // 
         T_WRITEBACK         = 4'b0100; // 
 

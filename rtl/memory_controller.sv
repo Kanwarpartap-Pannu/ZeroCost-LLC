@@ -49,7 +49,7 @@ memory #(
     .write_en_dat(write_en),
     .funct3_i(funct3_i),
     .request(request),
-    .write_finished(write_finished),
+    .write_finished(wr_finished),
     .ready(ready_out),
     .data_o(),
     .data_dat_o(mem_out) // data read from data memory
