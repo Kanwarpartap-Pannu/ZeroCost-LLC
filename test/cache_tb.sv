@@ -56,7 +56,7 @@ always @(posedge clk ) begin
             address <= test_addresses[i][55:40];
             op <= test_addresses[i][34:32];
             store_data <= test_addresses[i][31:0]; 
-            requester <= my_array[i]; 
+            requester <= my_array[i];  
             i <= i+1;
         end
     end

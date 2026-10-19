@@ -91,7 +91,13 @@ always_ff @(posedge clk) begin
 	end
 
 	else begin 
-		if (push_en) begin 
+		if (push_en && pop_en) begin 
+			fifo_buffer[found_entry][DWIDTH+AWIDTH] <= 1; 
+			data_o <= 0;
+			data_valid <= 0;  
+		end
+
+		else if (push_en) begin 
 			if(!full) begin
 			    fifo_buffer[tail[POINTER_BITS-1:0]] <= data_i;
 			    tail <= tail+1; 
@@ -99,7 +105,8 @@ always_ff @(posedge clk) begin
 			data_o <= 0;
 			data_valid <= 0;  
 		end
-		if (pop_en) begin 
+
+		else if (pop_en) begin 
 			if (!empty) begin
 			    data_o <= fifo_buffer[head[POINTER_BITS-1:0]];
 			    head <= head+1;
@@ -110,11 +117,6 @@ always_ff @(posedge clk) begin
 				data_o <= 0;
 				data_valid <= 0;  
 			end
-		end
-		if (push_en && pop_en) begin 
-			fifo_buffer[found_entry][DWIDTH+AWIDTH] <= 1; 
-			data_o <= 0;
-			data_valid <= 0;  
 		end
 	end 
 end
