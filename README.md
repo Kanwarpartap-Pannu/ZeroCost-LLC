@@ -46,12 +46,14 @@ The cache has four main modules.
 The Tag Array stores tags in a k-way set-associative array. For each way, it also stores the LRU ages and cache line states (empty, clean, relocated, shared). It performs tag comparisons and contains the LRU replacement logic. It also handles relocation.
 
 For more information, please refer to:
+[Tag Array](docs/modules/Tag_Array.md)
 
 ## Data Array
 
 The Data Array holds cache lines in a k-way set-associative array and returns the requested way.
 
 For more information, please refer to:
+[Data Array](docs/modules/Data_Array.md)
 
 ## Memory Controller
 
@@ -62,6 +64,7 @@ Responsible for interfacing with main memory and handling reads and writes. Futu
 A FIFO buffer that holds evicted cache lines and opportunistically drains them to main memory.
 
 For more information, please refer to:
+[Writeback Buffer](docs/modules/Writeback_Buffer.md)
 
 For more detailed information on each module, refer to the following directory:
 
