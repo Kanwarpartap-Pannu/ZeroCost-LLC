@@ -56,6 +56,7 @@ memory #(
 );
 
 assign data_out = mem_out; 
+assign mem_store = data_in; 
 
 // STATES 
 parameter IDLE = 0, READING = 1, WRITE_BACK = 2; 

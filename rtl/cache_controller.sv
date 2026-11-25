@@ -67,6 +67,15 @@ tag_array # (
 
 // Data Array 
 // clk, reset, way_i, set_i, D_op, funct3_i, store_data, cache_line_i
+// If the request missed in the cache: 
+//  - Check if there is a relocation request if yes transition to RELOC_ONE
+//  the first relocation cycle 
+//      - Else if the cache line is in the writeback buffer transition to
+//      MISS_BUFFER_HIT
+//      T
+//          - If not in writeback buffer transition to READING_MEM 
+//
+//          # READING_MEM: 
 // set_o
 logic [1:0] D_op; 
 

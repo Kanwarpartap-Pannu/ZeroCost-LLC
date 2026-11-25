@@ -80,7 +80,7 @@ For more detailed information on each state, refer to:
 
 # Running the Cache
 
-To run the simulation, ensure Verilator is installed and execute the following command:
+To run the simulation, ensure Verilator is installed  POP_BUFFERand execute the following command:
 
 ```bash
 make run
